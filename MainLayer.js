@@ -51,15 +51,15 @@ MainLayer.prototype.onEnter = function () {
 	  //score font
 	this.scoreBg = cc.Sprite.create("res/scoreBlock.png");
 	this.scoreBg.setScaleY(this.scaleX);
-	this.scoreBg.setScaleY(this.scaleY);
-    this.rootNode.addChild(this.scoreBg);
-    this.scoreBg.setPosition(cc.p(360, 1100));
+	this.scoreBg.setScaleY(this.scaleY);    
+    this.scoreBg.setPosition(cc.p(360, 0 + this.scoreBg._contentSize.height * this.scaleY));
     this.scoreBg.setAnchorPoint(cc.p(0.5, 0.5));
+	this.rootNode.addChild(this.scoreBg);
     // this.scoreBg.setColor(cc.c3b(0, 92, 165));
     this.scoreBg.setZOrder(199);
     this.scoreLabel = cc.LabelTTF.create("0.00", "Arial", 50);
     this.rootNode.addChild(this.scoreLabel);
-    this.scoreLabel.setPosition(cc.p(360, 1090));
+    this.scoreLabel.setPosition(cc.p(360, 0 + this.scoreLabel._contentSize.height * this.scaleY));
     this.scoreLabel.setAnchorPoint(cc.p(0.5, 0.5));
     // this.scoreLabel.setColor(cc.c3b(255, 20, 147));
 	// richard modify change score color
