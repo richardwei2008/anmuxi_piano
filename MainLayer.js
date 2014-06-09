@@ -107,9 +107,9 @@ MainLayer.prototype.newBlock = function (i, j, colorType) {
 			}
 			if (j % 10 == 7) {
 				seconds = 1;
-				var pointLabel = cc.LabelTTF.create("-" + seconds + "秒", "Arial", 60);
+				var pointLabel = cc.LabelTTF.create("减" + seconds + "秒", "Arial", 50);
 				block.addChild(pointLabel);
-				pointLabel.setPosition(cc.p(this.blockWidth + 60, this.blockHeight + 120));	
+				pointLabel.setPosition(cc.p(this.blockWidth + 40, this.blockHeight + 120));	
 				pointLabel.setAnchorPoint(cc.p(0.5, 0.5));
 				pointLabel.setColor(cc.c3b(255, 255, 255));
 				pointLabel.setZOrder(2);
