@@ -60,13 +60,21 @@ MainLayer.prototype.onEnter = function () {
     }
 
     //score font
+	this.scoreBg = cc.Sprite.create("res/scoreBlock.png");
+	this.scoreBg.setScaleY(this.scaleX);
+	this.scoreBg.setScaleY(this.scaleY / 4);
+    this.rootNode.addChild(this.scoreBg);
+    this.scoreBg.setPosition(cc.p(360, 1240));
+    this.scoreBg.setAnchorPoint(cc.p(0.5, 0.5));
+    this.scoreBg.setColor(cc.c3b(0, 92, 165));
+    this.scoreBg.setZOrder(199);
     this.scoreLabel = cc.LabelTTF.create("0.00", "Arial", 50);
     this.rootNode.addChild(this.scoreLabel);
     this.scoreLabel.setPosition(cc.p(360, 1230));
     this.scoreLabel.setAnchorPoint(cc.p(0.5, 0.5));
     // this.scoreLabel.setColor(cc.c3b(255, 20, 147));
 	// richard modify change score color
-    this.scoreLabel.setColor(cc.c3b(0, 92, 165));
+    this.scoreLabel.setColor(cc.c3b(255, 255, 255));
     this.scoreLabel.setZOrder(200);
 };
 
