@@ -139,7 +139,9 @@ StartLayer.prototype.newBlock = function (i, j) {
     block.addChild(blockLabel);
     blockLabel.setPosition(cc.p(this.blockWidth / 2 - 30, this.blockHeight / 2 - 60));	
     blockLabel.setAnchorPoint(cc.p(0.5, 0.5));
-    var colors = [cc.c3b(0, 0, 0) /*black*/, cc.c3b(255, 255, 255) /*white*/];
+    // var colors = [cc.c3b(0, 0, 0) /*black*/, cc.c3b(255, 255, 255) /*white*/];
+	// richard modify the color for anmuxi RGB(0, 92, 165)	
+	var colors = [cc.c3b(0, 92, 165) /*dark blue*/, cc.c3b(255, 255, 255) /*white*/];	
 	var theBlockColor = "black";
     if (i == j) {
         block.setColor(colors[0]);
