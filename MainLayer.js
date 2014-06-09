@@ -85,6 +85,15 @@ MainLayer.prototype.newBlock = function (i, j, colorType) {
         block.setColor(cc.c3b(178, 206, 228));
     } else {
 		if (i == colorType) {
+			if (j == 1) {
+				// add start label to the block
+				var startLabel = cc.LabelTTF.create("Start", "Arial", 90);
+				block.addChild(startLabel);
+				startLabel.setPosition(cc.p(this.blockWidth / 2 + 60, this.blockHeight / 2 + 60));	
+				startLabel.setAnchorPoint(cc.p(0.5, 0.5));
+				startLabel.setColor(cc.c3b(255, 255, 255));
+				startLabel.setZOrder(200);
+			}
             // block.setColor(cc.c3b(30, 30, 30));
 			// richard modify to new block color
             block.setColor(cc.c3b(0, 92, 165));
