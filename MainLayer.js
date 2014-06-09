@@ -60,11 +60,13 @@ MainLayer.prototype.onEnter = function () {
     }
 
     //score font
-    this.scoreLabel = cc.LabelTTF.create("0.00", "Arial", 70);
+    this.scoreLabel = cc.LabelTTF.create("0.00", "Arial", 50);
     this.rootNode.addChild(this.scoreLabel);
     this.scoreLabel.setPosition(cc.p(360, 1230));
     this.scoreLabel.setAnchorPoint(cc.p(0.5, 0.5));
-    this.scoreLabel.setColor(cc.c3b(255, 20, 147));
+    // this.scoreLabel.setColor(cc.c3b(255, 20, 147));
+	// richard modify change score color
+    this.scoreLabel.setColor(cc.c3b(0, 92, 165));
     this.scoreLabel.setZOrder(200);
 };
 
@@ -78,10 +80,14 @@ MainLayer.prototype.newBlock = function (i, j, colorType) {
     block.setAnchorPoint(cc.p(0.5, 0.5));
     var color = "white";
     if (j == 0) {
-        block.setColor(cc.c3b(0, 255, 0));
+        // block.setColor(cc.c3b(0, 255, 0));
+		// richard modify the footer color to light blue
+        block.setColor(cc.c3b(178, 206, 228));
     } else {
-        if (i == colorType) {
-            block.setColor(cc.c3b(30, 30, 30));
+		if (i == colorType) {
+            // block.setColor(cc.c3b(30, 30, 30));
+			// richard modify to new block color
+            block.setColor(cc.c3b(0, 92, 165));
             color = "black";
         }
     }
@@ -104,7 +110,9 @@ MainLayer.prototype.createTopOverNode = function () {
     bgColor.setScaleX(720 / 300);
     bgColor.setScaleY(1280 / 500);
     bgColor.setAnchorPoint(cc.p(0, 0));
-    bgColor.setColor(cc.c3b(0, 255, 0));
+    // bgColor.setColor(cc.c3b(0, 255, 0));
+	// richard modify the footer color to light blue
+    bgColor.setColor(cc.c3b(178, 206, 228));
     this.scoreNode.addChild(bgColor);
     this.scoreNode.bgColor = bgColor;
 
@@ -113,7 +121,9 @@ MainLayer.prototype.createTopOverNode = function () {
     var modeLabel = cc.LabelTTF.create(wordsMode[GAME_MODE] + "模式", "Arial", 70);
     this.scoreNode.addChild(modeLabel);
     modeLabel.setPosition(cc.p(350, 1000));
-    modeLabel.setColor(cc.c3b(0, 0, 0));
+    // modeLabel.setColor(cc.c3b(0, 0, 0));
+	// richard modify the mode label to dark blue
+    modeLabel.setColor(cc.c3b(0, 92, 165));
     modeLabel.setAnchorPoint(cc.p(0.5, 0.5));
 
     //result
@@ -129,7 +139,9 @@ MainLayer.prototype.createTopOverNode = function () {
     this.scoreNode.addChild(backLabel);
     backLabel.setPosition(cc.p(200, 400));
     backLabel.setAnchorPoint(cc.p(0.5, 0.5));
-    backLabel.setColor(cc.c3b(0, 0, 0));
+    // backLabel.setColor(cc.c3b(0, 0, 0));
+	// richard modify the mode label to dark blue
+    backLabel.setColor(cc.c3b(0, 92, 165));
     this.scoreNode.back = backLabel;
 
     //return
@@ -137,7 +149,9 @@ MainLayer.prototype.createTopOverNode = function () {
     this.scoreNode.addChild(returnLabel);
     returnLabel.setPosition(cc.p(500, 400));
     returnLabel.setAnchorPoint(cc.p(0.5, 0.5));
-    returnLabel.setColor(cc.c3b(0, 0, 0));
+    // returnLabel.setColor(cc.c3b(0, 0, 0));
+	// richard modify the mode label to dark blue
+    returnLabel.setColor(cc.c3b(0, 92, 165));
     this.scoreNode.return = returnLabel;
 };
 
@@ -197,7 +211,9 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
 
                                 //move down
                                 cc.AudioEngine.getInstance().playEffect(PIANO_SIMPLE[this.pianoListIndex[j - 1]], false);
-                                block.setColor(cc.c3b(100, 100, 100)); /* green */
+                                // block.setColor(cc.c3b(100, 100, 100)); /* gray touched */
+								// richard modify to a deep light blue after touched
+                                block.setColor(cc.c3b(100, 160, 208));
                                 var heightNum = 1;
                                 if (block.blockData.row == (this.pianoLengthIndex - 1)) { //when last row ,game success end, move two height
                                     heightNum = 2;
@@ -228,7 +244,9 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
                                 cc.ScaleTo.create(0, this.scaleX * 4 / 5, this.scaleY * 4 / 5),
                                 cc.ScaleTo.create(0.2, this.scaleX, this.scaleY)
                             ));
-                            this.scoreNode.bgColor.setColor(cc.c3b(255, 0, 0)); 
+                            // this.scoreNode.bgColor.setColor(cc.c3b(255, 0, 0)); 
+							// richard modify
+                            this.scoreNode.bgColor.setColor(cc.c3b(178, 206, 228)); 
                             this.scoreNode.result.setString("失败了");
 							this.scoreNode.back.setString("返回");
                             this.scoreNode.runAction(cc.MoveTo.create(0.2, cc.p(0, this.blockHeight * this.moveNum)));
