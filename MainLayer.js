@@ -48,6 +48,24 @@ MainLayer.prototype.onEnter = function () {
     this.pianoLength = 5;   //init length 5
     cc.log("length==" + this.pianoLength);
 
+	  //score font
+	this.scoreBg = cc.Sprite.create("res/scoreBlock.png");
+	this.scoreBg.setScaleY(this.scaleX);
+	this.scoreBg.setScaleY(this.scaleY);
+    this.rootNode.addChild(this.scoreBg);
+    this.scoreBg.setPosition(cc.p(360, 1100));
+    this.scoreBg.setAnchorPoint(cc.p(0.5, 0.5));
+    // this.scoreBg.setColor(cc.c3b(0, 92, 165));
+    this.scoreBg.setZOrder(199);
+    this.scoreLabel = cc.LabelTTF.create("0.00", "Arial", 50);
+    this.rootNode.addChild(this.scoreLabel);
+    this.scoreLabel.setPosition(cc.p(360, 1090));
+    this.scoreLabel.setAnchorPoint(cc.p(0.5, 0.5));
+    // this.scoreLabel.setColor(cc.c3b(255, 20, 147));
+	// richard modify change score color
+    this.scoreLabel.setColor(cc.c3b(178, 206, 228));
+    this.scoreLabel.setZOrder(200);
+	
     //tables
     this.tables = new Array(this.pianoLengthIndex);
     for (var j = 0; j < this.pianoLength; j++) {
@@ -59,23 +77,7 @@ MainLayer.prototype.onEnter = function () {
         this.tables[j] = sprites;
     }
 
-    //score font
-	this.scoreBg = cc.Sprite.create("res/scoreBlock.png");
-	this.scoreBg.setScaleY(this.scaleX);
-	this.scoreBg.setScaleY(this.scaleY / 4);
-    this.rootNode.addChild(this.scoreBg);
-    this.scoreBg.setPosition(cc.p(360, 1240));
-    this.scoreBg.setAnchorPoint(cc.p(0.5, 0.5));
-    this.scoreBg.setColor(cc.c3b(0, 92, 165));
-    this.scoreBg.setZOrder(199);
-    this.scoreLabel = cc.LabelTTF.create("0.00", "Arial", 50);
-    this.rootNode.addChild(this.scoreLabel);
-    this.scoreLabel.setPosition(cc.p(360, 1230));
-    this.scoreLabel.setAnchorPoint(cc.p(0.5, 0.5));
-    // this.scoreLabel.setColor(cc.c3b(255, 20, 147));
-	// richard modify change score color
-    this.scoreLabel.setColor(cc.c3b(255, 255, 255));
-    this.scoreLabel.setZOrder(200);
+  
 };
 
 MainLayer.prototype.newBlock = function (i, j, colorType) {
@@ -87,6 +89,7 @@ MainLayer.prototype.newBlock = function (i, j, colorType) {
     block.setZOrder(100);
     block.setAnchorPoint(cc.p(0.5, 0.5));
     var color = "white";
+	var seconds = 0;
     if (j == 0) {
         // block.setColor(cc.c3b(0, 255, 0));
 		// richard modify the footer color to light blue
@@ -100,7 +103,22 @@ MainLayer.prototype.newBlock = function (i, j, colorType) {
 				startLabel.setPosition(cc.p(this.blockWidth / 2 + 60, this.blockHeight / 2 + 60));	
 				startLabel.setAnchorPoint(cc.p(0.5, 0.5));
 				startLabel.setColor(cc.c3b(255, 255, 255));
-				startLabel.setZOrder(200);
+				startLabel.setZOrder(1);
+			}
+			if (j % 10 == 7) {
+				seconds = 1;
+				var pointLabel = cc.LabelTTF.create("-" + seconds + "秒", "Arial", 60);
+				block.addChild(pointLabel);
+				pointLabel.setPosition(cc.p(this.blockWidth + 60, this.blockHeight + 120));	
+				pointLabel.setAnchorPoint(cc.p(0.5, 0.5));
+				pointLabel.setColor(cc.c3b(255, 255, 255));
+				pointLabel.setZOrder(2);
+				var pointIcon = cc.Sprite.create("res/yogurt.png");
+				block.addChild(pointIcon);
+				pointIcon.setPosition(cc.p(this.blockWidth / 2 + 60, this.blockHeight / 2 + 60));		
+				pointIcon.setAnchorPoint(cc.p(0.5, 0.5));
+				pointIcon.setColor(cc.c3b(255, 255, 255));
+				pointIcon.setZOrder(1);				
 			}
             // block.setColor(cc.c3b(30, 30, 30));
 			// richard modify to new block color
@@ -108,7 +126,7 @@ MainLayer.prototype.newBlock = function (i, j, colorType) {
             color = "black";
         }
     }
-    block.blockData = {col: i, row: j, color: color};
+    block.blockData = {col: i, row: j, color: color, seconds : seconds};
     this.blockNode.addChild(block);
     return block;
 };
@@ -211,14 +229,15 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
                     if (cc.rectContainsPoint(blockRect, newTouchPos)) {
                         if (j == 0) {
                             return;
-                        }
-
+                        }						
                         //touch black
-                        if (block.blockData.color == "black") {
+                        if (block.blockData.color == "black") {							
                             if (block.blockData.row == (this.moveNum + 1)) {
-
-                                //create new sprite 
-                                if (this.pianoLength < this.pianoLengthIndex) {  //not reach top
+                            	if (block.blockData.seconds != 0) {
+                            		this.currentTime = this.currentTime - block.blockData.seconds;
+                            	}
+                            	//create new sprite
+                            	if (this.pianoLength < this.pianoLengthIndex) { //not reach top
                                     this.moveAddNewSprites();
                                 }
 
