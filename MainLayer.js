@@ -52,14 +52,14 @@ MainLayer.prototype.onEnter = function () {
 	this.scoreBg = cc.Sprite.create("res/scoreBlock.png");
 	this.scoreBg.setScaleY(this.scaleX);
 	this.scoreBg.setScaleY(this.scaleY);    
-    this.scoreBg.setPosition(cc.p(360, 0 + this.scoreBg._contentSize.height * this.scaleY));
+    this.scoreBg.setPosition(cc.p(360, winSize.height - this.scoreBg._contentSize.height * this.scaleY));
     this.scoreBg.setAnchorPoint(cc.p(0.5, 0.5));
 	this.rootNode.addChild(this.scoreBg);
     // this.scoreBg.setColor(cc.c3b(0, 92, 165));
     this.scoreBg.setZOrder(199);
     this.scoreLabel = cc.LabelTTF.create("0.00", "Arial", 50);
     this.rootNode.addChild(this.scoreLabel);
-    this.scoreLabel.setPosition(cc.p(360, 0 + this.scoreLabel._contentSize.height * this.scaleY));
+    this.scoreLabel.setPosition(cc.p(360, winSize.height - this.scoreLabel._contentSize.height * this.scaleY));
     this.scoreLabel.setAnchorPoint(cc.p(0.5, 0.5));
     // this.scoreLabel.setColor(cc.c3b(255, 20, 147));
 	// richard modify change score color
@@ -162,7 +162,7 @@ MainLayer.prototype.createTopOverNode = function () {
     modeLabel.setAnchorPoint(cc.p(0.5, 0.5));
 
     //result
-    var resultLabel = cc.LabelTTF.create("获得刮刮卡", "Arial", 110);
+    var resultLabel = cc.LabelTTF.create("成功", "Arial", 110);
     this.scoreNode.addChild(resultLabel);
     resultLabel.setPosition(cc.p(360, 750));
     resultLabel.setAnchorPoint(cc.p(0.5, 0.5));
@@ -170,24 +170,24 @@ MainLayer.prototype.createTopOverNode = function () {
     this.scoreNode.result = resultLabel;
 
     //back
-    var backLabel = cc.LabelTTF.create("确认", "Arial", 50);
-    this.scoreNode.addChild(backLabel);
-    backLabel.setPosition(cc.p(200, 400));
-    backLabel.setAnchorPoint(cc.p(0.5, 0.5));
-    // backLabel.setColor(cc.c3b(0, 0, 0));
-	// richard modify the mode label to dark blue
-    backLabel.setColor(cc.c3b(0, 92, 165));
-    this.scoreNode.back = backLabel;
-
-    //return
-    var returnLabel = cc.LabelTTF.create("重来", "Arial", 50);
-    this.scoreNode.addChild(returnLabel);
-    returnLabel.setPosition(cc.p(500, 400));
-    returnLabel.setAnchorPoint(cc.p(0.5, 0.5));
-    // returnLabel.setColor(cc.c3b(0, 0, 0));
-	// richard modify the mode label to dark blue
-    returnLabel.setColor(cc.c3b(0, 92, 165));
-    this.scoreNode.return = returnLabel;
+    // var backLabel = cc.LabelTTF.create("确认", "Arial", 50);
+    // this.scoreNode.addChild(backLabel);
+    // backLabel.setPosition(cc.p(200, 400));
+    // backLabel.setAnchorPoint(cc.p(0.5, 0.5));
+    // // backLabel.setColor(cc.c3b(0, 0, 0));
+	// // richard modify the mode label to dark blue
+    // backLabel.setColor(cc.c3b(0, 92, 165));
+    // this.scoreNode.back = backLabel;
+    // 
+    // //return
+    // var returnLabel = cc.LabelTTF.create("重来", "Arial", 50);
+    // this.scoreNode.addChild(returnLabel);
+    // returnLabel.setPosition(cc.p(500, 400));
+    // returnLabel.setAnchorPoint(cc.p(0.5, 0.5));
+    // // returnLabel.setColor(cc.c3b(0, 0, 0));
+	// // richard modify the mode label to dark blue
+    // returnLabel.setColor(cc.c3b(0, 92, 165));
+    // this.scoreNode.return = returnLabel;
 };
 
 
@@ -284,7 +284,7 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
 							// richard modify
                             this.scoreNode.bgColor.setColor(cc.c3b(178, 206, 228)); 
                             this.scoreNode.result.setString("失败了");
-							this.scoreNode.back.setString("返回");
+							// this.scoreNode.back.setString("返回");
                             this.scoreNode.runAction(cc.MoveTo.create(0.2, cc.p(0, this.blockHeight * this.moveNum)));
                         }
                     }
@@ -292,29 +292,29 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
             }
         }
     }
-    else if (this.gameStatus == OVER) {  //game over
-        //back
-        var backRect = cc.rectCreate(this.scoreNode.back.getPosition(), [50, 30]);
-        if (cc.rectContainsPoint(backRect, this.pBegan)) {
-            this.scoreNode.back.runAction(cc.Sequence.create(cc.ScaleTo.create(0.1, 1.1),
-                cc.CallFunc.create(function () {
-                    cc.AudioEngine.getInstance().stopAllEffects();
-                    cc.BuilderReader.runScene("", "StartLayer");
-                })
-            ));
-        }
-
-        //return
-        var returnRect = cc.rectCreate(this.scoreNode.return.getPosition(), [50, 30]);
-        if (cc.rectContainsPoint(returnRect, this.pBegan)) {
-            this.scoreNode.return.runAction(cc.Sequence.create(cc.ScaleTo.create(0.1, 1.1),
-                cc.CallFunc.create(function () {
-                    cc.AudioEngine.getInstance().stopAllEffects();
-                    cc.BuilderReader.runScene("", "MainLayer");
-                })
-            ));
-        }
-    }
+    // else if (this.gameStatus == OVER) {  //game over
+    //     //back
+    //     var backRect = cc.rectCreate(this.scoreNode.back.getPosition(), [50, 30]);
+    //     if (cc.rectContainsPoint(backRect, this.pBegan)) {
+    //         this.scoreNode.back.runAction(cc.Sequence.create(cc.ScaleTo.create(0.1, 1.1),
+    //             cc.CallFunc.create(function () {
+    //                 cc.AudioEngine.getInstance().stopAllEffects();
+    //                 cc.BuilderReader.runScene("", "StartLayer");
+    //             })
+    //         ));
+    //     }
+    // 
+    //     //return
+    //     var returnRect = cc.rectCreate(this.scoreNode.return.getPosition(), [50, 30]);
+    //     if (cc.rectContainsPoint(returnRect, this.pBegan)) {
+    //         this.scoreNode.return.runAction(cc.Sequence.create(cc.ScaleTo.create(0.1, 1.1),
+    //             cc.CallFunc.create(function () {
+    //                 cc.AudioEngine.getInstance().stopAllEffects();
+    //                 cc.BuilderReader.runScene("", "MainLayer");
+    //             })
+    //         ));
+    //     }
+    // }
 };
 
 

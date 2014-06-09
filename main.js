@@ -46,7 +46,15 @@ if (sys.platform == 'browser') {
             // set FPS. the default value is 1.0/60 if you don't call this
             director.setAnimationInterval(1.0 / this.config['frameRate']);
             var glView = director.getOpenGLView();
-            glView.setDesignResolutionSize(720, 1280, cc.RESOLUTION_POLICY.SHOW_ALL);
+			var height = cc.Director.getInstance().getWinSize().height;
+			var width = cc.Director.getInstance().getWinSize().width;
+			var resolutionSizeWidth = 720; // default
+			var resolutionSizeHeight = 1280; // default
+			// if (height <= resolutionSizeHeight && width <= resolutionSizeWidth) {
+			// 	resolutionSizeWidth = width;
+			// 	resolutionSizeHeight = height;
+			// }
+            glView.setDesignResolutionSize(resolutionSizeWidth, resolutionSizeHeight, cc.RESOLUTION_POLICY.SHOW_ALL);
             cc.Loader.preload(ccb_resources, function () {
                 cc.BuilderReader.runScene("", "StartLayer");
             }, this);
