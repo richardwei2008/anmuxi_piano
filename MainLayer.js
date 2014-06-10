@@ -217,8 +217,8 @@ MainLayer.prototype.moveAddNewSprites = function () {
 
 MainLayer.prototype.onTouchesBegan = function (touches, event) {
     this.pBegan = touches[0].getLocation();
-    cc.log("this.pianoLength==" + this.pianoLength);
-	console.log("this.pianoLength==" + this.pianoLength);
+    // cc.log("this.pianoLength==" + this.pianoLength);
+	// console.log("this.pianoLength==" + this.pianoLength);
     if (this.gameStatus == START) {  //game start
         var newTouchPos = cc.p(this.pBegan.x, (this.pBegan.y + this.moveNum * this.blockHeight));
         for (var j = 0; j < this.pianoLength; j++) {
@@ -245,8 +245,8 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
                                     this.createTopOverNode();
                                 }
 
-                                //move down
-                                cc.AudioEngine.getInstance().playEffect(PIANO_SIMPLE[this.pianoListIndex[j - 1]], false);
+                                //move down richard TODO comment sound
+                                // cc.AudioEngine.getInstance().playEffect(PIANO_SIMPLE[this.pianoListIndex[j - 1]], false);
                                 // block.setColor(cc.c3b(100, 100, 100)); /* gray touched */
 								// richard modify to a deep light blue after touched
                                 block.setColor(cc.c3b(100, 160, 208));

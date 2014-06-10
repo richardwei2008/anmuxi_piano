@@ -98,7 +98,8 @@ StartLayer.prototype.onTouchesBegan = function (touches, event) {
             if (block) {
                 var blockRect = cc.rectCreate(block.getPosition(), [this.blockWidth / 2, this.blockHeight / 2]);
 			    if (cc.rectContainsPoint(blockRect, this.pBegan)) {
-                    cc.AudioEngine.getInstance().playEffect(PIANO_SIMPLE[1 + getRandom(6)], false);
+					// richard remove sound
+                    // cc.AudioEngine.getInstance().playEffect(PIANO_SIMPLE[1 + getRandom(6)], false);
                     if (j == 0 && i == 0) {
                         GAME_MODE = MODE_ZEN;
                     } else if (j == 0 && i == 1) {
