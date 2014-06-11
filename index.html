@@ -5,17 +5,41 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <title>别踩白块儿</title>
+	<link type="text/css" href="css/loader.css" rel="stylesheet"/>
+	<script src="jquery.min.js"></script>
+	<script type="text/javascript">
+		
+		function isAppLoaded() {	
+			console.log("is audio loaded");
+			$(".loader").fadeOut("slow");
+		};
+		$(window).load(function () {
+			window.location = "#top";
+			var audioElement = document.getElementById('photography_audio');
+			audioElement.preload = 'auto';
+			audioElement.load();
+			$(".loader").delay(8000).fadeOut("slow");
+			// $(audioElement).on("loadeddata", function () {
+			// 	console.log("is audio loaded");
+			// 	$(".loader").fadeOut("slow");
+			// });
+			// audioElement.addEventListener('canplaythrough', function () {
+			// 	console.log("is audio loaded");
+			// 	$(".loader").fadeOut("slow");
+			// });
+		});
+	</script>
 </head>
-<script language="javascript">
-	function  init() {
-		window.location ="#top";
-	};
-</script>
-<body onload="init()" style="text-align: center; background: #2D3132;">
+<body style="text-align: center; background: #2D3132;">
+<div class="loader">
+</div>
+<audio id="photography_audio" hidden="true" style="display:none;">
+    <source src="res/piano/kissTheRain.mp3" type="audio/mpeg"></source>
+</audio>
 <div >
    <canvas id="gameCanvas" style="background-color: #005CA5;"></canvas>
 </div>
-<script src="jquery.min.js"></script>
+
 <script src="boot-html5.js"></script>
 <script type="text/javascript">
 	var canvas = document.getElementById('gameCanvas');

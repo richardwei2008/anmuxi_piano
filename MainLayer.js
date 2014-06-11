@@ -256,6 +256,7 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
                                     cc.log("end");
                                     this.gameStatus = OVER;
                                     cc.AudioEngine.getInstance().playEffect(SOUNDS.win, false);
+									PauseAudio();
 									// TODO refactor to fire event mode
 									setTimeout(function () {
 										window.location.href = "win.html";
@@ -275,6 +276,7 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
                             this.createTopOverNode();   //create score node and move 
                             this.gameStatus = OVER;
                             cc.AudioEngine.getInstance().playEffect(SOUNDS.error, false);
+							PauseAudio();
                             block.setColor(cc.c3b(255, 0, 0)); /* red */
                             block.runAction(cc.Sequence.create(
                                 cc.ScaleTo.create(0, this.scaleX * 4 / 5, this.scaleY * 4 / 5),

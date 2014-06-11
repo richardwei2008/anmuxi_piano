@@ -23,6 +23,7 @@ MODE_NOT = 3;
 
 GAME_MODE = 0;
 
+require("PlayAudio.js");
 require("StartLayer.js");
 require("MainLayer.js");
 require("CocosEditor.js");
