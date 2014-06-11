@@ -36,6 +36,9 @@ SOUNDS = {
     win: "res/sounds/win.mp3"
 };
 
+MUSIC = {
+    bg: "res/piano/kissTheRain.mp3"
+};
 
 /*TouchSnow没什么音乐细胞 怎么搞都弄不好一曲好听的曲子 术业有专攻 童鞋自行修改  do、re、mi、fa，sol、la、duo说难也不难，说容易也真心不容易*/
 

@@ -100,6 +100,7 @@ StartLayer.prototype.onTouchesBegan = function (touches, event) {
 			    if (cc.rectContainsPoint(blockRect, this.pBegan)) {
 					// richard remove sound
                     // cc.AudioEngine.getInstance().playEffect(PIANO_SIMPLE[1 + getRandom(6)], false);
+					cc.AudioEngine.getInstance().playEffect(MUSIC.bg, true);
                     if (j == 0 && i == 0) {
                         GAME_MODE = MODE_ZEN;
                     } else if (j == 0 && i == 1) {
