@@ -42,7 +42,7 @@ MainLayer.prototype.onEnter = function () {
     this.moveNum = 0;
 
     //piano music length
-    this.pianoListIndex = CITY_OF_SKY;
+    this.pianoListIndex = KISS_THE_RAIN;
     this.pianoLengthIndex = this.pianoListIndex.length;
 
     this.pianoLength = 5;   //init length 5
@@ -246,7 +246,7 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
                                 }
 
                                 //move down richard TODO comment sound
-                                // cc.AudioEngine.getInstance().playEffect(PIANO_SIMPLE[this.pianoListIndex[j - 1]], false);
+                                // cc.AudioEngine.getInstance().playEffect(PIANO_SIMPLE[this.pianoListIndex[j - 1]], false);								
                                 // block.setColor(cc.c3b(100, 100, 100)); /* gray touched */
 								// richard modify to a deep light blue after touched
                                 block.setColor(cc.c3b(100, 160, 208));
