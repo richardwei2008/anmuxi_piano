@@ -23,11 +23,13 @@ MODE_NOT = 3;
 
 GAME_MODE = 0;
 
+require("js/WechatShare.js");
 require("PlayAudio.js");
 require("StartLayer.js");
 require("MainLayer.js");
 require("CocosEditor.js");
 require("PianoMusics.js");
+
 
 if (sys.platform == 'browser') {
 

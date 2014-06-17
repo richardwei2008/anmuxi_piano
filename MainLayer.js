@@ -54,17 +54,23 @@ MainLayer.prototype.onEnter = function () {
 
 	  //score font
 	this.scoreBg = cc.Sprite.create("res/scoreBlock.png");
-	this.scoreBg.setScaleY(this.scaleX);
-	this.scoreBg.setScaleY(this.scaleY);    
-    this.scoreBg.setPosition(cc.p(360, winSize.height - this.scoreBg._contentSize.height * this.scaleY));
-    this.scoreBg.setAnchorPoint(cc.p(0.5, 0.5));
+	this.scoreBg.setScaleY(this.scaleX);	
+	this.scoreBg.setScaleY(this.scaleY);
+	// console.log("scaleY==" + this.scaleY);    
+	var positionY = winSize.height - 40 * this.scaleY;
+    this.scoreBg.setPosition(cc.p(360, positionY));
+    // console.log("winSizeHeight==" + winSize.height); 
+	// console.log("scoreBgHeight==" + this.scoreBg._contentSize.height); 
+	// console.log("positionY==" + positionY);    
+	this.scoreBg.setAnchorPoint(cc.p(0.5, 0.5));
 	this.rootNode.addChild(this.scoreBg);
     // this.scoreBg.setColor(cc.c3b(0, 92, 165));
     this.scoreBg.setZOrder(199);
     this.scoreLabel = cc.LabelTTF.create("0.00", "Arial", 50);
 	this.scoreLabel.setString("总时间30.00''    块数: " + this.totalTap);
     this.rootNode.addChild(this.scoreLabel);
-    this.scoreLabel.setPosition(cc.p(360, winSize.height - this.scoreLabel._contentSize.height * this.scaleY));
+    this.scoreLabel.setPosition(cc.p(360, positionY - 10));
+	
     this.scoreLabel.setAnchorPoint(cc.p(0.5, 0.5));
     // this.scoreLabel.setColor(cc.c3b(255, 20, 147));
 	// richard modify change score color
@@ -149,10 +155,12 @@ MainLayer.prototype.createTopOverNode = function () {
     this.blockNode.addChild(this.scoreNode);
 
     //color bg
-    var bgColor = cc.Sprite.create("res/whiteBlock.png");
+    var bgColor = cc.Sprite.create("image/scorebg.jpg");
     bgColor.setPosition(cc.p(0, 0));
-    bgColor.setScaleX(720 / 300);
-    bgColor.setScaleY(1280 / 500);
+	// bgColor.setScaleX(720 / 300);
+    // bgColor.setScaleY(1280 / 500);
+    bgColor.setScaleX(680 / 300 / 2);
+    bgColor.setScaleY(1136 / 500 / 2);
     bgColor.setAnchorPoint(cc.p(0, 0));
     // bgColor.setColor(cc.c3b(0, 255, 0));
 	// richard modify the footer color to light blue
@@ -162,7 +170,7 @@ MainLayer.prototype.createTopOverNode = function () {
 
     //mode
     var wordsMode = ["经典", "街机", "禅"];
-    var modeLabel = cc.LabelTTF.create(wordsMode[GAME_MODE] + "模式", "Arial", 70);
+    var modeLabel = cc.LabelTTF.create(wordsMode[GAME_MODE] + "模式", "Arial", 130);
     this.scoreNode.addChild(modeLabel);
     modeLabel.setPosition(cc.p(350, 1000));
     // modeLabel.setColor(cc.c3b(0, 0, 0));
@@ -179,23 +187,40 @@ MainLayer.prototype.createTopOverNode = function () {
     this.scoreNode.result = resultLabel;
 	
 	//score
-    var resultLabel2 = cc.LabelTTF.create("分数", "Arial", 90);
+    var resultLabel2 = cc.LabelTTF.create("分数", "Arial", 150);
     this.scoreNode.addChild(resultLabel2);
     resultLabel2.setPosition(cc.p(360, 600));
     resultLabel2.setAnchorPoint(cc.p(0.5, 0.5));
-    resultLabel2.setColor(cc.c3b(139, 58, 58));
+    resultLabel2.setColor(cc.c3b(0, 92, 165));
     this.scoreNode.result2 = resultLabel2;
 
     //back
-    // var backLabel = cc.LabelTTF.create("确认", "Arial", 50);
-    // this.scoreNode.addChild(backLabel);
-    // backLabel.setPosition(cc.p(200, 400));
-    // backLabel.setAnchorPoint(cc.p(0.5, 0.5));
-    // // backLabel.setColor(cc.c3b(0, 0, 0));
-	// // richard modify the mode label to dark blue
-    // backLabel.setColor(cc.c3b(0, 92, 165));
-    // this.scoreNode.back = backLabel;
-    // 
+    var backLabel = cc.LabelTTF.create("重来", "Arial", 40);
+    this.scoreNode.addChild(backLabel);
+    backLabel.setPosition(cc.p(180, 260));
+    backLabel.setAnchorPoint(cc.p(0.5, 0.5));
+    // backLabel.setColor(cc.c3b(0, 0, 0));
+	// richard modify the mode label to dark blue
+    backLabel.setColor(cc.c3b(178, 206, 228));
+    this.scoreNode.back = backLabel;
+	
+	//share
+    // var shareLabel = cc.LabelTTF.create("炫耀", "Arial", 40);
+    // this.scoreNode.addChild(shareLabel);
+    // shareLabel.setPosition(cc.p(180, 260));
+    // shareLabel.setAnchorPoint(cc.p(0.5, 0.5));    
+    // shareLabel.setColor(cc.c3b(178, 206, 228));
+    // this.scoreNode.share = shareLabel;
+	
+	//rank
+    var rankLabel = cc.LabelTTF.create("排名", "Arial", 40);
+    this.scoreNode.addChild(rankLabel);
+    rankLabel.setPosition(cc.p(540, 260));
+    rankLabel.setAnchorPoint(cc.p(0.5, 0.5));    
+    rankLabel.setColor(cc.c3b(178, 206, 228));
+    this.scoreNode.rank = rankLabel;
+    
+	
     // //return
     // var returnLabel = cc.LabelTTF.create("重来", "Arial", 50);
     // this.scoreNode.addChild(returnLabel);
@@ -212,7 +237,7 @@ MainLayer.prototype.onUpdate = function (dt) {
     if (this.gameStatus == OVER) {
         return;
     }
-	if (this.currentTime <= 0) {
+	if (this.currentTime <= 0) {	
 		this.currentTime = 0;
 		this.scoreLabel.setString("时间到！" + "      块数: " + this.totalTap);
 		this.gameStatus = OVER;
@@ -221,8 +246,12 @@ MainLayer.prototype.onUpdate = function (dt) {
 		PauseAudio();        
         this.scoreNode.bgColor.setColor(cc.c3b(178, 206, 228)); 
         this.scoreNode.result.setString("挑战成功");		
-		this.scoreNode.result2.setString("块数: " + this.totalTap);
+		this.scoreNode.result2.setString(this.totalTap);
         this.scoreNode.runAction(cc.MoveTo.create(0.2, cc.p(0, this.blockHeight * this.moveNum)));		
+
+		// var wxTitle = "安慕希浓醇酸奶—不睬白格，我已经踩到" + highscore + "格子啦！在" + rank[0] + "个人里已经排名第" + rank[1] + "！速度来挑战我！";
+		var wxTitle = "安慕希不睬白格赢红包，我已经踩到" + this.totalTap + "个格子啦！速度来挑战我！";
+		setWxContent(wxTitle);
 		return;
 	}
     // this.currentTime += dt;
@@ -329,12 +358,51 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
 							// richard modify
                             this.scoreNode.bgColor.setColor(cc.c3b(178, 206, 228)); 
                             this.scoreNode.result.setString("失败了");
-							this.scoreNode.result2.setString("块数: " + this.totalTap);
+							this.scoreNode.result2.setString(this.totalTap);
                             this.scoreNode.runAction(cc.MoveTo.create(0.2, cc.p(0, this.blockHeight * this.moveNum)));
                         }
                     }
                 }
             }
+        }
+    }
+	else if (this.gameStatus == OVER) {  //game over
+        //back
+        var backRect = cc.rectCreate(this.scoreNode.back.getPosition(), [50, 30]);
+        if (cc.rectContainsPoint(backRect, this.pBegan)) {
+            this.scoreNode.back.runAction(cc.Sequence.create(cc.ScaleTo.create(0.1, 1.1),
+                cc.CallFunc.create(function () {
+                    cc.AudioEngine.getInstance().stopAllEffects();
+                    cc.BuilderReader.runScene("", "MainLayer");
+                })
+            ));
+        }
+		
+		//share
+		// var shareRect = cc.rectCreate(this.scoreNode.share.getPosition(), [50, 30]);
+		// if (cc.rectContainsPoint(shareRect, this.pBegan)) {
+		// 	this.scoreNode.share.runAction(cc.Sequence.create(cc.ScaleTo.create(0.1, 1.1),
+		// 			cc.CallFunc.create(function () {
+		// 				cc.AudioEngine.getInstance().stopAllEffects();
+		// 				// cc.BuilderReader.runScene("", "MainLayer");
+		// 				var title = "安慕希别踩白格赢红包";
+		// 				var link = "http://www.36kr.com";
+		// 				var desc = "我在安慕希浓醇酸奶-别踩白块-微信红包的游戏中获得" + this.totalTap + "的成绩";
+		// 				var imgUrl = "http://192.168.1.9/image/icon.jpg";
+		// 				ShareToWeibo(imgUrl, link, title, desc);
+		// 			})
+		// 		)
+		// 	);
+		// }
+        //rank
+        var rankRect = cc.rectCreate(this.scoreNode.rank.getPosition(), [50, 30]);
+        if (cc.rectContainsPoint(rankRect, this.pBegan)) {
+            this.scoreNode.rank.runAction(cc.Sequence.create(cc.ScaleTo.create(0.1, 1.1),
+                cc.CallFunc.create(function () {
+                    cc.AudioEngine.getInstance().stopAllEffects();
+                    cc.BuilderReader.runScene("", "MainLayer");
+                })
+            ));
         }
     }
 };
