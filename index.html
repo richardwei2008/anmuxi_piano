@@ -26,7 +26,7 @@
 			var url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc63c757bdae5dd41&redirect_uri=http%3A%2F%2Fbeyondwechattest.sinaapp.com%2Fgame.html&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
 			if (!isWeiXin()) {
 				alert("您所使用的不是微信浏览器，游戏成绩将无法参加赢红包活动");
-				url = window.location.origin + "/game.html";
+				url = window.location.href.substring(0, window.location.href.lastIndexOf('/')) + "/game.html";
 			}
 			enterButton.onclick = function () {
 				window.location.href = url;

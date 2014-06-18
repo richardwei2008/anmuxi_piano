@@ -20,9 +20,6 @@ StartLayer.prototype.onDidLoadFromCCB = function () {
 
     this.rootNode.setTouchEnabled(true);
 };
-
-//StartLayer和MainLayer代码有重复相似之处 本应该整合到一块 不过考虑下还是分开 这样更清晰点 更好理解 也易于维护
-
 /* start 单模式 */
 
 StartLayer.prototype.onEnter = function () {
