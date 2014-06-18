@@ -6,8 +6,31 @@
 		document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
 		document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
 	}
+	
 	function onBridgeReady() {
-		 window.shareData = {
+		// subscribe  用户是否订阅该公众号标识，值为0时，代表此用户没有关注该公众号，拉取不到其余信息。  
+		// openid  用户的标识，对当前公众号唯一  
+		// nickname  用户的昵称  
+		// sex  用户的性别，值为1时是男性，值为2时是女性，值为0时是未知  
+		// city  用户所在城市  
+		// country  用户所在国家  
+		// province  用户所在省份  
+		// language  用户的语言，简体中文为zh_CN  
+		// headimgurl  用户头像，最后一个数值代表正方形头像大小（有0、46、64、96、132数值可选，0代表640*640正方形头像），用户没有头像时该项为空  
+		// subscribe_time  用户关注时间，为时间戳。如果用户曾多次关注，则取最后关注时间
+		window.user = {
+			"subscribe": 0,
+			"openId": null,
+			"nickname": null,
+			"sex": null,
+			"city": null,
+			"country": null,
+			"province": null,
+			"language": null,
+			"headimgurl": null,
+			"subscribe_time": null
+		};
+		window.shareData = {
 			"imgUrl": "http://192.168.1.9/image/icon.jpg",
 			//可以是页面的头像，也可以是自己定义的一张图片不变，每个页面可以有这个JS
 			"timeLineLink": "http://192.168.1.9",
@@ -120,4 +143,13 @@
 	};
 })();
 
+function isWeiXin() {
+		var ua = window.navigator.userAgent.toLowerCase();
+		if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+			return true;
+		} else {
+			return false;
+		}
+	};
+	
 

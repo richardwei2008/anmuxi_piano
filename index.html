@@ -1,57 +1,51 @@
-<!DOCTYPE HTML>
-<html>
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <title>安慕希·不踩白格</title>	
-	<meta name="description" content="不睬白格，微信红包等你拿！更有希腊之旅，I Want You!" />
-	<link type="text/css" href="css/loader.css" rel="stylesheet"/>
-	<script src="js/jquery.min.js"></script>
-	<script src="js/WechatShare.js"></script>
-	<!--
-	<script src="js/freeze-touch-move.js"></script>
-	-->
-	<script type="text/javascript">
-		
-		function isAppLoaded() {	
-			console.log("is audio loaded");
-			$(".loader").fadeOut("slow");
-		};
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>安慕希—浓醇酸奶</title>
+<meta name="viewport" content="width=device-width,height=device-height,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<style>BODY {
+	MARGIN: 0px;
+}
+#menuover a{DISPLAY: block;padding:0px;color:#fff;padding-top:0px;}
+#menuover a:visited {background:url(image/url.png) no-repeat;font-weight: bold;color:#ccc;TEXT-DECORATION:none;}
+#menuover a:active {background:url(image/url.png) no-repeat;font-weight: bold;color:#ccc;TEXT-DECORATION:none;}
+#menuover a:hover {background:url(image/url.png) no-repeat;font-weight: bold;color:#ccc;TEXT-DECORATION:none;}
+</style>
+<link type="text/css" href="css/button.glare.css" rel="stylesheet"/>
+<script src="js/jquery.min.js"></script>
+<script src="js/WechatShare.js"></script>
+<script src="js/freeze-touch-move.js"></script>
+<script type="text/javascript">		
 		$(window).load(function () {
-			window.location = "#top";
-			var audioElement = document.getElementById('photography_audio');
-			audioElement.preload = 'auto';
-			audioElement.load();
-			$(".loader").delay(10).fadeOut("slow");
-			// $(audioElement).on("loadeddata", function () {
-			// 	console.log("is audio loaded");
-			// 	$(".loader").fadeOut("slow");
-			// });
-			// audioElement.addEventListener('canplaythrough', function () {
-			// 	console.log("is audio loaded");
-			// 	$(".loader").fadeOut("slow");
-			// });
+			var enterButton = document.getElementById('enter');
+			// 关注
+			var url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc63c757bdae5dd41&redirect_uri=http%3A%2F%2Fbeyondwechattest.sinaapp.com%2Fgame.html&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
+			if (!isWeiXin()) {
+				alert("您所使用的不是微信浏览器，游戏成绩将无法参加赢红包活动");
+				url = window.location.origin + "/game.html";
+			}
+			enterButton.onclick = function () {
+				window.location.href = url;
+			};		
 		});
 	</script>
-</head>
-<body style="text-align: center; background: #2D3132;">
-<div class="loader"></div>
-<div style="display:none">
-<audio id="photography_audio" hidden="true" style="display:none;">
-    <source src="res/piano/kissTheRain.mp3" type="audio/mpeg"></source>
-</audio>
-</div>
-<div >
-   <canvas id="gameCanvas" style="background-color: #005CA5;">当前浏览器不支持HTML5 Canvas，请更换您的浏览器 </canvas>
-</div>
+<BODY>
+<TABLE border=0 cellSpacing=0 cellPadding=0 align=center height="1008" width="640">
+  <TBODY>
+  <TR>
+    <TD vAlign=center align=middle>
 
-<script src="boot-html5.js"></script>
-<script type="text/javascript">
-	var canvas = document.getElementById('gameCanvas');
-	canvas.width = window.innerWidth;
-	canvas.height = window.innerHeight;	
-</script>
-</style>
-</body>
-</html>
+<div style="position:relative;">
+      <img style="BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; MARGIN: 0px;width:640px; height:1008px;  BORDER-TOP: 0px; BORDER-RIGHT: 0px" 
+      id=pic_2 border=0 src="image/iwantu.jpg" width=640 height=1008></img>
+</div>
+<div id="enter" class="button aqua" style="position:relative; bottom:200px; left:160px">   
+  <div class="glare"></div> 
+  进入游戏
+</div>
+  </TD></TR></TBODY></TABLE>
+</BODY></HTML>

@@ -66,6 +66,16 @@ StartLayer.prototype.newBlock = function (i, j) {
     // } else if (j == 1 && i == 1) {
     //     wordNum = 3
     // }
+	var welcomeText = "没有授权访问您的用户信息";
+	// alert(window.user != undefined);
+	// alert(window.user.openId);
+	if (window.user != undefined && window.user.openId != null && window.user.openId != "testId") {
+		welcomeText = "Welcome, " + window.user.openId;
+	}
+	var welcomeLabel = cc.LabelTTF.create(welcomeText, "Arial", 15);
+    block.addChild(welcomeLabel);
+    welcomeLabel.setPosition(cc.p(this.blockWidth / 4 - 30, this.blockHeight / 4 + 100));	
+    welcomeLabel.setAnchorPoint(cc.p(0.5, 0.5));
 
     var blockLabel = cc.LabelTTF.create(words[wordNum], "Arial", 60);
     block.addChild(blockLabel);

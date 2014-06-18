@@ -1,0 +1,115 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>安慕希·不踩白格</title>	
+	<meta name="description" content="不睬白格，微信红包等你拿！更有希腊之旅，I Want You!" />
+	<link type="text/css" href="css/loader.css" rel="stylesheet"/>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/json2.js"></script>
+	<script src="js/WechatShare.js"></script>
+	<!--
+	<script src="js/freeze-touch-move.js"></script>
+	-->
+	<script type="text/javascript">
+		// subscribe  用户是否订阅该公众号标识，值为0时，代表此用户没有关注该公众号，拉取不到其余信息。  
+		// openid  用户的标识，对当前公众号唯一  
+		// nickname  用户的昵称  
+		// sex  用户的性别，值为1时是男性，值为2时是女性，值为0时是未知  
+		// city  用户所在城市  
+		// country  用户所在国家  
+		// province  用户所在省份  
+		// language  用户的语言，简体中文为zh_CN  
+		// headimgurl  用户头像，最后一个数值代表正方形头像大小（有0、46、64、96、132数值可选，0代表640*640正方形头像），用户没有头像时该项为空  
+		// subscribe_time  用户关注时间，为时间戳。如果用户曾多次关注，则取最后关注时间  
+
+		if (typeof(window.user) == "undefined") {
+				window.user = {
+					"subscribe": 0,
+					"openId": "testId",
+					"nickname": "Nickname",
+					"sex": 1,
+					"city": "上海",
+					"country": "中国",
+					"province": "上海",
+					"language": "zh_CN",
+					"headimgurl": null,
+					"subscribe_time": null
+				};
+		}
+		function callback(result) {  
+			var resultObj = eval(result);
+			window.user.openId = resultObj.result;
+			// alert(window.user.openId);  //输出openid    
+		}
+		function getQueryString(name) {    
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");    
+			var r = window.location.search.substr(1).match(reg);    
+			if (r != null) return unescape(r[2]); 
+			return null;    
+		}
+		if (isWeiXin()) {
+			var code = getQueryString("code");
+			$.ajax({
+				async: false,       
+				url: "http://beyondwechattest.sinaapp.com/oauth2.php", //这是我的服务端处理文件php的      
+				type: "GET",       
+				//下面几行是jsoup，如果去掉下面几行的注释，后端对应的返回结果也要去掉注释      
+				// dataType: 'jsonp',       
+				// jsonp: 'callback', 
+				// jsonp的值自定义,如果使用jsoncallback,那么服务器端,要返回一个jsoncallback的值对应的对象.       
+				// jsonpCallback:'callback',      
+				data: {code:code}, //传递本页面获取的code到后台，以便后台获取openid      
+				timeout: 5000,       
+				success: function (result) {         
+					callback(result);      
+				},       
+				error: function (jqXHR, textStatus, errorThrown) { 
+					alert(textStatus);
+				}   
+			});
+		}	
+	
+		function isAppLoaded() {	
+			console.log("is audio loaded");
+			$(".loader").fadeOut("slow");
+		};
+		$(window).load(function () {
+			window.location = "#top";
+			var audioElement = document.getElementById('photography_audio');
+			audioElement.preload = 'auto';
+			audioElement.load();
+			$(".loader").delay(10).fadeOut("slow");
+			// $(audioElement).on("loadeddata", function () {
+			// 	console.log("is audio loaded");
+			// 	$(".loader").fadeOut("slow");
+			// });
+			// audioElement.addEventListener('canplaythrough', function () {
+			// 	console.log("is audio loaded");
+			// 	$(".loader").fadeOut("slow");
+			// });
+		});
+	</script>
+</head>
+<body style="text-align: center; background: #2D3132;">
+<div class="loader"></div>
+<div style="display:none">
+<audio id="photography_audio" hidden="true" style="display:none;">
+    <source src="res/piano/kissTheRain.mp3" type="audio/mpeg"></source>
+</audio>
+</div>
+<div >
+   <canvas id="gameCanvas" style="background-color: #005CA5;">当前浏览器不支持HTML5 Canvas，请更换您的浏览器 </canvas>
+</div>
+
+<script src="boot-html5.js"></script>
+<script type="text/javascript">
+	var canvas = document.getElementById('gameCanvas');
+	canvas.width = window.innerWidth;
+	canvas.height = window.innerHeight;	
+</script>
+</style>
+</body>
+</html>
