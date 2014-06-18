@@ -57,7 +57,7 @@ class UserDB extends mysqli {
 	public function get_users() {        
         return $this->query("SELECT id, openId, nickname FROM user_info LIMIT 6");        
     }
-    
+	 
     public function create_user($name, $password) {
         $name = $this->real_escape_string($name);
         $password = $this->real_escape_string($password);
