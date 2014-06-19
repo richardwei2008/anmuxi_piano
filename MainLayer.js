@@ -41,7 +41,7 @@ MainLayer.prototype.onEnter = function () {
     var winSize = cc.Director.getInstance().getWinSize();
     this.blockWidth = winSize.width / 4;
     this.blockHeight = winSize.height / 4;
-    this.scaleX = (this.blockWidth - 2) / 300;
+    this.scaleX = (this.blockWidth - 2) / 320;
     this.scaleY = (this.blockHeight - 2) / 500;
     this.moveNum = 0;
 
@@ -156,11 +156,11 @@ MainLayer.prototype.createTopOverNode = function () {
 
     //color bg
     var bgColor = cc.Sprite.create("image/scorebg.jpg");
-    bgColor.setPosition(cc.p(0, 0));
+    bgColor.setPosition(cc.p(0, 0)); // +32
 	// bgColor.setScaleX(720 / 300);
     // bgColor.setScaleY(1280 / 500);
-    bgColor.setScaleX(680 / 300 / 2);
-    bgColor.setScaleY(1136 / 500 / 2);
+    bgColor.setScaleX(640 / 320 / 2);
+    bgColor.setScaleY(960 / 500 / 2);
     bgColor.setAnchorPoint(cc.p(0, 0));
     // bgColor.setColor(cc.c3b(0, 255, 0));
 	// richard modify the footer color to light blue

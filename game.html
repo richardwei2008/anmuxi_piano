@@ -2,17 +2,17 @@
 <html>
 <head>
     <meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="viewport" content="width=device-width,height=auto,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;target-densitydpi=Medium-dpi">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="format-detection" content="telephone=no">
     <title>安慕希·不踩白格</title>	
 	<meta name="description" content="不睬白格，微信红包等你拿！更有希腊之旅，I Want You!" />
+	<link type="text/css" href="css/style.css" rel="stylesheet"/>
 	<link type="text/css" href="css/loader.css" rel="stylesheet"/>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/json2.js"></script>
 	<script src="js/WechatShare.js"></script>
-	<!--
-	<script src="js/freeze-touch-move.js"></script>
-	-->
 	<script type="text/javascript">
 		// subscribe  用户是否订阅该公众号标识，值为0时，代表此用户没有关注该公众号，拉取不到其余信息。  
 		// openid  用户的标识，对当前公众号唯一  
@@ -70,15 +70,14 @@
 					alert(textStatus);
 				}   
 			});
-		}	
-	
+		}
 		function isAppLoaded() {	
 			console.log("is audio loaded");
 			$(".loader").fadeOut("slow");
 		};
 		$(window).load(function () {
 			window.location = "#top";
-			var audioElement = document.getElementById('photography_audio');
+			var audioElement = $("#photography_audio");
 			audioElement.preload = 'auto';
 			audioElement.load();
 			$(".loader").delay(10).fadeOut("slow");
@@ -91,25 +90,33 @@
 			// 	$(".loader").fadeOut("slow");
 			// });
 		});
+		$(document).ready(function(){
+			var canvas = $("#gameCanvas");
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;	
+			console.log("canvas.width=="+canvas.width);
+			console.log("canvas.height=="+canvas.height);
+		});
 	</script>
+	<script src="boot-html5.js"></script>
 </head>
-<body style="text-align: center; background: #2D3132;">
-<div class="loader"></div>
-<div style="display:none">
-<audio id="photography_audio" hidden="true" style="display:none;">
-    <source src="res/piano/kissTheRain.mp3" type="audio/mpeg"></source>
-</audio>
-</div>
-<div >
-   <canvas id="gameCanvas" style="background-color: #005CA5;">当前浏览器不支持HTML5 Canvas，请更换您的浏览器 </canvas>
-</div>
 
-<script src="boot-html5.js"></script>
-<script type="text/javascript">
-	var canvas = document.getElementById('gameCanvas');
-	canvas.width = window.innerWidth;
-	canvas.height = window.innerHeight;	
-</script>
-</style>
-</body>
+<table border="0" cellspacing="0" cellpadding="0" align="center" height="1014" width="640">
+	<TR>
+		<TD vAlign=center align=middle>
+			<div style="width:640px;height:1014px;">
+				<div style="display:none">
+				<audio id="photography_audio" hidden="true" style="display:none;">
+					<source src="res/piano/kissTheRain.mp3" type="audio/mpeg"></source>
+				</audio>
+				</div>
+				<!--
+				<img style="border: 0px; margin: 0px; width: 640px; height: 1014px;" id="pic_2" border="0" src="image/iwantu.jpg" >	
+				-->
+				<canvas style="border: 0px; margin: 0px; width: 640px; height: 1014px;"  id="gameCanvas">当前浏览器不支持HTML5 Canvas，请更换您的浏览器 </canvas>
+			</div>
+		</TD>
+	</TR>
+</TABLE>
+
 </html>

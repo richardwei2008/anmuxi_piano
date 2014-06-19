@@ -31,7 +31,7 @@ StartLayer.prototype.onEnter = function () {
 	this.blockWidth = winSize.width;
     this.blockHeight = winSize.height;
     console.log("[blockWidth , blockHeight]: [" + this.blockWidth + ", " + this.blockHeight + "] ");
-	this.scaleX = this.blockWidth / 300;
+	this.scaleX = this.blockWidth / 320;
     this.scaleY = this.blockHeight / 500;
 	console.log("[scaleX , scaleY]: [" + this.scaleX + ", " + this.scaleY + "] ");
 	// only 1 block
@@ -47,7 +47,7 @@ StartLayer.prototype.onEnter = function () {
 
 StartLayer.prototype.newBlock = function (i, j) {
     var block = cc.Sprite.create("res/whiteBlock.png");
-    block.setPosition(cc.p(this.blockWidth / 2, this.blockHeight / 2));
+    block.setPosition(cc.p(this.blockWidth / 2, this.blockHeight / 2)); // 
     block.setScaleX(this.scaleX);
     block.setScaleY(this.scaleY);
     block.setZOrder(100);
@@ -71,17 +71,18 @@ StartLayer.prototype.newBlock = function (i, j) {
 	}
 	var welcomeLabel = cc.LabelTTF.create(welcomeText, "Arial", 15);
     block.addChild(welcomeLabel);
-    welcomeLabel.setPosition(cc.p(this.blockWidth / 4 - 30, this.blockHeight / 4 + 100));	
+    welcomeLabel.setPosition(cc.p(this.blockWidth / 4, this.blockHeight / 4 + 100));	
     welcomeLabel.setAnchorPoint(cc.p(0.5, 0.5));
 
     var blockLabel = cc.LabelTTF.create(words[wordNum], "Arial", 60);
     block.addChild(blockLabel);
-    blockLabel.setPosition(cc.p(this.blockWidth / 4 - 30, this.blockHeight / 4));	
+    blockLabel.setPosition(cc.p(this.blockWidth / 4, this.blockHeight / 4));	
     blockLabel.setAnchorPoint(cc.p(0.5, 0.5));
 	var clickLabel = cc.LabelTTF.create('点击进入', "Arial", 40);
 	block.addChild(clickLabel);
-    clickLabel.setPosition(cc.p(this.blockWidth / 4 - 30, this.blockHeight / 4 - 120 ));	
+    clickLabel.setPosition(cc.p(this.blockWidth / 4, this.blockHeight / 4 - 120 ));	
     clickLabel.setAnchorPoint(cc.p(0.5, 0.5));
+	this.startNode.enter = clickLabel;
     // var colors = [cc.c3b(0, 0, 0) /*black*/, cc.c3b(255, 255, 255) /*white*/];
 	// richard modify the color for anmuxi RGB(0, 92, 165)	
 	var colors = [cc.c3b(0, 92, 165) /*dark blue*/, cc.c3b(255, 255, 255) /*white*/];	
@@ -109,8 +110,10 @@ StartLayer.prototype.onTouchesBegan = function (touches, event) {
         for (var i = 0; i < 1; i++) {
             var block = this.tables[j][i];
             if (block) {
-                var blockRect = cc.rectCreate(block.getPosition(), [this.blockWidth / 2, this.blockHeight / 2]);
-			    if (cc.rectContainsPoint(blockRect, this.pBegan)) {
+				// richard change the touch area to the label 
+                var touchRect = cc.rectCreate(block.getPosition(), [this.blockWidth / 2, this.blockHeight / 2]);
+				// touchRect = cc.rectCreate(this.startNode.enter.getPosition(), [100, 60]);
+			    if (cc.rectContainsPoint(touchRect, this.pBegan)) {
 					// richard remove sound
                     // cc.AudioEngine.getInstance().playEffect(PIANO_SIMPLE[1 + getRandom(6)], false);
 					// cc.AudioEngine.getInstance().playEffect(MUSIC.bg, true);
