@@ -29,7 +29,7 @@ StartLayer.prototype.onEnter = function () {
     // this.scaleX = this.blockWidth / 300;
     // this.scaleY = this.blockHeight / 500;
 	this.blockWidth = winSize.width;
-    this.blockHeight = winSize.height;
+    this.blockHeight = 1014; // winSize.height;
     console.log("[blockWidth , blockHeight]: [" + this.blockWidth + ", " + this.blockHeight + "] ");
 	this.scaleX = this.blockWidth / 320;
     this.scaleY = this.blockHeight / 500;

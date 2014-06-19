@@ -112,7 +112,7 @@ MainLayer.prototype.newBlock = function (i, j, colorType) {
 				// add start label to the block
 				var startLabel = cc.LabelTTF.create("Start", "Arial", 90);
 				block.addChild(startLabel);
-				startLabel.setPosition(cc.p(this.blockWidth / 2 + 60, this.blockHeight / 2 + 60));	
+				startLabel.setPosition(cc.p(this.blockWidth, this.blockHeight));	
 				startLabel.setAnchorPoint(cc.p(0.5, 0.5));
 				startLabel.setColor(cc.c3b(255, 255, 255));
 				startLabel.setZOrder(1);
@@ -123,13 +123,13 @@ MainLayer.prototype.newBlock = function (i, j, colorType) {
 				award = 1;		
 				var pointLabel = cc.LabelTTF.create("奖" + award + "块", "Arial", 50);				
 				block.addChild(pointLabel);
-				pointLabel.setPosition(cc.p(this.blockWidth + 40, this.blockHeight + 120));	
+				pointLabel.setPosition(cc.p(this.blockWidth / 2 * 3, this.blockHeight * 2 - 60));	
 				pointLabel.setAnchorPoint(cc.p(0.5, 0.5));
 				pointLabel.setColor(cc.c3b(255, 255, 255));
 				pointLabel.setZOrder(2);
 				var pointIcon = cc.Sprite.create("res/yogurt.png");
 				block.addChild(pointIcon);
-				pointIcon.setPosition(cc.p(this.blockWidth / 2 + 60, this.blockHeight / 2 + 60));		
+				pointIcon.setPosition(cc.p(this.blockWidth, this.blockHeight));		
 				pointIcon.setAnchorPoint(cc.p(0.5, 0.5));
 				pointIcon.setColor(cc.c3b(255, 255, 255));
 				pointIcon.setZOrder(1);				
@@ -172,7 +172,7 @@ MainLayer.prototype.createTopOverNode = function () {
     var wordsMode = ["经典", "街机", "禅"];
     var modeLabel = cc.LabelTTF.create(wordsMode[GAME_MODE] + "模式", "Arial", 130);
     this.scoreNode.addChild(modeLabel);
-    modeLabel.setPosition(cc.p(350, 1000));
+    modeLabel.setPosition(cc.p(320, 1000));
     // modeLabel.setColor(cc.c3b(0, 0, 0));
 	// richard modify the mode label to dark blue
     modeLabel.setColor(cc.c3b(0, 92, 165));
@@ -181,7 +181,7 @@ MainLayer.prototype.createTopOverNode = function () {
     //result
     var resultLabel = cc.LabelTTF.create("成功", "Arial", 110);
     this.scoreNode.addChild(resultLabel);
-    resultLabel.setPosition(cc.p(360, 750));
+    resultLabel.setPosition(cc.p(320, 750));
     resultLabel.setAnchorPoint(cc.p(0.5, 0.5));
     resultLabel.setColor(cc.c3b(139, 58, 58));
     this.scoreNode.result = resultLabel;
@@ -189,7 +189,7 @@ MainLayer.prototype.createTopOverNode = function () {
 	//score
     var resultLabel2 = cc.LabelTTF.create("分数", "Arial", 150);
     this.scoreNode.addChild(resultLabel2);
-    resultLabel2.setPosition(cc.p(360, 600));
+    resultLabel2.setPosition(cc.p(320, 600));
     resultLabel2.setAnchorPoint(cc.p(0.5, 0.5));
     resultLabel2.setColor(cc.c3b(0, 92, 165));
     this.scoreNode.result2 = resultLabel2;
@@ -197,7 +197,7 @@ MainLayer.prototype.createTopOverNode = function () {
     //back
     var backLabel = cc.LabelTTF.create("重来", "Arial", 40);
     this.scoreNode.addChild(backLabel);
-    backLabel.setPosition(cc.p(180, 260));
+    backLabel.setPosition(cc.p(160, 260));
     backLabel.setAnchorPoint(cc.p(0.5, 0.5));
     // backLabel.setColor(cc.c3b(0, 0, 0));
 	// richard modify the mode label to dark blue
@@ -215,7 +215,7 @@ MainLayer.prototype.createTopOverNode = function () {
 	//rank
     var rankLabel = cc.LabelTTF.create("排名", "Arial", 40);
     this.scoreNode.addChild(rankLabel);
-    rankLabel.setPosition(cc.p(540, 260));
+    rankLabel.setPosition(cc.p(480, 260));
     rankLabel.setAnchorPoint(cc.p(0.5, 0.5));    
     rankLabel.setColor(cc.c3b(178, 206, 228));
     this.scoreNode.rank = rankLabel;
@@ -357,7 +357,7 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
                             // this.scoreNode.bgColor.setColor(cc.c3b(255, 0, 0)); 
 							// richard modify
                             this.scoreNode.bgColor.setColor(cc.c3b(178, 206, 228)); 
-                            this.scoreNode.result.setString("失败了");
+                            this.scoreNode.result.setString("失 败 了");
 							this.scoreNode.result2.setString(this.totalTap);
                             this.scoreNode.runAction(cc.MoveTo.create(0.2, cc.p(0, this.blockHeight * this.moveNum)));
                         }

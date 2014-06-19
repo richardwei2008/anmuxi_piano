@@ -67,7 +67,7 @@
 					callback(result);      
 				},       
 				error: function (jqXHR, textStatus, errorThrown) { 
-					alert(textStatus);
+					// alert(textStatus);
 				}   
 			});
 		}
@@ -94,29 +94,40 @@
 			var canvas = $("#gameCanvas");
 			canvas.width = window.innerWidth;
 			canvas.height = window.innerHeight;	
+			// var ctx = canvas.get(0).getContext("2d");
+			// ctx.fillStyle = "#0000FF";
+			// ctx.fillRect(0, 0, canvas.width, canvas.height); 
 			console.log("canvas.width=="+canvas.width);
 			console.log("canvas.height=="+canvas.height);
+			// alert("canvas.width=="+canvas.width);
+			// alert("canvas.height=="+canvas.height);
+			// alert("body.height=="+$("body").height());
 		});
 	</script>
 	<script src="boot-html5.js"></script>
 </head>
-
-<table border="0" cellspacing="0" cellpadding="0" align="center" height="1014" width="640">
+<body>
+<table border="0" cellspacing="0" cellpadding="0" align="center" height="960" width="640">
 	<TR>
 		<TD vAlign=center align=middle>
-			<div style="width:640px;height:1014px;">
+			<div style="width:640px;height:960px;">
 				<div style="display:none">
 				<audio id="photography_audio" hidden="true" style="display:none;">
 					<source src="res/piano/kissTheRain.mp3" type="audio/mpeg"></source>
 				</audio>
 				</div>
 				<!--
-				<img style="border: 0px; margin: 0px; width: 640px; height: 1014px;" id="pic_2" border="0" src="image/iwantu.jpg" >	
+				<img style="border: 0px; margin: 0px; width: 640px; height: 960px;" id="pic_2" border="0" src="image/iwantu.jpg" >	
 				-->
-				<canvas style="border: 0px; margin: 0px; width: 640px; height: 1014px;"  id="gameCanvas">当前浏览器不支持HTML5 Canvas，请更换您的浏览器 </canvas>
+				<canvas style="border: 0px; margin: 0px; width: 640px; height: 960px;"  id="gameCanvas">当前浏览器不支持HTML5 Canvas，请更换您的浏览器 </canvas>
 			</div>
 		</TD>
 	</TR>
 </TABLE>
-
+<script>
+var canvas = $("#gameCanvas");
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;	
+</script>
+<body>
 </html>

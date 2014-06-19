@@ -11,10 +11,11 @@ body,html
     display:block;
     margin: 0px;
     padding: 0px;
-    background-color: #f00;/*#2D3132; */
+	height: 100%; 
+    background-color: #005CA5;/*#2D3132; */
 }
 #canvas {
-	background-color: #2D3132;
+	background-color: #005CA5;
 	position: relative;
     left: 0;
     right: 0;
