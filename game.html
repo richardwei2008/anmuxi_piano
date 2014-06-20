@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-	<meta name="viewport" content="width=device-width,height=auto,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;target-densitydpi=Medium-dpi">
+	<meta name="viewport" content="width=device-width,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;target-densitydpi=high-dpi">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	<meta name="format-detection" content="telephone=no">
@@ -24,7 +24,7 @@
 		// language  用户的语言，简体中文为zh_CN  
 		// headimgurl  用户头像，最后一个数值代表正方形头像大小（有0、46、64、96、132数值可选，0代表640*640正方形头像），用户没有头像时该项为空  
 		// subscribe_time  用户关注时间，为时间戳。如果用户曾多次关注，则取最后关注时间  
-
+		var DEBUG = true
 		if (typeof(window.user) == "undefined") {
 				window.user = {
 					"subscribe": 0,
@@ -50,7 +50,7 @@
 			if (r != null) return unescape(r[2]); 
 			return null;    
 		}
-		if (isWeiXin()) {
+		if (isWeiXin() && !DEBUG) {
 			var code = getQueryString("code");
 			$.ajax({
 				async: false,       
@@ -94,32 +94,32 @@
 			var canvas = $("#gameCanvas");
 			canvas.width = window.innerWidth;
 			canvas.height = window.innerHeight;	
-			// var ctx = canvas.get(0).getContext("2d");
-			// ctx.fillStyle = "#0000FF";
-			// ctx.fillRect(0, 0, canvas.width, canvas.height); 
+			var ctx = canvas.get(0).getContext("2d");
+			ctx.fillStyle = "#0000FF";
+			ctx.fillRect(0, 0, canvas.width, canvas.height); 
 			console.log("canvas.width=="+canvas.width);
 			console.log("canvas.height=="+canvas.height);
 			// alert("canvas.width=="+canvas.width);
 			// alert("canvas.height=="+canvas.height);
 			// alert("body.height=="+$("body").height());
+			alert("window==" + $(window).width() + 'x' + $(window).height());
+			alert("document==" + $(document).width() + 'x' + $(document).height());
+					
 		});
 	</script>
 	<script src="boot-html5.js"></script>
 </head>
 <body>
-<table border="0" cellspacing="0" cellpadding="0" align="center" height="960" width="640">
+<table border="0" cellspacing="0" cellpadding="0" align="center" height="100%" width="100%">
 	<TR>
 		<TD vAlign=center align=middle>
-			<div style="width:640px;height:960px;">
+			<div style="width:100%;">
 				<div style="display:none">
 				<audio id="photography_audio" hidden="true" style="display:none;">
 					<source src="res/piano/kissTheRain.mp3" type="audio/mpeg"></source>
 				</audio>
 				</div>
-				<!--
-				<img style="border: 0px; margin: 0px; width: 640px; height: 960px;" id="pic_2" border="0" src="image/iwantu.jpg" >	
-				-->
-				<canvas style="border: 0px; margin: 0px; width: 640px; height: 960px;"  id="gameCanvas">当前浏览器不支持HTML5 Canvas，请更换您的浏览器 </canvas>
+				<canvas id="gameCanvas">当前浏览器不支持HTML5 Canvas，请更换您的浏览器 </canvas>
 			</div>
 		</TD>
 	</TR>

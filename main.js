@@ -51,8 +51,8 @@ if (sys.platform == 'browser') {
             var glView = director.getOpenGLView();
 			var height = cc.Director.getInstance().getWinSize().height;
 			var width = cc.Director.getInstance().getWinSize().width;
-			var resolutionSizeWidth = 640; // default
-			var resolutionSizeHeight = 1014; // default 1014
+			var resolutionSizeWidth = width; // 640; // default
+			var resolutionSizeHeight = height; // 1014; // default 1014
 			// if (height <= resolutionSizeHeight && width <= resolutionSizeWidth) {
 			// 	resolutionSizeWidth = width;
 			// 	resolutionSizeHeight = height;
