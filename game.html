@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-	<meta name="viewport" content="width=device-width,inital-scale=1.0,maximum-scale=1.0,user-scalable=no;target-densitydpi=high-dpi">
+	<meta name="viewport" content="width=device-width,inital-scale=1.0,maximum-scale=1.0,user-scalable=no">
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	<meta name="format-detection" content="telephone=no">
@@ -11,9 +11,12 @@
 	<link type="text/css" href="css/style.css" rel="stylesheet"/>
 	<link type="text/css" href="css/loader.css" rel="stylesheet"/>
 	<script src="js/jquery.min.js"></script>
+	<script src="js/getDevicePixelRatio-min.js"></script>
 	<script src="js/json2.js"></script>
 	<script src="js/WechatShare.js"></script>
+	<script src="js/freeze-touch-move.js"></script>
 	<script type="text/javascript">
+		
 		// subscribe  用户是否订阅该公众号标识，值为0时，代表此用户没有关注该公众号，拉取不到其余信息。  
 		// openid  用户的标识，对当前公众号唯一  
 		// nickname  用户的昵称  
@@ -75,6 +78,8 @@
 			console.log("is audio loaded");
 			$(".loader").fadeOut("slow");
 		};
+		
+		
 		$(window).load(function () {
 			window.location = "#top";
 			var audioElement = $("#photography_audio");
@@ -102,10 +107,28 @@
 			// alert("canvas.width=="+canvas.width);
 			// alert("canvas.height=="+canvas.height);
 			// alert("body.height=="+$("body").height());
-			alert("window==" + $(window).width() + 'x' + $(window).height());
-			alert("document==" + $(document).width() + 'x' + $(document).height());
-					
+			// alert("window==" + $(window).width() + 'x' + $(window).height());
+			// alert("document==" + $(document).width() + 'x' + $(document).height());
+			// alert("container==" + $('#container').width() + 'x' + $(container).height());
+			if (typeof(window.resolution) == "undefined") {
+				window.resolution = {
+					"width": $(document).width(),
+					"height": $(document).height()
+				};
+			}
+			$(".loader").delay(10).fadeOut("slow");
+			
 		});
+		
+		$(function () {
+			if (navigator.userAgent.match(/iPhone/i) ) { // || navigator.userAgent.match(/iPad/i)
+				window.resolution.device = 'iPhone';
+			}
+		});		
+		setTimeout(function animate() {
+			$('#container').css({"padding-top":"0px"});
+			$('#container').css({"padding-bottom":"0px"});
+		}, 3000);
 	</script>
 	<script src="boot-html5.js"></script>
 </head>
@@ -113,7 +136,7 @@
 <table border="0" cellspacing="0" cellpadding="0" align="center" height="100%" width="100%">
 	<TR>
 		<TD vAlign=center align=middle>
-			<div style="width:100%;">
+			<div id="container" style="width:100%;height:100%;padding-top:0px;padding-bottom:0px">
 				<div style="display:none">
 				<audio id="photography_audio" hidden="true" style="display:none;">
 					<source src="res/piano/kissTheRain.mp3" type="audio/mpeg"></source>
@@ -124,10 +147,5 @@
 		</TD>
 	</TR>
 </TABLE>
-<script>
-var canvas = $("#gameCanvas");
-			canvas.width = window.innerWidth;
-			canvas.height = window.innerHeight;	
-</script>
 <body>
 </html>

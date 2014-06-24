@@ -24,13 +24,21 @@ StartLayer.prototype.onDidLoadFromCCB = function () {
 
 StartLayer.prototype.onEnter = function () {
     var winSize = cc.Director.getInstance().getWinSize();
-    // this.blockWidth = winSize.width / 2;
-    // this.blockHeight = winSize.height / 2;
+    this.blockWidth = winSize.width;
+    this.blockHeight = winSize.height;
+	
+	this.positionX = this.blockWidth / 2
+	// for NO_BORDER mode
+	// alert('window.resolution.device == ' + window.resolution.device + ' ' + (window.resolution.device == 'iPhone'));	
+	// if (window.resolution.device == 'iPhone') {
+	// 	this.positionX = (this.blockWidth * 1.1) / 2;
+	// }
     // this.scaleX = this.blockWidth / 300;
     // this.scaleY = this.blockHeight / 500;
-	this.blockWidth = winSize.width;
-    this.blockHeight = 1014; // winSize.height;
+	//this.blockWidth = winSize.width;
+    //this.blockHeight = 1014; // winSize.height;
     console.log("[blockWidth , blockHeight]: [" + this.blockWidth + ", " + this.blockHeight + "] ");
+	// alert("[blockWidth , blockHeight]: [" + this.blockWidth + ", " + this.blockHeight + "] ");
 	this.scaleX = this.blockWidth / 320;
     this.scaleY = this.blockHeight / 500;
 	console.log("[scaleX , scaleY]: [" + this.scaleX + ", " + this.scaleY + "] ");
@@ -43,11 +51,13 @@ StartLayer.prototype.onEnter = function () {
         }
         this.tables[j] = sprites;
     }
+	$('#container').css({"padding-top":"0px"});
+	$('#container').css({"padding-bottom":"0px"});
 };
 
 StartLayer.prototype.newBlock = function (i, j) {
     var block = cc.Sprite.create("res/whiteBlock.png");
-    block.setPosition(cc.p(this.blockWidth / 2, this.blockHeight / 2)); // 
+    block.setPosition(cc.p(this.positionX, this.blockHeight / 2)); // 
     block.setScaleX(this.scaleX);
     block.setScaleY(this.scaleY);
     block.setZOrder(100);
@@ -71,16 +81,16 @@ StartLayer.prototype.newBlock = function (i, j) {
 	}
 	var welcomeLabel = cc.LabelTTF.create(welcomeText, "Arial", 15);
     block.addChild(welcomeLabel);
-    welcomeLabel.setPosition(cc.p(this.blockWidth / 4, this.blockHeight / 4 + 100));	
+    welcomeLabel.setPosition(cc.p(this.blockWidth / this.scaleX * 0.5 , this.blockHeight / this.scaleY * 0.9));	
     welcomeLabel.setAnchorPoint(cc.p(0.5, 0.5));
 
     var blockLabel = cc.LabelTTF.create(words[wordNum], "Arial", 60);
     block.addChild(blockLabel);
-    blockLabel.setPosition(cc.p(this.blockWidth / 4, this.blockHeight / 4));	
+    blockLabel.setPosition(cc.p(this.blockWidth / this.scaleX * 0.5, this.blockHeight / this.scaleY * 0.6));	
     blockLabel.setAnchorPoint(cc.p(0.5, 0.5));
 	var clickLabel = cc.LabelTTF.create('点击进入', "Arial", 40);
 	block.addChild(clickLabel);
-    clickLabel.setPosition(cc.p(this.blockWidth / 4, this.blockHeight / 4 - 120 ));	
+    clickLabel.setPosition(cc.p(this.blockWidth / this.scaleX * 0.5, this.blockHeight / this.scaleY * 0.3));	
     clickLabel.setAnchorPoint(cc.p(0.5, 0.5));
 	this.startNode.enter = clickLabel;
     // var colors = [cc.c3b(0, 0, 0) /*black*/, cc.c3b(255, 255, 255) /*white*/];

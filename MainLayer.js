@@ -37,13 +37,23 @@ MainLayer.prototype.onDidLoadFromCCB = function () {
 MainLayer.prototype.onEnter = function () {
     cc.log("game mode==" + GAME_MODE);
     // return;
-
+	
+	
     var winSize = cc.Director.getInstance().getWinSize();
     this.blockWidth = winSize.width / 4;
     this.blockHeight = winSize.height / 4;
     this.scaleX = (this.blockWidth - 2) / 320;
     this.scaleY = (this.blockHeight - 2) / 500;
-    this.moveNum = 0;
+	this.moveNum = 0;
+	
+	console.log("[blockWidth , blockHeight]: [" + this.blockWidth + ", " + this.blockHeight + "] ");
+	console.log("[scaleX , scaleY]: [" + this.scaleX + ", " + this.scaleY + "] ");
+	
+	this.positionX = this.blockWidth / 2;
+	// for NO_BORDER mode
+	// if (window.resolution.device == 'iPhone') {
+	// 	this.positionX = (this.blockWidth / 2) + this.blockWidth * 0.2 ;
+	// }
 
     //piano music length
     this.pianoListIndex = KISS_THE_RAIN;
@@ -58,7 +68,7 @@ MainLayer.prototype.onEnter = function () {
 	this.scoreBg.setScaleY(this.scaleY);
 	// console.log("scaleY==" + this.scaleY);    
 	var positionY = winSize.height - 40 * this.scaleY;
-    this.scoreBg.setPosition(cc.p(360, positionY));
+    this.scoreBg.setPosition(cc.p(360 / window.devicePixelRatio, positionY));
     // console.log("winSizeHeight==" + winSize.height); 
 	// console.log("scoreBgHeight==" + this.scoreBg._contentSize.height); 
 	// console.log("positionY==" + positionY);    
@@ -66,10 +76,10 @@ MainLayer.prototype.onEnter = function () {
 	this.rootNode.addChild(this.scoreBg);
     // this.scoreBg.setColor(cc.c3b(0, 92, 165));
     this.scoreBg.setZOrder(199);
-    this.scoreLabel = cc.LabelTTF.create("0.00", "Arial", 50);
+    this.scoreLabel = cc.LabelTTF.create("0.00", "Arial", 50 / window.devicePixelRatio);
 	this.scoreLabel.setString("总时间30.00''    块数: " + this.totalTap);
     this.rootNode.addChild(this.scoreLabel);
-    this.scoreLabel.setPosition(cc.p(360, positionY - 10));
+    this.scoreLabel.setPosition(cc.p(360 / window.devicePixelRatio, positionY - 10));
 	
     this.scoreLabel.setAnchorPoint(cc.p(0.5, 0.5));
     // this.scoreLabel.setColor(cc.c3b(255, 20, 147));
@@ -94,7 +104,7 @@ MainLayer.prototype.onEnter = function () {
 MainLayer.prototype.newBlock = function (i, j, colorType) {
     //simple block
     var block = cc.Sprite.create("res/whiteBlock.png");
-    block.setPosition(cc.p(this.blockWidth / 2 + this.blockWidth * i, this.blockHeight / 2 + this.blockHeight * j));
+    block.setPosition(cc.p(this.positionX + this.blockWidth * i, this.blockHeight / 2 + this.blockHeight * j));
     block.setScaleX(this.scaleX);
     block.setScaleY(this.scaleY);
     block.setZOrder(100);
@@ -112,7 +122,11 @@ MainLayer.prototype.newBlock = function (i, j, colorType) {
 				// add start label to the block
 				var startLabel = cc.LabelTTF.create("Start", "Arial", 90);
 				block.addChild(startLabel);
-				startLabel.setPosition(cc.p(this.blockWidth, this.blockHeight));	
+				// alert("[blockWidth , blockHeight]: [" + this.blockWidth + ", " + this.blockHeight + "] ");
+				// alert("[scaleX , scaleY]: [" + this.scaleX + ", " + this.scaleY + "] ");
+				console.log("[blockWidth , blockHeight]: [" + this.blockWidth + ", " + this.blockHeight + "] ");
+				console.log("[scaleX , scaleY]: [" + this.scaleX + ", " + this.scaleY + "] ");
+				startLabel.setPosition(cc.p(this.blockWidth * window.devicePixelRatio, this.blockHeight * window.devicePixelRatio));	
 				startLabel.setAnchorPoint(cc.p(0.5, 0.5));
 				startLabel.setColor(cc.c3b(255, 255, 255));
 				startLabel.setZOrder(1);
@@ -123,13 +137,13 @@ MainLayer.prototype.newBlock = function (i, j, colorType) {
 				award = 1;		
 				var pointLabel = cc.LabelTTF.create("奖" + award + "块", "Arial", 50);				
 				block.addChild(pointLabel);
-				pointLabel.setPosition(cc.p(this.blockWidth / 2 * 3, this.blockHeight * 2 - 60));	
+				pointLabel.setPosition(cc.p((this.blockWidth + 70 * 0.5) * window.devicePixelRatio, (this.blockHeight * 2) * window.devicePixelRatio - this.blockHeight * 0.5));	
 				pointLabel.setAnchorPoint(cc.p(0.5, 0.5));
 				pointLabel.setColor(cc.c3b(255, 255, 255));
 				pointLabel.setZOrder(2);
 				var pointIcon = cc.Sprite.create("res/yogurt.png");
 				block.addChild(pointIcon);
-				pointIcon.setPosition(cc.p(this.blockWidth, this.blockHeight));		
+				pointIcon.setPosition(cc.p(this.blockWidth * window.devicePixelRatio, (this.blockHeight - 20) * window.devicePixelRatio)) ;		
 				pointIcon.setAnchorPoint(cc.p(0.5, 0.5));
 				pointIcon.setColor(cc.c3b(255, 255, 255));
 				pointIcon.setZOrder(1);				
@@ -159,8 +173,8 @@ MainLayer.prototype.createTopOverNode = function () {
     bgColor.setPosition(cc.p(0, 0)); // +32
 	// bgColor.setScaleX(720 / 300);
     // bgColor.setScaleY(1280 / 500);
-    bgColor.setScaleX(640 / 320 / 2);
-    bgColor.setScaleY(960 / 500 / 2);
+    bgColor.setScaleX(window.resolution.width / 320 / 2);
+    bgColor.setScaleY(window.resolution.height / 500 / 2);
     bgColor.setAnchorPoint(cc.p(0, 0));
     // bgColor.setColor(cc.c3b(0, 255, 0));
 	// richard modify the footer color to light blue
@@ -170,34 +184,34 @@ MainLayer.prototype.createTopOverNode = function () {
 
     //mode
     var wordsMode = ["经典", "街机", "禅"];
-    var modeLabel = cc.LabelTTF.create(wordsMode[GAME_MODE] + "模式", "Arial", 130);
+    var modeLabel = cc.LabelTTF.create(wordsMode[GAME_MODE] + "模式", "Arial", 130 / window.devicePixelRatio);
     this.scoreNode.addChild(modeLabel);
-    modeLabel.setPosition(cc.p(320, 1000));
+    modeLabel.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 3));
     // modeLabel.setColor(cc.c3b(0, 0, 0));
 	// richard modify the mode label to dark blue
     modeLabel.setColor(cc.c3b(0, 92, 165));
     modeLabel.setAnchorPoint(cc.p(0.5, 0.5));
 
     //result
-    var resultLabel = cc.LabelTTF.create("成功", "Arial", 110);
+    var resultLabel = cc.LabelTTF.create("成功", "Arial", 110 / window.devicePixelRatio);
     this.scoreNode.addChild(resultLabel);
-    resultLabel.setPosition(cc.p(320, 750));
+    resultLabel.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 2));
     resultLabel.setAnchorPoint(cc.p(0.5, 0.5));
     resultLabel.setColor(cc.c3b(139, 58, 58));
     this.scoreNode.result = resultLabel;
 	
 	//score
-    var resultLabel2 = cc.LabelTTF.create("分数", "Arial", 150);
+    var resultLabel2 = cc.LabelTTF.create("分数", "Arial", 150 / window.devicePixelRatio);
     this.scoreNode.addChild(resultLabel2);
-    resultLabel2.setPosition(cc.p(320, 600));
+    resultLabel2.setPosition(cc.p(this.blockWidth * 2, (this.blockHeight) * 2 - 150 / window.devicePixelRatio));
     resultLabel2.setAnchorPoint(cc.p(0.5, 0.5));
     resultLabel2.setColor(cc.c3b(0, 92, 165));
     this.scoreNode.result2 = resultLabel2;
 
     //back
-    var backLabel = cc.LabelTTF.create("重来", "Arial", 40);
+    var backLabel = cc.LabelTTF.create("重来", "Arial", 40 / window.devicePixelRatio);
     this.scoreNode.addChild(backLabel);
-    backLabel.setPosition(cc.p(160, 260));
+    backLabel.setPosition(cc.p(this.blockWidth, this.blockHeight));
     backLabel.setAnchorPoint(cc.p(0.5, 0.5));
     // backLabel.setColor(cc.c3b(0, 0, 0));
 	// richard modify the mode label to dark blue
@@ -213,9 +227,9 @@ MainLayer.prototype.createTopOverNode = function () {
     // this.scoreNode.share = shareLabel;
 	
 	//rank
-    var rankLabel = cc.LabelTTF.create("排名", "Arial", 40);
+    var rankLabel = cc.LabelTTF.create("排名", "Arial", 40 / window.devicePixelRatio);
     this.scoreNode.addChild(rankLabel);
-    rankLabel.setPosition(cc.p(480, 260));
+    rankLabel.setPosition(cc.p(this.blockWidth * 3, this.blockHeight));
     rankLabel.setAnchorPoint(cc.p(0.5, 0.5));    
     rankLabel.setColor(cc.c3b(178, 206, 228));
     this.scoreNode.rank = rankLabel;
@@ -290,7 +304,7 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
             for (var i = 0; i < 4; i++) {
                 var block = this.tables[j][i];
                 if (block) {
-                    var blockRect = cc.rectCreate(block.getPosition(), [this.blockWidth / 2, this.blockHeight / 2]);
+                    var blockRect = cc.rectCreate(block.getPosition(), [this.positionX, this.blockHeight / 2]);
                     if (cc.rectContainsPoint(blockRect, newTouchPos)) {
                         if (j == 0) {							
                             return;

@@ -51,13 +51,14 @@ if (sys.platform == 'browser') {
             var glView = director.getOpenGLView();
 			var height = cc.Director.getInstance().getWinSize().height;
 			var width = cc.Director.getInstance().getWinSize().width;
-			var resolutionSizeWidth = width; // 640; // default
-			var resolutionSizeHeight = height; // 1014; // default 1014
+			var resolutionSizeWidth = window.resolution.width; // 640; // default
+			var resolutionSizeHeight = window.resolution.height; // 1014; // default 1014
 			// if (height <= resolutionSizeHeight && width <= resolutionSizeWidth) {
 			// 	resolutionSizeWidth = width;
 			// 	resolutionSizeHeight = height;
 			// }
 			// cc.RESOLUTION_POLICY.SHOW_ALL, cc.RESOLUTION_POLICY.NO_BORDER
+			// cc.EGLView.getInstance().resizeWithBrowserSize(true);
             glView.setDesignResolutionSize(resolutionSizeWidth, resolutionSizeHeight, cc.RESOLUTION_POLICY.SHOW_ALL);
             cc.Loader.preload(ccb_resources, function () {
                 cc.BuilderReader.runScene("", "StartLayer");
