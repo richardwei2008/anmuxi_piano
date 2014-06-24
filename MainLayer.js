@@ -414,7 +414,8 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
             this.scoreNode.rank.runAction(cc.Sequence.create(cc.ScaleTo.create(0.1, 1.1),
                 cc.CallFunc.create(function () {
                     cc.AudioEngine.getInstance().stopAllEffects();
-                    cc.BuilderReader.runScene("", "MainLayer");
+                    url = window.location.href.substring(0, window.location.href.lastIndexOf('/')) + "/result.html";
+					window.location.href = url;
                 })
             ));
         }

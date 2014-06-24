@@ -3,35 +3,37 @@
 	margin:0 auto;
 }
 
-
-.tab_wraptop{ width:100%; position:fixed; top:0; margin:0 auto;}
-.tab_top{ table-layout:fixed; padding-bottom:0px; margin:0 auto;background-color:#FFFFFF; max-width:100%; margin:0 auto;border-bottom:1px solid #ccc;}
-
+.tab_wraptop{width:100%;position:fixed;margin:0 auto;max-width: 1024px;}
+.tab_top{background-color:#FFFFFF;border-bottom:1px solid #ccc;margin:0 auto;}
 
 
-.tab_wraptopc{ width:100%; position:fixed; top:200; margin:0 auto;}
+
+.tab_wraptopc{ width:100%; position:fixed; top:200; }
 
 
-.tab_wrap{ width:100%; position:fixed; bottom:0; margin:0 auto;}
+.tab_wrap{width:100%; position:fixed; bottom:0; max-width: 1024px;}
 
-.tab_bot{ table-layout:fixed; padding-bottom:0px; margin:0 auto;  max-width:100%; background-color:#FFFFFF;margin:0 auto;border-top:1px solid #ccc;}
+.tab_bot{ table-layout:fixed; padding-bottom:0px; background-color:#FFFFFF;border-top:1px solid #ccc;}
 
 .font {
-font-size:40px;
-padding: 20px;
+font-size:20px;
+padding: 10px;
 }
 .font2 {
-font-size:25px;
+font-size:16px;
 padding: 5px;
 
 }
 .font3 {
-font-size:14px;
+font-size:18px;
 padding: 5px;
 
 }
 
 
 .pic {
-padding: 10px;
+padding: 2px;
+margin: 2px;
+border-radius:50%; 
+overflow:hidden;
 }

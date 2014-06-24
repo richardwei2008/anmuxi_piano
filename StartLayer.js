@@ -88,7 +88,7 @@ StartLayer.prototype.newBlock = function (i, j) {
     block.addChild(blockLabel);
     blockLabel.setPosition(cc.p(this.blockWidth / this.scaleX * 0.5, this.blockHeight / this.scaleY * 0.6));	
     blockLabel.setAnchorPoint(cc.p(0.5, 0.5));
-	var clickLabel = cc.LabelTTF.create('点击进入', "Arial", 40);
+	var clickLabel = cc.LabelTTF.create('开始游戏', "Arial", 40);
 	block.addChild(clickLabel);
     clickLabel.setPosition(cc.p(this.blockWidth / this.scaleX * 0.5, this.blockHeight / this.scaleY * 0.3));	
     clickLabel.setAnchorPoint(cc.p(0.5, 0.5));

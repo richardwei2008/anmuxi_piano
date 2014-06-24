@@ -1,40 +1,52 @@
-<?php
+ï»¿<?php
 
-//ĞèÒªÖ´ĞĞµÄSQLÓï¾ä
-//µ¥Ìõ
+//éœ€è¦æ‰§è¡Œçš„SQLè¯­å¥
+//å•æ¡
+$openId = "openid1";
 $sql="SELECT id, openId, nickname FROM user_info LIMIT 6";
-//¶àÌõÊı¾İ
+$sql_me="SELECT info.id, info.openId, nickname, info.headimgurl, s.score FROM user_info info, user_score s where info.openId = '$openId'";
+$sql_global="SELECT info.id, info.openId, nickname, info.headimgurl, s.score FROM user_info info, user_score s where info.id = s.userid ORDER BY s.score LIMIT 6";
+$sql_total="SELECT count(info.id) as value FROM user_info info ";
+//å¤šæ¡æ•°æ®
 //$sql="select id,name from tbl_user";
 
-//µ÷ÓÃconn.phpÎÄ¼ş½øĞĞÊı¾İ¿â²Ù×÷ 
+//è°ƒç”¨conn.phpæ–‡ä»¶è¿›è¡Œæ•°æ®åº“æ“ä½œ 
 require('conn.php'); 
 
-//ÌáÊ¾²Ù×÷³É¹¦ĞÅÏ¢£¬×¢Òâ£º$result´æÔÚÓÚconn.phpÎÄ¼şÖĞ£¬±»µ÷ÓÃ³öÀ´ 
-if($result) 
+
+
+//æ‰§è¡ŒSQLè¯­å¥(æŸ¥è¯¢) 
+$result_me = mysql_query($sql_me) or die('æ•°æ®åº“æŸ¥è¯¢å¤±è´¥ï¼</br>é”™è¯¯åŸå› ï¼š'.mysql_error()); 
+$result_global = mysql_query($sql_global) or die('æ•°æ®åº“æŸ¥è¯¢å¤±è´¥ï¼</br>é”™è¯¯åŸå› ï¼š'.mysql_error()); 
+$result_total= mysql_query($sql_total) or die('æ•°æ®åº“æŸ¥è¯¢å¤±è´¥ï¼</br>é”™è¯¯åŸå› ï¼š'.mysql_error()); 
+//æç¤ºæ“ä½œæˆåŠŸä¿¡æ¯ï¼Œæ³¨æ„ï¼š$resultå­˜åœ¨äºconn.phpæ–‡ä»¶ä¸­ï¼Œè¢«è°ƒç”¨å‡ºæ¥ 
+if($result_global) 
 { 
 //	$array=mysql_fetch_array($result,MYSQL_ASSOC);
+	/*æ•°æ®é›†*/
+	$me = mysql_fetch_object($result_me);
+	$totalObj = mysql_fetch_object($result_total);
+	// echo json_encode($me);
 	
-		
-	/*Êı¾İ¼¯*/
-
 	$users=array();
-	$i=0;
-	while($row=mysql_fetch_array($result,MYSQL_ASSOC)){
+	$i=0;	
+	while($row=mysql_fetch_array($result_global, MYSQL_ASSOC)){
 		// echo $row['openId'].'-----------'.$row['nickname'].'</br>';
 		$users[$i]=$row;
 		$i++;
 	}
-	echo json_encode(array('dataList'=>$users));
-	/*µ¥ÌõÊı¾İ*/
+	echo json_encode(array('dataList'=>$users, 'me'=>$me, 'total'=>$totalObj)); //
+	/*å•æ¡æ•°æ®*/
 
 	// $row=mysql_fetch_row($result,MYSQL_ASSOC);
 	// 
 	// echo json_encode(array('jsonObj'=>$row));
 } 
-
-mysql_free_result($result);
-//ÊÍ·Å½á¹û
+mysql_free_result($result_me);
+mysql_free_result($result_global);
+mysql_free_result($result_total);
+//é‡Šæ”¾ç»“æœ
 mysql_close();
-//¹Ø±ÕÁ¬½Ó
+//å…³é—­è¿æ¥
 
 ?>
