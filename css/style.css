@@ -9,26 +9,27 @@ aside, footer, header, nav, section {
 body,html
 {
     display:block;
-    margin: 0px;
+    margin: 0 auto;
     padding: 0px;
 	height: 100%; 
+	max-width: 1024px;
     background-color: #2D3132;/*#2D3132; */
 }
-#bg {
+#container {
 	/*position:relative;
 	vertical-align:top;     解决ie浏览器背景填充时的空隙*/
-	margin: 0px;	
+	margin: 0 auto;
 	width: 100%;
 	height: 100%;
 }
-#canvas {
+#gameCanvas {
 	background-color: #2D3132;/*#005CA5; */
 	position: relative;
     left: 0;
     right: 0;
     top: 0;
     bottom: 0;
-    margin: 0px;
+    margin: 0 auto;
 	padding: 0px;
     width: 100%; 
 }
