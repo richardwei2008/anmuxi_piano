@@ -19,6 +19,7 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/WechatShare.js"></script>
 <script src="js/freeze-touch-move.js"></script>
+<script src="js/config.js"></script>
 <script type="text/javascript">		
 		$(window).ready(function () {
 			$('#enter').click(function(){
@@ -27,8 +28,7 @@
 			// 关注
 			var redirect_uri = "http%3A%2F%2F" + window.location.hostname + "%2Fgame.html";
 			var url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc63c757bdae5dd41&redirect_uri="+ redirect_uri + "&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect";
-			var DEBUG = true
-			if (!isWeiXin() || DEBUG) {
+			if (!isWeiXin() || CONFIG.DEBUG) {
 				alert("您所使用的不是微信浏览器，游戏成绩将无法参加赢红包活动");
 				url = window.location.href.substring(0, window.location.href.lastIndexOf('/')) + "/game.html";
 			}

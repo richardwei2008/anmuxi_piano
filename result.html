@@ -30,7 +30,7 @@
 					url : "services/read.php",
 					datatype : "json",
 					success : function (response) {
-						$("#err").html(response);
+						// $("#err").html(response);
 						// alert(response);
 						var responseObj = JSON.parse(response);
 						users = responseObj.dataList;
