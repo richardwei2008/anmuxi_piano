@@ -266,6 +266,9 @@ MainLayer.prototype.onUpdate = function (dt) {
 		// var wxTitle = "安慕希浓醇酸奶—不睬白格，我已经踩到" + highscore + "格子啦！在" + rank[0] + "个人里已经排名第" + rank[1] + "！速度来挑战我！";
 		var wxTitle = "安慕希不睬白格赢红包，我已经踩到" + this.totalTap + "个格子啦！速度来挑战我！";
 		setWxContent(wxTitle);
+		
+		window.onGameOverEvent.fire({type:'gameOver', success : true, score : this.totalTap});
+		
 		return;
 	}
     // this.currentTime += dt;
@@ -374,6 +377,7 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
                             this.scoreNode.result.setString("失 败 了");
 							this.scoreNode.result2.setString(this.totalTap);
                             this.scoreNode.runAction(cc.MoveTo.create(0.2, cc.p(0, this.blockHeight * this.moveNum)));
+							window.onGameOverEvent.fire({type:'gameOver', success : false, score : this.totalTap})
                         }
                     }
                 }

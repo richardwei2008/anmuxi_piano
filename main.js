@@ -23,6 +23,7 @@ MODE_NOT = 3;
 
 GAME_MODE = 0;
 
+require("js/jquery.min.js");
 require("js/WechatShare.js");
 require("PlayAudio.js");
 require("StartLayer.js");

@@ -11,12 +11,12 @@
 	<link type="text/css" href="css/style.css" rel="stylesheet"/>
 	<link type="text/css" href="css/loader.css" rel="stylesheet"/>
 	<script src="js/jquery.min.js"></script>
+	<script src="js/yahoo-min.js"></script>
+	<script src="js/event-min.js"></script>
 	<script src="js/getDevicePixelRatio-min.js"></script>
 	<script src="js/json2.js"></script>
 	<script src="js/WechatShare.js"></script>
-	<script src="js/freeze-touch-move.js"></script>
-	<script type="text/javascript">
-		
+	<script type="text/javascript">		
 		// subscribe  用户是否订阅该公众号标识，值为0时，代表此用户没有关注该公众号，拉取不到其余信息。  
 		// openid  用户的标识，对当前公众号唯一  
 		// nickname  用户的昵称  
@@ -27,7 +27,27 @@
 		// language  用户的语言，简体中文为zh_CN  
 		// headimgurl  用户头像，最后一个数值代表正方形头像大小（有0、46、64、96、132数值可选，0代表640*640正方形头像），用户没有头像时该项为空  
 		// subscribe_time  用户关注时间，为时间戳。如果用户曾多次关注，则取最后关注时间  
-		var DEBUG = true
+		var DEBUG = true;
+		window.onGameOverEvent = new YAHOO.util.CustomEvent('onGameOverEvent');
+		function submitScore(event, arguments, obj) {
+			console.log('onGameOverEvent Fired');
+			if (arguments != null && arguments.length > 0) {
+				window.user.score = arguments[0].score;
+			}
+			 $.ajax({
+			 	type : 'POST',
+			 	url : "services/save.php",
+			 	data : JSON.stringify(window.user),
+			 	dataType : 'json',
+			 	success : function (data, textStatus, xhr) {
+			 		alert(textStatus);					
+			 	},
+			 	error : function (xhr, textStatus, errorThrown) {
+					$("#err").html(xhr.responseText);
+				}
+			});
+		};
+		window.onGameOverEvent.subscribe(submitScore);
 		if (typeof(window.user) == "undefined") {
 				window.user = {
 					"subscribe": 0,
@@ -39,7 +59,7 @@
 					"province": "上海",
 					"language": "zh_CN",
 					"headimgurl": null,
-					"subscribe_time": null
+					"subscribe_time": 1382695957
 				};
 		}
 		function callback(result) {  
@@ -95,7 +115,7 @@
 			// 	$(".loader").fadeOut("slow");
 			// });
 		});
-		$(document).ready(function(){
+		$(document).ready(function () {
 			var canvas = $("#gameCanvas");
 			canvas.width = window.innerWidth;
 			canvas.height = window.innerHeight;	
@@ -116,10 +136,8 @@
 					"height": $(document).height()
 				};
 			}
-			$(".loader").delay(10).fadeOut("slow");
-			
-		});
-		
+			$(".loader").delay(10).fadeOut("slow");			
+		});		
 		$(function () {
 			if (navigator.userAgent.match(/iPhone/i) ) { // || navigator.userAgent.match(/iPad/i)
 				window.resolution.device = 'iPhone';
@@ -127,25 +145,20 @@
 		});		
 		setTimeout(function animate() {
 			$('#container').css({"padding-top":"0px"});
-			$('#container').css({"padding-bottom":"0px"});
+			$('#container').css({"padding-bottom":"0px"});		
 		}, 3000);
 	</script>
 	<script src="boot-html5.js"></script>
 </head>
 <body>
-<table border="0" cellspacing="0" cellpadding="0" align="center" height="100%" width="100%">
-	<TR>
-		<TD vAlign=center align=middle>
-			<div id="container" style="width:100%;height:100%;padding-top:0px;padding-bottom:0px">
-				<div style="display:none">
-				<audio id="photography_audio" hidden="true" style="display:none;">
-					<source src="res/piano/kissTheRain.mp3" type="audio/mpeg"></source>
-				</audio>
-				</div>
-				<canvas id="gameCanvas">当前浏览器不支持HTML5 Canvas，请更换您的浏览器 </canvas>
-			</div>
-		</TD>
-	</TR>
-</TABLE>
+<div id="err" style="max-width:1024px; margin:0 auto"></div>
+<div id="container" style="width:100%;height:100%;padding-top:0px;padding-bottom:0px">
+	<div style="display:none">
+		<audio id="photography_audio" hidden="true" style="display:none;">
+			<source src="res/piano/kissTheRain.mp3" type="audio/mpeg"></source>
+		</audio>
+	</div>
+	<canvas id="gameCanvas">当前浏览器不支持HTML5 Canvas，请更换您的浏览器 </canvas>
+</div>
 <body>
 </html>
