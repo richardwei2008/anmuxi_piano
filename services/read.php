@@ -4,8 +4,8 @@
 //单条
 $openId = "openid1";
 $sql="SELECT id, openId, nickname FROM user_info LIMIT 6";
-$sql_me="SELECT info.id, info.openId, nickname, info.headimgurl, s.score FROM user_info info, user_score s where info.openId = '$openId'";
-$sql_global="SELECT info.id, info.openId, nickname, info.headimgurl, s.score FROM user_info info, user_score s where info.id = s.userid ORDER BY s.score LIMIT 6";
+$sql_me="SELECT info.id, info.openId, nickname, info.headimgurl, info.score FROM user_info info where info.openId = '$openId'";
+$sql_global="SELECT info.id, info.openId, nickname, info.headimgurl, info.score FROM user_info info ORDER BY info.score LIMIT 6";
 $sql_total="SELECT count(info.id) as value FROM user_info info ";
 //多条数据
 //$sql="select id,name from tbl_user";
