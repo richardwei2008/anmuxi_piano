@@ -169,7 +169,7 @@ MainLayer.prototype.createTopOverNode = function () {
     this.blockNode.addChild(this.scoreNode);
 
     //color bg
-    var bgColor = cc.Sprite.create("image/scorebg.jpg");
+    var bgColor = cc.Sprite.create("image/last.jpg");
     bgColor.setPosition(cc.p(0, 0)); // +32
 	// bgColor.setScaleX(720 / 300);
     // bgColor.setScaleY(1280 / 500);
@@ -183,40 +183,74 @@ MainLayer.prototype.createTopOverNode = function () {
     this.scoreNode.bgColor = bgColor;
 
     //mode
-    var wordsMode = ["经典", "街机", "禅"];
-    var modeLabel = cc.LabelTTF.create(wordsMode[GAME_MODE] + "模式", "Arial", 130 / window.devicePixelRatio);
+    // var wordsMode = ["经典", "街机", "禅"];
+    // var modeLabel = cc.LabelTTF.create(wordsMode[GAME_MODE] + "模式", "Arial", 130 / window.devicePixelRatio);
+    // this.scoreNode.addChild(modeLabel);
+    // modeLabel.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 3));
+    // // modeLabel.setColor(cc.c3b(0, 0, 0));
+	// // richard modify the mode label to dark blue
+    // modeLabel.setColor(cc.c3b(0, 92, 165));
+    // modeLabel.setAnchorPoint(cc.p(0.5, 0.5));
+	var spriteScale = 1 / window.devicePixelRatio;
+		
+    var modeLabel = cc.Sprite.create("image/classic.png");
     this.scoreNode.addChild(modeLabel);
-    modeLabel.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 3));
+	modeLabel.setScaleX(spriteScale * 1.4);
+	modeLabel.setScaleY(spriteScale * 1.4);
+    modeLabel.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 2));
     // modeLabel.setColor(cc.c3b(0, 0, 0));
 	// richard modify the mode label to dark blue
-    modeLabel.setColor(cc.c3b(0, 92, 165));
+    // modeLabel.setColor(cc.c3b(0, 92, 165));
     modeLabel.setAnchorPoint(cc.p(0.5, 0.5));
 
     //result
-    var resultLabel = cc.LabelTTF.create("成功", "Arial", 110 / window.devicePixelRatio);
-    this.scoreNode.addChild(resultLabel);
-    resultLabel.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 2));
-    resultLabel.setAnchorPoint(cc.p(0.5, 0.5));
-    resultLabel.setColor(cc.c3b(139, 58, 58));
-    this.scoreNode.result = resultLabel;
+    // var resultLabel = cc.LabelTTF.create("成功", "Arial", 110 / window.devicePixelRatio);
+	var successLabel = cc.Sprite.create("image/success.png");
+    this.scoreNode.addChild(successLabel);
+	successLabel.setScaleX(spriteScale);
+	successLabel.setScaleY(spriteScale);
+    successLabel.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 2 - 200 / window.devicePixelRatio ));
+    successLabel.setAnchorPoint(cc.p(0.5, 0.5));
+    successLabel.setColor(cc.c3b(139, 58, 58));
+	this.scoreNode.success = successLabel;
+    this.scoreNode.result = successLabel;
 	
-	//score
-    var resultLabel2 = cc.LabelTTF.create("分数", "Arial", 150 / window.devicePixelRatio);
+	var failedLabel = cc.LabelTTF.create("失  败  了", "Arial", 60 / window.devicePixelRatio);    
+	failedLabel.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 2 - 200 / window.devicePixelRatio ));
+    failedLabel.setAnchorPoint(cc.p(0.5, 0.5));
+    failedLabel.setColor(cc.c3b(139, 58, 58));
+	this.scoreNode.failed = failedLabel;
+	
+	
+	//score	
+    var resultLabel2 = cc.LabelTTF.create("分数", "Arial", 120 / window.devicePixelRatio);
     this.scoreNode.addChild(resultLabel2);
-    resultLabel2.setPosition(cc.p(this.blockWidth * 2, (this.blockHeight) * 2 - 150 / window.devicePixelRatio));
+    resultLabel2.setPosition(cc.p(this.blockWidth * 2, (this.blockHeight) * 2 - 110 / window.devicePixelRatio));
     resultLabel2.setAnchorPoint(cc.p(0.5, 0.5));
     resultLabel2.setColor(cc.c3b(0, 92, 165));
     this.scoreNode.result2 = resultLabel2;
 
     //back
-    var backLabel = cc.LabelTTF.create("重来", "Arial", 40 / window.devicePixelRatio);
-    this.scoreNode.addChild(backLabel);
-    backLabel.setPosition(cc.p(this.blockWidth, this.blockHeight));
-    backLabel.setAnchorPoint(cc.p(0.5, 0.5));
-    // backLabel.setColor(cc.c3b(0, 0, 0));
-	// richard modify the mode label to dark blue
-    backLabel.setColor(cc.c3b(178, 206, 228));
-    this.scoreNode.back = backLabel;
+	
+	var btnBackX = this.blockWidth;
+	var btnBackY = this.blockHeight * 0.2;
+	var btnBack = cc.Sprite.create("image/back.png");
+	btnBack.setScaleX(spriteScale);
+	btnBack.setScaleY(spriteScale);
+    this.scoreNode.addChild(btnBack);
+    btnBack.setPosition(cc.p(btnBackX, btnBackY));    
+    btnBack.setAnchorPoint(cc.p(0.5, 0.5));
+	
+    // var backLabel = cc.LabelTTF.create("重来", "Arial", 40 / window.devicePixelRatio);
+    // // this.scoreNode.addChild(backLabel);
+	// btnBack.addChild(backLabel);
+    // backLabel.setPosition(cc.p(btnBackX, btnBackY));
+    // backLabel.setAnchorPoint(cc.p(0.5, 0.5));
+    // // backLabel.setColor(cc.c3b(0, 0, 0));
+	// // richard modify the mode label to dark blue
+    // backLabel.setColor(cc.c3b(178, 206, 228));
+    // this.scoreNode.back = backLabel;
+	this.scoreNode.back = btnBack;
 	
 	//share
     // var shareLabel = cc.LabelTTF.create("炫耀", "Arial", 40);
@@ -227,12 +261,24 @@ MainLayer.prototype.createTopOverNode = function () {
     // this.scoreNode.share = shareLabel;
 	
 	//rank
-    var rankLabel = cc.LabelTTF.create("排名", "Arial", 40 / window.devicePixelRatio);
-    this.scoreNode.addChild(rankLabel);
-    rankLabel.setPosition(cc.p(this.blockWidth * 3, this.blockHeight));
-    rankLabel.setAnchorPoint(cc.p(0.5, 0.5));    
-    rankLabel.setColor(cc.c3b(178, 206, 228));
-    this.scoreNode.rank = rankLabel;
+	var btnRankX = this.blockWidth * 3;
+	var btnRankY = this.blockHeight * 0.2;
+	
+	var btnRank = cc.Sprite.create("image/rank.png");
+	btnRank.setScaleX(spriteScale);
+	btnRank.setScaleY(spriteScale);
+    this.scoreNode.addChild(btnRank);
+    btnRank.setPosition(cc.p(btnRankX, btnRankY));    
+    btnRank.setAnchorPoint(cc.p(0.5, 0.5));
+	
+    // var rankLabel = cc.LabelTTF.create("排名", "Arial", 40 / window.devicePixelRatio);
+    // // this.scoreNode.addChild(rankLabel);
+    // btnRank.addChild(rankLabel);
+    // rankLabel.setPosition(cc.p(btnRankX, btnRankY));
+    // rankLabel.setAnchorPoint(cc.p(0.5, 0.5));    
+    // rankLabel.setColor(cc.c3b(178, 206, 228));
+    // // this.scoreNode.rank = rankLabel;
+    this.scoreNode.rank = btnRank;
     
 	
     // //return
@@ -259,7 +305,7 @@ MainLayer.prototype.onUpdate = function (dt) {
         cc.AudioEngine.getInstance().playEffect(SOUNDS.win, false);
 		PauseAudio();        
         this.scoreNode.bgColor.setColor(cc.c3b(178, 206, 228)); 
-        this.scoreNode.result.setString("挑战成功");		
+        // this.scoreNode.result.setString("挑战成功");		
 		this.scoreNode.result2.setString(this.totalTap);
         this.scoreNode.runAction(cc.MoveTo.create(0.2, cc.p(0, this.blockHeight * this.moveNum)));		
 
@@ -374,7 +420,9 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
                             // this.scoreNode.bgColor.setColor(cc.c3b(255, 0, 0)); 
 							// richard modify
                             this.scoreNode.bgColor.setColor(cc.c3b(178, 206, 228)); 
-                            this.scoreNode.result.setString("失 败 了");
+                            // this.scoreNode.result.setString("失 败 了");
+							this.scoreNode.removeChild(this.scoreNode.success);
+							this.scoreNode.addChild(this.scoreNode.failed);
 							this.scoreNode.result2.setString(this.totalTap);
                             this.scoreNode.runAction(cc.MoveTo.create(0.2, cc.p(0, this.blockHeight * this.moveNum)));
 							// alert("After-game " + JSON.stringify(globalUser));

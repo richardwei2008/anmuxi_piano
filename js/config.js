@@ -1,4 +1,4 @@
 var CONFIG = {
-  DEBUG: false,
+  DEBUG: true,
   OAUTH_URL : "http://beyondwechattest.sinaapp.com/oauth2.php"
 };
