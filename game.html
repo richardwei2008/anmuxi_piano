@@ -155,15 +155,12 @@
 				window.resolution.device = 'iPhone';
 			}
 		});		
-		var timeout = 2000;
-		if (!isWeiXin()) {
-			timeout = 1000;
-		}
+		
 		setTimeout(function animate() {
 				$('#container').css({"padding-top":"0px"});
 				$('#container').css({"padding-bottom":"0px"});		
 				$('#gameCanvas').css({"background-color":"#005C87"});
-		}, timeout);
+			}, 3000);
 		
 	</script>
 	<script src="boot-html5.js"></script>

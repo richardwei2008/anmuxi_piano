@@ -95,30 +95,30 @@ StartLayer.prototype.newBlock = function (i, j) {
     welcomeLabel.setAnchorPoint(cc.p(0.5, 0.5));
 
     var blockLabel = cc.LabelTTF.create(words[wordNum], "Arial", 100);
-    block.addChild(blockLabel);
-    blockLabel.setPosition(cc.p(this.blockWidth / this.scaleX * 0.5, this.blockHeight / this.scaleY * 0.8));	
-    blockLabel.setAnchorPoint(cc.p(0.5, 0.5));
+    // block.addChild(blockLabel);
+    // blockLabel.setPosition(cc.p(this.blockWidth / this.scaleX * 0.5, this.blockHeight / this.scaleY * 0.8));	
+    // blockLabel.setAnchorPoint(cc.p(0.5, 0.5));
 	
 	/***** game instruction **************/
-	var iconScale = 0.4;
+	var iconScale = 0.8;
 	var yogurtIcon = cc.Sprite.create("res/yogurt.png");
     block.addChild(yogurtIcon);
 	yogurtIcon.setScaleX(iconScale);
     yogurtIcon.setScaleY(iconScale);
-    yogurtIcon.setPosition(cc.p(this.blockWidth / this.scaleX * 0.5, this.blockHeight / this.scaleY * 0.65));	
+    yogurtIcon.setPosition(cc.p(this.blockWidth / this.scaleX * 0.5, this.blockHeight / this.scaleY * 0.8));	
     yogurtIcon.setAnchorPoint(cc.p(0.5, 0.5));
-	var yogurtLabel = cc.LabelTTF.create("浓 醇 酸 奶  ( 游戏得分 +1 )", "Arial", 30);
+	var yogurtLabel = cc.LabelTTF.create("点击 浓 醇 酸 奶  ( 游戏得分 +1 )", "Arial", 30);
     block.addChild(yogurtLabel);
-    yogurtLabel.setPosition(cc.p(this.blockWidth / this.scaleX * 0.5, this.blockHeight / this.scaleY * 0.55));	
+    yogurtLabel.setPosition(cc.p(this.blockWidth / this.scaleX * 0.5, this.blockHeight / this.scaleY * 0.65));	
     yogurtLabel.setAnchorPoint(cc.p(0.5, 0.5));
 	
 	var proteinIcon = cc.Sprite.create("res/protein.png");
     block.addChild(proteinIcon);
 	proteinIcon.setScaleX(iconScale);
     proteinIcon.setScaleY(iconScale);
-    proteinIcon.setPosition(cc.p(this.blockWidth / this.scaleX * 0.5, this.blockHeight / this.scaleY * 0.45));	
+    proteinIcon.setPosition(cc.p(this.blockWidth / this.scaleX * 0.5, this.blockHeight / this.scaleY * 0.5));	
     proteinIcon.setAnchorPoint(cc.p(0.5, 0.5));
-	var proteinLabel = cc.LabelTTF.create("多35%蛋白质  (游戏时间 +35%)", "Arial", 30);
+	var proteinLabel = cc.LabelTTF.create("点击 多35%蛋白质  (游戏时间 +35%)", "Arial", 30);
     block.addChild(proteinLabel);
     proteinLabel.setPosition(cc.p(this.blockWidth / this.scaleX * 0.5, this.blockHeight / this.scaleY * 0.35));	
     proteinLabel.setAnchorPoint(cc.p(0.5, 0.5));
