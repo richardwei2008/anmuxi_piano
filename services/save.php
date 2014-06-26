@@ -4,7 +4,7 @@ $jsonPOST = json_decode(file_get_contents("php://input"));
 // $jsonPOST->nickname = 'ServerUser';
 $score=$jsonPOST->score;
 $subscribe=$jsonPOST->subscribe;
-$openId=$jsonPOST->openId;
+$openId=$jsonPOST->openid;
 $nickname=$jsonPOST->nickname; 
 $sex = $jsonPOST->sex;
 $language = $jsonPOST->language;
@@ -20,13 +20,13 @@ $sql_update = "UPDATE user_info set score = $score, subscribe = '$subscribe', ni
 $result = mysqli_query($mysqli_con, $sql_query);
 $count = mysqli_fetch_object($result);
 // echo json_encode(array('count'=>$count));
-if ($count->value == 0) {
+if ($count->value == 0 || $openId == "" || $openId == null) {
 	if (mysqli_query($mysqli_con, $sql_insert)) {
 		echo json_encode(array('user'=>$jsonPOST, 'message'=>"Successfully inserted ". mysqli_affected_rows($mysqli_con)."row"));
 	} else {
 		echo "Error occurred: " . mysqli_error($mysqli_con);
 	}
-} else {
+} else if ($openId != null && $openId != "") {
 	if (mysqli_query($mysqli_con, $sql_update)) {
 		echo json_encode(array('user'=>$jsonPOST, 'message'=>"Successfully updated ". mysqli_affected_rows($mysqli_con)."row"));
 	} else {

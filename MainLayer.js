@@ -266,7 +266,7 @@ MainLayer.prototype.onUpdate = function (dt) {
 		// var wxTitle = "安慕希浓醇酸奶—不睬白格，我已经踩到" + highscore + "格子啦！在" + rank[0] + "个人里已经排名第" + rank[1] + "！速度来挑战我！";
 		var wxTitle = "安慕希不睬白格赢红包，我已经踩到" + this.totalTap + "个格子啦！速度来挑战我！";
 		setWxContent(wxTitle);
-		
+		// alert("After-game " + JSON.stringify(globalUser));
 		window.onGameOverEvent.fire({type:'gameOver', success : true, score : this.totalTap});
 		
 		return;
@@ -346,9 +346,9 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
                                     cc.AudioEngine.getInstance().playEffect(SOUNDS.win, false);
 									PauseAudio();
 									// TODO refactor to fire event mode
-									setTimeout(function () {
-										window.location.href = "win.html";
-									}, 1000);
+									// setTimeout(function () {
+									// 	window.location.href = "win.html";
+									// }, 1000);
                                 }
                                 this.blockNode.runAction(cc.MoveTo.create(0.2, cc.p(0, (this.blockNode.getPositionY() - this.blockHeight * heightNum))));
                                 this.moveNum += 1;
@@ -377,6 +377,7 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
                             this.scoreNode.result.setString("失 败 了");
 							this.scoreNode.result2.setString(this.totalTap);
                             this.scoreNode.runAction(cc.MoveTo.create(0.2, cc.p(0, this.blockHeight * this.moveNum)));
+							// alert("After-game " + JSON.stringify(globalUser));
 							window.onGameOverEvent.fire({type:'gameOver', success : false, score : this.totalTap})
                         }
                     }
@@ -413,13 +414,13 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
 		// 	);
 		// }
         //rank
+		var fireEvent = {type:'viewResult', success : true, score : this.totalTap};
         var rankRect = cc.rectCreate(this.scoreNode.rank.getPosition(), [50, 30]);
         if (cc.rectContainsPoint(rankRect, this.pBegan)) {
             this.scoreNode.rank.runAction(cc.Sequence.create(cc.ScaleTo.create(0.1, 1.1),
                 cc.CallFunc.create(function () {
                     cc.AudioEngine.getInstance().stopAllEffects();
-                    url = window.location.href.substring(0, window.location.href.lastIndexOf('/')) + "/result.html";
-					window.location.href = url;
+					window.onViewResultEvent.fire(fireEvent);					
                 })
             ));
         }

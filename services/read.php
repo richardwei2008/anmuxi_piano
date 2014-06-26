@@ -3,9 +3,10 @@
 //需要执行的SQL语句
 //单条
 $openId = "openid1";
+$openId = $_SESSION['openId'];
 $sql="SELECT id, openId, nickname FROM user_info LIMIT 6";
 $sql_me="SELECT info.id, info.openId, nickname, info.headimgurl, info.score FROM user_info info where info.openId = '$openId'";
-$sql_global="SELECT info.id, info.openId, nickname, info.headimgurl, info.score FROM user_info info ORDER BY info.score LIMIT 6";
+$sql_global="SELECT info.id, info.openId, nickname, info.headimgurl, info.score FROM user_info info ORDER BY info.score desc LIMIT 6";
 $sql_total="SELECT count(info.id) as value FROM user_info info ";
 //多条数据
 //$sql="select id,name from tbl_user";
@@ -35,7 +36,7 @@ if($result_global)
 		$users[$i]=$row;
 		$i++;
 	}
-	echo json_encode(array('dataList'=>$users, 'me'=>$me, 'total'=>$totalObj)); //
+	echo json_encode(array('dataList'=>$users, 'me'=>$me, 'total'=>$totalObj, 'openId'=>$openId)); //
 	/*单条数据*/
 
 	// $row=mysql_fetch_row($result,MYSQL_ASSOC);
@@ -48,5 +49,6 @@ mysql_free_result($result_total);
 //释放结果
 mysql_close();
 //关闭连接
-
+unset($_SESSION['openId']);
+session_destroy();
 ?>

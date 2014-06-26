@@ -16,6 +16,7 @@
 	<script src="js/getDevicePixelRatio-min.js"></script>
 	<script src="js/json2.js"></script>
 	<script src="js/config.js"></script>
+	<script src="js/storage.js"></script>
 	<script src="js/WechatShare.js"></script>
 	<script type="text/javascript">		
 		// subscribe  用户是否订阅该公众号标识，值为0时，代表此用户没有关注该公众号，拉取不到其余信息。  
@@ -28,84 +29,60 @@
 		// language  用户的语言，简体中文为zh_CN  
 		// headimgurl  用户头像，最后一个数值代表正方形头像大小（有0、46、64、96、132数值可选，0代表640*640正方形头像），用户没有头像时该项为空  
 		// subscribe_time  用户关注时间，为时间戳。如果用户曾多次关注，则取最后关注时间  
+		// if (typeof(window.user) == "undefined") {
+		// 		window.user = {
+		// 			"subscribe": 0,
+		// 			"openId": "testId", // oxqECj13-L8dz--q6dd9Z34ouTfc
+		// 			"nickname": "Nickname",
+		// 			"sex": 1,
+		// 			"city": "上海",
+		// 			"country": "中国",
+		// 			"province": "上海",
+		// 			"language": "zh_CN",
+		// 			"headimgurl": null,
+		// 			"subscribe_time": 1382695957
+		// 		};
+		// }
+		// alert("Pre-load " + JSON.stringify(globalUser));
 		window.onGameOverEvent = new YAHOO.util.CustomEvent('onGameOverEvent');
 		function submitScore(event, arguments, obj) {
 			console.log('onGameOverEvent Fired');
 			if (arguments != null && arguments.length > 0) {
-				window.user.score = arguments[0].score;
+				globalUser.score = arguments[0].score;
 			}
+			// alert("Pre-submit " + JSON.stringify(globalUser));
 			 $.ajax({
 			 	type : 'POST',
 			 	url : "services/save.php",
-			 	data : JSON.stringify(window.user),
+			 	data : JSON.stringify(globalUser),
 			 	dataType : 'json',
 			 	success : function (data, textStatus, xhr) {
-			 		alert(textStatus);					
+			 		// alert("Post-submit (success) " + textStatus);					
 			 	},
 			 	error : function (xhr, textStatus, errorThrown) {
+					// alert("Post-submit (fail) " + xhr.responseText);
 					$("#err").html(xhr.responseText);
 				}
 			});
 		};
 		window.onGameOverEvent.subscribe(submitScore);
-		if (typeof(window.user) == "undefined") {
-				window.user = {
-					"subscribe": 0,
-					"openId": "testId",
-					"nickname": "Nickname",
-					"sex": 1,
-					"city": "上海",
-					"country": "中国",
-					"province": "上海",
-					"language": "zh_CN",
-					"headimgurl": null,
-					"subscribe_time": 1382695957
-				};
-		}
-		function callback(result) {  
-			var resultObj = eval(result);
-			window.user.openId = resultObj.result;
-			// alert(window.user.openId);  //输出openid    
-		}
-		function getQueryString(name) {    
-			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");    
-			var r = window.location.search.substr(1).match(reg);    
-			if (r != null) return unescape(r[2]); 
-			return null;    
-		}
-		if (isWeiXin() && !CONFIG.DEBUG) {
-			var code = getQueryString("code");
-			$.ajax({
-				async: false,       
-				url: CONFIG.OAUTH_URL, //这是我的服务端处理文件php的      
-				type: "GET",       
-				//下面几行是jsoup，如果去掉下面几行的注释，后端对应的返回结果也要去掉注释      
-				// dataType: 'jsonp',       
-				// jsonp: 'callback', 
-				// jsonp的值自定义,如果使用jsoncallback,那么服务器端,要返回一个jsoncallback的值对应的对象.       
-				// jsonpCallback:'callback',      
-				data: {code:code}, //传递本页面获取的code到后台，以便后台获取openid      
-				timeout: 5000,       
-				success: function (result) {         
-					callback(result);      
-				},       
-				error: function (jqXHR, textStatus, errorThrown) { 
-					// alert(textStatus);
-				}   
-			});
-		}
-		function isAppLoaded() {	
-			console.log("is audio loaded");
-			$(".loader").fadeOut("slow");
+		
+		window.onViewResultEvent = new YAHOO.util.CustomEvent('onViewResultEvent');
+		function viewResult(event, arguments, obj) {
+			var url = window.location.href.substring(0, window.location.href.lastIndexOf('/')) + "/result.html";
+			window.location.href = url;
 		};
-		
-		
+		window.onViewResultEvent.subscribe(viewResult);
+		// function isAppLoaded() {	
+		// 	console.log("is audio loaded");
+		// 	$(".loader").fadeOut("slow");
+		// };
 		$(window).load(function () {
 			window.location = "#top";
 			var audioElement = $("#photography_audio");
 			audioElement.preload = 'auto';
 			audioElement.load();
-			$(".loader").delay(10).fadeOut("slow");
+			
 			// $(audioElement).on("loadeddata", function () {
 			// 	console.log("is audio loaded");
 			// 	$(".loader").fadeOut("slow");
@@ -115,7 +92,43 @@
 			// 	$(".loader").fadeOut("slow");
 			// });
 		});
+		
+		function callback(result) {  
+			var resultObj = eval(result);
+			globalUser = JSON.parse(resultObj.result);
+			// alert("After-authCallback " + JSON.stringify(globalUser));
+			// window.onGameStartEvent.fire({type:'gameStart', openId : globalUser.openId, success : true});
+			// alert("My name " + globalUser.nickname);  //输出openid    
+		};
+		function getQueryString(name) {    
+			var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");    
+			var r = window.location.search.substr(1).match(reg);    
+			if (r != null) return unescape(r[2]); 
+			return null;    
+		};
 		$(document).ready(function () {
+			if (isWeiXin() && !CONFIG.DEBUG) {
+				var code = getQueryString("code");
+				$.ajax({
+					async: false,       
+					url: CONFIG.OAUTH_URL, //这是我的服务端处理文件php的      
+					type: "GET",       
+					//下面几行是jsoup，如果去掉下面几行的注释，后端对应的返回结果也要去掉注释      
+					// dataType: 'jsonp',       
+					// jsonp: 'callback', 
+					// jsonp的值自定义,如果使用jsoncallback,那么服务器端,要返回一个jsoncallback的值对应的对象.       
+					// jsonpCallback:'callback',      
+					data: {code:code}, //传递本页面获取的code到后台，以便后台获取openid      
+					timeout: 5000,       
+					success: function (result) {         
+						callback(result);      
+					},       
+					error: function (jqXHR, textStatus, errorThrown) { 
+						// alert(textStatus);
+					}   
+				});
+			}
+		
 			var canvas = $("#gameCanvas");
 			canvas.width = window.innerWidth;
 			canvas.height = window.innerHeight;	
@@ -135,8 +148,7 @@
 					"width": $(document).width(),
 					"height": $(document).height()
 				};
-			}
-			$(".loader").delay(10).fadeOut("slow");			
+			}		
 		});		
 		$(function () {
 			if (navigator.userAgent.match(/iPhone/i) ) { // || navigator.userAgent.match(/iPad/i)

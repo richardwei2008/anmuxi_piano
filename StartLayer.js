@@ -74,10 +74,10 @@ StartLayer.prototype.newBlock = function (i, j) {
     //     wordNum = 3
     // }
 	var welcomeText = "没有授权访问您的用户信息";
-	// alert(window.user != undefined);
-	// alert(window.user.openId);
-	if (window.user != undefined && window.user.openId != null && window.user.openId != "testId") {
-		welcomeText = "Welcome, " + window.user.openId;
+	// alert(globalUser != undefined);
+	// alert(globalUser.nickname);
+	if (globalUser != undefined && globalUser.nickname != null && globalUser.nickname != "NICKNAME") {
+		welcomeText = "Welcome, " + globalUser.nickname;
 	}
 	var welcomeLabel = cc.LabelTTF.create(welcomeText, "Arial", 15);
     block.addChild(welcomeLabel);
@@ -116,6 +116,7 @@ StartLayer.prototype.newBlock = function (i, j) {
 
 StartLayer.prototype.onTouchesBegan = function (touches, event) {
     this.pBegan = touches[0].getLocation();  // to get touch position
+	// alert("Before-game " + JSON.stringify(globalUser));
     for (var j = 0; j < 1; j++) {
         for (var i = 0; i < 1; i++) {
             var block = this.tables[j][i];

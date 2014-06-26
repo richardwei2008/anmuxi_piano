@@ -1,6 +1,5 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-    
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width,inital-scale=1.0,maximum-scale=1.0,user-scalable=no">
@@ -16,7 +15,10 @@
 		<link rel="stylesheet" href="css/loader.css">
 		<script src="js/jquery.min.js"></script>
 		<script src="js/jquery.tmpl.js"></script>
+		<script src="js/storage.js"></script>
+		<!--
 		<script src="js/freeze-touch-move.js"></script>
+		-->
 		<script type="text/javascript"> 
 			var me = null;
 			var users = null;
@@ -26,12 +28,13 @@
 				// 	alert(JSON.stringify(json));
 				// });
 				$.ajax({
-					type : "Get",
+					type : "GET",
 					url : "services/read.php",
 					datatype : "json",
+					data: {openId: globalUser.openId},
 					success : function (response) {
 						// $("#err").html(response);
-						// alert(response);
+						alert(response);
 						var responseObj = JSON.parse(response);
 						users = responseObj.dataList;
 						me = responseObj.me;
@@ -49,8 +52,8 @@
 						$("#loader").fadeOut("slow");	
 					},
 					error : function (xhr, textStatus, errorThrown) {
-						// alert(errorThrown);
-						$("#loader").fadeOut("slow");
+						alert(errorThrown);
+						$("#loader").fadeOut("slow");						
 						$("#err").html(errorThrown);
 					}
 				});
@@ -130,7 +133,7 @@
                     </td>
 					<td width="30%">
                         <div align="right" class="font3 highlight">
-                            <b>${score}秒</b>
+                            <b>${score}块</b>
                         </div>
                     </td>
 					</tr>
@@ -162,7 +165,7 @@
                     </td>
 					<td width="30%">
                         <div align="right" class="font3">
-                            19.25秒
+                            19.25块
                         </div>
                     </td>
                 </tr>
@@ -189,7 +192,7 @@
                     </td>
 					<td width="30%">
                         <div align="right" class="font3">
-                            ${score}秒
+                            ${score}块
                         </div>
                     </td>
 					</tr>
@@ -221,7 +224,7 @@
                     </td>
 					 <td width="30%">
                         <div align="right" class="font3">
-                            19.25秒
+                            19.25块
                         </div>
                     </td>
                 </tr>
@@ -243,7 +246,7 @@
                     </td>
 					<td width="30%">
                         <div align="right" class="font3">
-                            19.25秒
+                            19.25块
                         </div>
                     </td>
                 </tr>
@@ -265,7 +268,7 @@
                     </td>
 					<td width="30%">
                         <div align="right" class="font3">
-                            19.25秒
+                            19.25块
                         </div>
                     </td>
                 </tr>

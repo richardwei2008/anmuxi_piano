@@ -1,13 +1,25 @@
-<?php 
+<?php session_start();
 	$code = $_GET['code']; //前端传来的code值
 	$appid = "wxc63c757bdae5dd41";
 	$appsecret = "fa68568880b31435badf3070cdd27a54";//获取openid
-	$url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=$appid&secret=$appsecret&code=$code&grant_type=authorization_code";
+	$url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=$appid&secret=$appsecret&code=$code&grant_type=authorization_code";	
 	$result = https_request($url);
 	$jsoninfo = json_decode($result, true);
 	$openid = $jsoninfo["openid"]; //从返回json结果中读出openid
+	
+	$_SESSION['openId']=$openid;
+	
+	/** richard add read profile */
+	$urlToGetAccessToken = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=".$appid."&secret=".$appsecret;
+	$token_response = https_request($urlToGetAccessToken);
+	$jsoninfo = json_decode($token_response, true);
+	$access_token = $jsoninfo["access_token"];
+	$urlToGetUserProfile = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=$access_token&openid=$openid&lang=zh_CN";
+	$user_response = https_request($urlToGetUserProfile);
+	/** end read profile */
+	
 	$callback=$_GET['callback'];  // 
-	echo $callback."({result:'".$openid."'})"; 
+	echo $callback."({result:'".$user_response."'})"; 
 	/// echo $openid; //把openid 送回前端
 	function https_request($url, $data = null) {    
 		$curl = curl_init();

@@ -24,8 +24,8 @@
 	color : red; 
 }
 .pic {
-	padding: 2px;
-	margin: 2px;
+	padding: 4px;
+	margin: 4px;
 	border-radius:50%; 
 	overflow:hidden;
 }
