@@ -102,9 +102,7 @@ StartLayer.prototype.newBlock = function (i, j) {
 	/***** game instruction **************/
 	var iconScale = 0.8;
 	var yogurtIcon = cc.Sprite.create("res/yogurt.png");
-    block.addChild(yogurtIcon);
-	yogurtIcon.setScaleX(iconScale);
-    yogurtIcon.setScaleY(iconScale);
+    block.addChild(yogurtIcon);	
     yogurtIcon.setPosition(cc.p(this.blockWidth / this.scaleX * 0.5, this.blockHeight / this.scaleY * 0.8));	
     yogurtIcon.setAnchorPoint(cc.p(0.5, 0.5));
 	var yogurtLabel = cc.LabelTTF.create("点击 浓 醇 酸 奶  ( 游戏得分 +1 )", "Arial", 30);
@@ -124,16 +122,18 @@ StartLayer.prototype.newBlock = function (i, j) {
     proteinLabel.setAnchorPoint(cc.p(0.5, 0.5));
 	
 	/***** game instruction **************/
-	
-	
-	
-	
-	
-	var clickLabel = cc.LabelTTF.create('开始游戏', "Arial", 40);
+	var clickLabel = cc.LabelTTF.create('点击开始游戏', "Arial", 40);
 	block.addChild(clickLabel);
     clickLabel.setPosition(cc.p(this.blockWidth / this.scaleX * 0.5, this.blockHeight / this.scaleY * 0.2));	
     clickLabel.setAnchorPoint(cc.p(0.5, 0.5));
 	this.startNode.enter = clickLabel;
+	
+	var clickIcon = cc.Sprite.create("image/tap.png");
+	block.addChild(clickIcon);
+    clickIcon.setPosition(cc.p(this.blockWidth / this.scaleX * 0.5 + 80, this.blockHeight / this.scaleY * 0.2 - 40));	
+    clickIcon.setAnchorPoint(cc.p(0.5, 0.5));
+	
+	
     // var colors = [cc.c3b(0, 0, 0) /*black*/, cc.c3b(255, 255, 255) /*white*/];
 	// richard modify the color for anmuxi RGB(0, 92, 165)	
 	var colors = [cc.c3b(0, 92, 165) /*dark blue*/, cc.c3b(255, 255, 255) /*white*/];	

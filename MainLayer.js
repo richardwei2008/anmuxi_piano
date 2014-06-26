@@ -105,13 +105,19 @@ MainLayer.prototype.newBlock = function (i, j, colorType) {
     //simple block
     var block = cc.Sprite.create("res/whiteBlock.png");
     block.setPosition(cc.p(this.positionX + this.blockWidth * i, this.blockHeight / 2 + this.blockHeight * j));
-    block.setScaleX(this.scaleX * 1.01);
-    block.setScaleY(this.scaleY * 1.005);
+	if (cc.Director.getInstance().getWinSize().width < 800) {
+		block.setScaleX(this.scaleX * 1.01);
+		block.setScaleY(this.scaleY * 1.005);
+	} else {
+		block.setScaleX(this.scaleX);
+		block.setScaleY(this.scaleY);
+	}
     block.setZOrder(100);
     block.setAnchorPoint(cc.p(0.5, 0.5));
     var color = "white";
 	// var seconds = 0;
 	var award = 0;
+	var awardType = "tile";
     if (j == 0) {
         // block.setColor(cc.c3b(0, 255, 0));
 		// richard modify the footer color to light blue
@@ -131,6 +137,24 @@ MainLayer.prototype.newBlock = function (i, j, colorType) {
 				startLabel.setColor(cc.c3b(255, 255, 255));
 				startLabel.setZOrder(1);
 			}
+			if (j == 10 || j == 30) {
+				// seconds = 1;
+				// var pointLabel = cc.LabelTTF.create("减" + seconds + "秒", "Arial", 50);
+				awardType = "seconds";
+				award = 1.35;		
+				var pointLabel = cc.LabelTTF.create("+ 35%", "Arial", 50);				
+				block.addChild(pointLabel);
+				pointLabel.setPosition(cc.p((this.blockWidth + 70 * 0.5) * window.devicePixelRatio, (this.blockHeight * 2) * window.devicePixelRatio - this.blockHeight * 0.5));	
+				pointLabel.setAnchorPoint(cc.p(0.5, 0.5));
+				pointLabel.setColor(cc.c3b(255, 255, 255));
+				pointLabel.setZOrder(2);
+				var pointIcon = cc.Sprite.create("res/protein.png");
+				block.addChild(pointIcon);
+				pointIcon.setPosition(cc.p(this.blockWidth * window.devicePixelRatio, (this.blockHeight - 20) * window.devicePixelRatio)) ;		
+				pointIcon.setAnchorPoint(cc.p(0.5, 0.5));
+				pointIcon.setColor(cc.c3b(255, 255, 255));
+				pointIcon.setZOrder(1);				
+			}
 			if (j % 10 == 7) {
 				// seconds = 1;
 				// var pointLabel = cc.LabelTTF.create("减" + seconds + "秒", "Arial", 50);
@@ -141,7 +165,7 @@ MainLayer.prototype.newBlock = function (i, j, colorType) {
 				pointLabel.setAnchorPoint(cc.p(0.5, 0.5));
 				pointLabel.setColor(cc.c3b(255, 255, 255));
 				pointLabel.setZOrder(2);
-				var pointIcon = cc.Sprite.create("res/protein.png");
+				var pointIcon = cc.Sprite.create("res/yogurt.png");
 				block.addChild(pointIcon);
 				pointIcon.setPosition(cc.p(this.blockWidth * window.devicePixelRatio, (this.blockHeight - 20) * window.devicePixelRatio)) ;		
 				pointIcon.setAnchorPoint(cc.p(0.5, 0.5));
@@ -155,7 +179,7 @@ MainLayer.prototype.newBlock = function (i, j, colorType) {
         }
     }
     // block.blockData = {col: i, row: j, color: color, seconds : seconds};
-	block.blockData = {col: i, row: j, color: color, award : award};
+	block.blockData = {col: i, row: j, color: color, award : award, awardType : awardType};
     this.blockNode.addChild(block);
     return block;
 };
@@ -367,8 +391,11 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
                             	// if (block.blockData.seconds != 0) {
                             	// 	this.currentTime = this.currentTime - block.blockData.seconds;
                             	// }
-								if (block.blockData.award != 0) {
+								if (block.blockData.awardType == 'tile' && block.blockData.award != 0) {
                             		this.totalTap = this.totalTap + block.blockData.award;
+                            	}
+								if (block.blockData.awardType == 'seconds' && block.blockData.award != 0) {
+                            		this.currentTime = this.currentTime * block.blockData.award;
                             	}
                             	//create new sprite
                             	if (this.pianoLength < this.pianoLengthIndex) { //not reach top
