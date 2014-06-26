@@ -23,7 +23,7 @@ body,html
 	height: 100%;
 }
 #gameCanvas {
-	background-color: #0201CB;/*#005CA5; */
+	background-color: #005C87;/*#005CA5; */
 	position: relative;
     left: 0;
     right: 0;
