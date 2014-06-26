@@ -105,8 +105,8 @@ MainLayer.prototype.newBlock = function (i, j, colorType) {
     //simple block
     var block = cc.Sprite.create("res/whiteBlock.png");
     block.setPosition(cc.p(this.positionX + this.blockWidth * i, this.blockHeight / 2 + this.blockHeight * j));
-    block.setScaleX(this.scaleX);
-    block.setScaleY(this.scaleY);
+    block.setScaleX(this.scaleX * 1.01);
+    block.setScaleY(this.scaleY * 1.005);
     block.setZOrder(100);
     block.setAnchorPoint(cc.p(0.5, 0.5));
     var color = "white";
