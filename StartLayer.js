@@ -39,8 +39,10 @@ StartLayer.prototype.onEnter = function () {
     //this.blockHeight = 1014; // winSize.height;
     console.log("[blockWidth , blockHeight]: [" + this.blockWidth + ", " + this.blockHeight + "] ");
 	// alert("[blockWidth , blockHeight]: [" + this.blockWidth + ", " + this.blockHeight + "] ");
-	this.scaleX = this.blockWidth / 320;
-    this.scaleY = this.blockHeight / 500;
+	// this.scaleX = this.blockWidth / 320;
+    // this.scaleY = this.blockHeight / 500;
+	this.scaleX = this.blockWidth / 640;
+    this.scaleY = this.blockHeight / 1000;
 	console.log("[scaleX , scaleY]: [" + this.scaleX + ", " + this.scaleY + "] ");
 	// only 1 block
     this.tables = new Array(1);
@@ -56,9 +58,17 @@ StartLayer.prototype.onEnter = function () {
 };
 
 StartLayer.prototype.newBlock = function (i, j) {
-    var block = cc.Sprite.create("res/whiteBlock.png");
+    // var block = cc.Sprite.create("res/whiteBlock.png");
+    // block.setPosition(cc.p(this.positionX, this.blockHeight / 2)); // 
+    // block.setScaleX(this.scaleX);
+    // block.setScaleY(this.scaleY);
+    // block.setZOrder(100);
+    // block.setAnchorPoint(cc.p(0.5, 0.5));	
+	var block = cc.Sprite.create("image/game.jpg");
     block.setPosition(cc.p(this.positionX, this.blockHeight / 2)); // 
-    block.setScaleX(this.scaleX);
+    // block.setScaleX(window.resolution.width / 320 / 2);
+    // block.setScaleY(window.resolution.height / 500 / 2);
+	block.setScaleX(this.scaleX);
     block.setScaleY(this.scaleY);
     block.setZOrder(100);
     block.setAnchorPoint(cc.p(0.5, 0.5));
@@ -81,16 +91,47 @@ StartLayer.prototype.newBlock = function (i, j) {
 	}
 	var welcomeLabel = cc.LabelTTF.create(welcomeText, "Arial", 15);
     block.addChild(welcomeLabel);
-    welcomeLabel.setPosition(cc.p(this.blockWidth / this.scaleX * 0.5 , this.blockHeight / this.scaleY * 0.9));	
+    welcomeLabel.setPosition(cc.p(this.blockWidth / this.scaleX * 0.5 , this.blockHeight / this.scaleY));	
     welcomeLabel.setAnchorPoint(cc.p(0.5, 0.5));
 
-    var blockLabel = cc.LabelTTF.create(words[wordNum], "Arial", 60);
+    var blockLabel = cc.LabelTTF.create(words[wordNum], "Arial", 100);
     block.addChild(blockLabel);
-    blockLabel.setPosition(cc.p(this.blockWidth / this.scaleX * 0.5, this.blockHeight / this.scaleY * 0.6));	
+    blockLabel.setPosition(cc.p(this.blockWidth / this.scaleX * 0.5, this.blockHeight / this.scaleY * 0.8));	
     blockLabel.setAnchorPoint(cc.p(0.5, 0.5));
+	
+	/***** game instruction **************/
+	var iconScale = 0.4;
+	var yogurtIcon = cc.Sprite.create("res/yogurt.png");
+    block.addChild(yogurtIcon);
+	yogurtIcon.setScaleX(iconScale);
+    yogurtIcon.setScaleY(iconScale);
+    yogurtIcon.setPosition(cc.p(this.blockWidth / this.scaleX * 0.5, this.blockHeight / this.scaleY * 0.65));	
+    yogurtIcon.setAnchorPoint(cc.p(0.5, 0.5));
+	var yogurtLabel = cc.LabelTTF.create("浓 醇 酸 奶  ( 游戏得分 +1 )", "Arial", 30);
+    block.addChild(yogurtLabel);
+    yogurtLabel.setPosition(cc.p(this.blockWidth / this.scaleX * 0.5, this.blockHeight / this.scaleY * 0.55));	
+    yogurtLabel.setAnchorPoint(cc.p(0.5, 0.5));
+	
+	var proteinIcon = cc.Sprite.create("res/protein.png");
+    block.addChild(proteinIcon);
+	proteinIcon.setScaleX(iconScale);
+    proteinIcon.setScaleY(iconScale);
+    proteinIcon.setPosition(cc.p(this.blockWidth / this.scaleX * 0.5, this.blockHeight / this.scaleY * 0.45));	
+    proteinIcon.setAnchorPoint(cc.p(0.5, 0.5));
+	var proteinLabel = cc.LabelTTF.create("多35%蛋白质  (游戏时间 +35%)", "Arial", 30);
+    block.addChild(proteinLabel);
+    proteinLabel.setPosition(cc.p(this.blockWidth / this.scaleX * 0.5, this.blockHeight / this.scaleY * 0.35));	
+    proteinLabel.setAnchorPoint(cc.p(0.5, 0.5));
+	
+	/***** game instruction **************/
+	
+	
+	
+	
+	
 	var clickLabel = cc.LabelTTF.create('开始游戏', "Arial", 40);
 	block.addChild(clickLabel);
-    clickLabel.setPosition(cc.p(this.blockWidth / this.scaleX * 0.5, this.blockHeight / this.scaleY * 0.3));	
+    clickLabel.setPosition(cc.p(this.blockWidth / this.scaleX * 0.5, this.blockHeight / this.scaleY * 0.2));	
     clickLabel.setAnchorPoint(cc.p(0.5, 0.5));
 	this.startNode.enter = clickLabel;
     // var colors = [cc.c3b(0, 0, 0) /*black*/, cc.c3b(255, 255, 255) /*white*/];

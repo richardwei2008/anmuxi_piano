@@ -141,7 +141,7 @@ MainLayer.prototype.newBlock = function (i, j, colorType) {
 				pointLabel.setAnchorPoint(cc.p(0.5, 0.5));
 				pointLabel.setColor(cc.c3b(255, 255, 255));
 				pointLabel.setZOrder(2);
-				var pointIcon = cc.Sprite.create("res/yogurt.png");
+				var pointIcon = cc.Sprite.create("res/protein.png");
 				block.addChild(pointIcon);
 				pointIcon.setPosition(cc.p(this.blockWidth * window.devicePixelRatio, (this.blockHeight - 20) * window.devicePixelRatio)) ;		
 				pointIcon.setAnchorPoint(cc.p(0.5, 0.5));
