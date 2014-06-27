@@ -23,18 +23,24 @@
 			var me = null;
 			var users = null;
 			var totalNum = null;
+			function getURLParameter(name) {
+				return decodeURI(
+					(RegExp(name + '=' + '(.+?)(&|$)').exec(location.search) || [, null])[1]);
+			}
 			$(window).load(function () {
 				// $.getJSON("services/server.php", function(json){ 
 				// 	alert(JSON.stringify(json));
 				// });
+				// alert("Pre-Get Result " + JSON.stringify(globalUser));
+				// alert("Pre-Get Result URL openId " + getURLParameter('openId'));
 				$.ajax({
 					type : "GET",
 					url : "services/read.php",
 					datatype : "json",
-					data: {openId: globalUser.openId},
+					data: {openId: getURLParameter('openId')},
 					success : function (response) {
 						// $("#err").html(response);
-						alert(response);
+						// alert(response);
 						var responseObj = JSON.parse(response);
 						users = responseObj.dataList;
 						me = responseObj.me;
@@ -61,7 +67,7 @@
 		</script>
 		<script type="text/javascript">		
 			$(window).ready(function () {
-				var url = window.location.href.substring(0, window.location.href.lastIndexOf('/')) + "/game.html";			
+				var url = window.location.href.substring(0, window.location.href.lastIndexOf('/')) + "/index.html";			
 				$('#back').click(function(){
 					window.location.href = url;
 				});			
@@ -91,11 +97,11 @@
                     <tr>
                         <td width="20%">
                             <div align="left" style="padding-left: 20px;">
-                                <img src="image/logo.png" width="100%" />
+                                <img src="image/logo.png" width="80%" />
                             </div>
                         </td>
-                        <td>
-                            <!--
+                        <td width="30%">
+							<!--
                             <div align="center" style=" font-family:黑体; color:#666;font-size:18px">
                                 经典模式
                             </div>
@@ -105,7 +111,7 @@
                         </td>
                         <td width="30%">
                             <div id = "back" align="center" style=" font-family:黑体; color:#0099CC;padding-left:20px;font-size:18px">
-                                再玩一次
+                                <b>再玩一次</b>
                             </div>
                         </td>
                     </tr>
