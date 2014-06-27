@@ -116,7 +116,7 @@
 			return null;    
 		};
 		$(document).ready(function () {
-			if (isWeiXin() && !CONFIG.DEBUG) {
+			if (!CONFIG.DEBUG && isWeiXin()) {
 				var code = getQueryString("code");
 				$.ajax({
 					async: false,       

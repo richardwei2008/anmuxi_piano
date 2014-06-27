@@ -87,6 +87,14 @@ MainLayer.prototype.onEnter = function () {
     this.scoreLabel.setColor(cc.c3b(178, 206, 228));
     this.scoreLabel.setZOrder(200);
 	
+	// effect
+	this.effectLabel = cc.LabelTTF.create("I Want U!", "Arial", 110 / window.devicePixelRatio);
+	// this.rootNode.addChild(effectLabel);
+    this.effectLabel.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 2));
+    this.effectLabel.setAnchorPoint(cc.p(0.5, 0.5));
+	this.effectLabel.setColor(cc.c3b(178, 206, 228));
+	this.effectLabel.setZOrder(200);
+	
     //tables
     this.tables = new Array(this.pianoLengthIndex);
     for (var j = 0; j < this.pianoLength; j++) {
@@ -226,7 +234,7 @@ MainLayer.prototype.createTopOverNode = function () {
 	// richard modify the mode label to dark blue
     // modeLabel.setColor(cc.c3b(0, 92, 165));
     modeLabel.setAnchorPoint(cc.p(0.5, 0.5));
-
+	
     //result
     // var resultLabel = cc.LabelTTF.create("成功", "Arial", 110 / window.devicePixelRatio);
 	var successLabel = cc.Sprite.create("image/success.png");
@@ -396,6 +404,16 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
                             	// }
 								if (block.blockData.awardType == 'tile' && block.blockData.award != 0) {
                             		this.totalTap = this.totalTap + block.blockData.award;
+									this.rootNode.addChild(this.effectLabel);
+									this.effectLabel.runAction(cc.Sequence.create(
+										cc.ScaleTo.create(0.1, 1.3),
+										cc.CallFunc.create(function () {
+											this.effectLabel.setScaleX(0.1);
+											this.effectLabel.setScaleY(0.1);
+											this.rootNode.removeChild(this.effectLabel);					
+										}, this)
+									), this);
+																										
                             	}
 								if (block.blockData.awardType == 'seconds' && block.blockData.award != 0) {
                             		this.currentTime = this.currentTime * block.blockData.award;
@@ -420,11 +438,7 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
                                     cc.log("end");
                                     this.gameStatus = OVER;
                                     cc.AudioEngine.getInstance().playEffect(SOUNDS.win, false);
-									PauseAudio();
-									// TODO refactor to fire event mode
-									// setTimeout(function () {
-									// 	window.location.href = "win.html";
-									// }, 1000);
+									PauseAudio();									
                                 }
                                 this.blockNode.runAction(cc.MoveTo.create(0.2, cc.p(0, (this.blockNode.getPositionY() - this.blockHeight * heightNum))));
                                 this.moveNum += 1;
@@ -467,7 +481,7 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
         //back
         var backRect = cc.rectCreate(this.scoreNode.back.getPosition(), [50, 30]);
         if (cc.rectContainsPoint(backRect, this.pBegan)) {
-            this.scoreNode.back.runAction(cc.Sequence.create(cc.ScaleTo.create(0.1, 1.1),
+            this.scoreNode.back.runAction(cc.Sequence.create(cc.ScaleTo.create(0.1, 1.005),
                 cc.CallFunc.create(function () {
                     cc.AudioEngine.getInstance().stopAllEffects();
                     cc.BuilderReader.runScene("", "MainLayer");
@@ -495,7 +509,7 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
 		var fireEvent = {type:'viewResult', success : true, score : this.totalTap};
         var rankRect = cc.rectCreate(this.scoreNode.rank.getPosition(), [50, 30]);
         if (cc.rectContainsPoint(rankRect, this.pBegan)) {
-            this.scoreNode.rank.runAction(cc.Sequence.create(cc.ScaleTo.create(0.1, 1.1),
+            this.scoreNode.rank.runAction(cc.Sequence.create(cc.ScaleTo.create(0.05, 1.05),
                 cc.CallFunc.create(function () {
                     cc.AudioEngine.getInstance().stopAllEffects();
 					window.onViewResultEvent.fire(fireEvent);					
