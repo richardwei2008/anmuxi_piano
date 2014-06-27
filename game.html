@@ -57,22 +57,27 @@
 			 	data : JSON.stringify(globalUser),
 			 	dataType : 'json',
 			 	success : function (data, textStatus, xhr) {
-			 		// alert("Post-submit (success) " + textStatus);					
+			 		// alert("Post-submit (success) " + xhr.responseText);						
 			 	},
 			 	error : function (xhr, textStatus, errorThrown) {
-					// alert("Post-submit (fail) " + xhr.responseText);
-					$("#err").html(xhr.responseText);
+					// alert("Post-submit (failed) " + xhr.responseText);	
+					// $("#err").html(xhr.responseText);
 				}
 			});
+			window.onViewResultEvent = new YAHOO.util.CustomEvent('onViewResultEvent');
+			function viewResult(event, arguments, obj) {
+				var url = window.location.href.substring(0, window.location.href.lastIndexOf('/')) + "/result.html";
+				if (globalUser.openid != null && globalUser.openid != "TESTID") {
+					url += "?openId=" + globalUser.openid;
+				}
+				window.location.href = url;
+				// alert("Before-viewResult " + JSON.stringify(globalUser));
+			};
+			window.onViewResultEvent.subscribe(viewResult);
 		};
 		window.onGameOverEvent.subscribe(submitScore);
 		
-		window.onViewResultEvent = new YAHOO.util.CustomEvent('onViewResultEvent');
-		function viewResult(event, arguments, obj) {
-			var url = window.location.href.substring(0, window.location.href.lastIndexOf('/')) + "/result.html";
-			window.location.href = url;
-		};
-		window.onViewResultEvent.subscribe(viewResult);
+		
 		// function isAppLoaded() {	
 		// 	console.log("is audio loaded");
 		// 	$(".loader").fadeOut("slow");
@@ -97,6 +102,10 @@
 			var resultObj = eval(result);
 			globalUser = JSON.parse(resultObj.result);
 			// alert("After-authCallback " + JSON.stringify(globalUser));
+			if (globalUser.nickname == null) {
+				alert("您还没有关注公众号,请先关注");
+				window.location.href = CONFIG.DOMAIN;
+			}
 			// window.onGameStartEvent.fire({type:'gameStart', openId : globalUser.openId, success : true});
 			// alert("My name " + globalUser.nickname);  //输出openid    
 		};
