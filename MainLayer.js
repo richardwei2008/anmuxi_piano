@@ -386,6 +386,7 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
                         }
 						if (j == 1) {
 							this.countDownStatus = START;
+							PlayAudio();
                         }		
                         //touch black
                         if (block.blockData.color == "black") {							
