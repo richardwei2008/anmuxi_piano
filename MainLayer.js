@@ -68,7 +68,7 @@ MainLayer.prototype.onEnter = function () {
 	this.scoreBg.setScaleY(this.scaleY);
 	// console.log("scaleY==" + this.scaleY);    
 	var positionY = winSize.height - 40 * this.scaleY;
-    this.scoreBg.setPosition(cc.p(360 / window.devicePixelRatio, positionY));
+    this.scoreBg.setPosition(cc.p(this.blockWidth * 4 / window.devicePixelRatio, positionY));
     // console.log("winSizeHeight==" + winSize.height); 
 	// console.log("scoreBgHeight==" + this.scoreBg._contentSize.height); 
 	// console.log("positionY==" + positionY);    
@@ -76,10 +76,10 @@ MainLayer.prototype.onEnter = function () {
 	this.rootNode.addChild(this.scoreBg);
     // this.scoreBg.setColor(cc.c3b(0, 92, 165));
     this.scoreBg.setZOrder(199);
-    this.scoreLabel = cc.LabelTTF.create("0.00", "Arial", 50 / window.devicePixelRatio);
-	this.scoreLabel.setString("总时间30.00''    块数: " + this.totalTap);
+    this.scoreLabel = cc.LabelTTF.create("0.00''", "Arial", 50 / window.devicePixelRatio);
+	// this.scoreLabel.setString("总时间30.00''    块数: " + this.totalTap);
     this.rootNode.addChild(this.scoreLabel);
-    this.scoreLabel.setPosition(cc.p(360 / window.devicePixelRatio, positionY - 10));
+    this.scoreLabel.setPosition(cc.p(this.blockWidth * 4 / window.devicePixelRatio, positionY - 10));
 	
     this.scoreLabel.setAnchorPoint(cc.p(0.5, 0.5));
     // this.scoreLabel.setColor(cc.c3b(255, 20, 147));
@@ -325,7 +325,7 @@ MainLayer.prototype.onUpdate = function (dt) {
     }
 	if (this.currentTime <= 0) {	
 		this.currentTime = 0;
-		this.scoreLabel.setString("时间到！" + "      块数: " + this.totalTap);
+		// this.scoreLabel.setString("时间到！" + "      块数: " + this.totalTap);
 		this.gameStatus = OVER;
 		this.createTopOverNode();   //create score node and move 
         cc.AudioEngine.getInstance().playEffect(SOUNDS.win, false);
@@ -351,7 +351,7 @@ MainLayer.prototype.onUpdate = function (dt) {
 	if (this.countDownStatus == START) {
 		this.currentTime -= dt;
 		if (this.currentTime - this.lastScoreTime > -0.09) {
-			this.scoreLabel.setString(getD(this.currentTime, 1) + "''    块数: " + this.totalTap);
+			this.scoreLabel.setString(getD(this.currentTime, 1) + "''");
 			this.lastScoreTime = this.currentTime;
 		}
 	} 
