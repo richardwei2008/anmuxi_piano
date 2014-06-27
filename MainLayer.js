@@ -239,7 +239,9 @@ MainLayer.prototype.createTopOverNode = function () {
 	this.scoreNode.success = successLabel;
     this.scoreNode.result = successLabel;
 	
-	var failedLabel = cc.Sprite.create("image/failed.png"); // cc.LabelTTF.create("失  败  了", "Arial", 60 / window.devicePixelRatio);    
+	var failedLabel = cc.Sprite.create("image/failed.png"); // cc.LabelTTF.create("失  败  了", "Arial", 60 / window.devicePixelRatio);   
+	failedLabel.setScaleX(0.7 * 1 / window.devicePixelRatio);
+	failedLabel.setScaleY(0.7 * 1 / window.devicePixelRatio);	
 	failedLabel.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 2 - 200 / window.devicePixelRatio ));
     failedLabel.setAnchorPoint(cc.p(0.5, 0.5));
     // failedLabel.setColor(cc.c3b(139, 58, 58));
