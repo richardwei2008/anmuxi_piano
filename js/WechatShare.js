@@ -31,11 +31,11 @@
 			"subscribe_time": null
 		};
 		window.shareData = {
-			"imgUrl": "http://192.168.1.9/image/icon.jpg",
+			"imgUrl": "http://beyondwechattest.sinaapp.com/image/icon.jpg",
 			//可以是页面的头像，也可以是自己定义的一张图片不变，每个页面可以有这个JS
-			"timeLineLink": "http://192.168.1.9",
-			"sendFriendLink": "http://192.168.1.9",
-			"weiboLink": "http://192.168.1.9",
+			"timeLineLink": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc63c757bdae5dd41&redirect_uri=http%3A%2F%2Fbeyondwechattest.sinaapp.com%2Findex.html?&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect",
+			"sendFriendLink": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc63c757bdae5dd41&redirect_uri=http%3A%2F%2Fbeyondwechattest.sinaapp.com%2Findex.html?&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect",
+			"weiboLink": "http://beyondwechattest.sinaapp.com",
 			//发送朋友圈
 			"tTitle": "伊利·安慕希浓醇酸奶—不睬白格，红包等你拿！速来挑战我！",
 			"tContent": "不睬白格，微信红包等你拿！更有希腊之旅，I Want You!",
@@ -137,9 +137,8 @@
 		if (typeof(window.shareData) != "undefined") {
 			window.shareData["tTitle"] = title;
 			window.shareData["fTitle"] = title;
-			window.shareData["wContent"] = title + " —— " + window.shareData["fContent"] + "【http://192.168.1.9/index.html】";
+			window.shareData["wContent"] = title + " —— " + window.shareData["fContent"] + "【https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc63c757bdae5dd41&redirect_uri=http%3A%2F%2Fbeyondwechattest.sinaapp.com%2Findex.html?&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect】";
 		}
-
 	};
 })();
 
@@ -151,5 +150,19 @@ function isWeiXin() {
 			return false;
 		}
 	};
-	
 
+function addWxContact(wxid) {      
+	if (typeof WeixinJSBridge == 'undefined') return false;          
+		WeixinJSBridge.invoke('addContact', {              
+		webtype: '1',              
+		username: 'gh_e5430c6431e7'          
+	},  function(d) {             
+		 // 返回d.err_msg取值，d还有一个属性是err_desc
+            // add_contact:cancel 用户取消
+            // add_contact:fail　关注失败
+            // add_contact:ok 关注成功
+            // add_contact:added 已经关注
+            WeixinJSBridge.log(d.err_msg);
+            cb && cb(d.err_msg);
+			});
+};
