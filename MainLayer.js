@@ -6,8 +6,8 @@ var MainLayer = function () {
     this.blockNode = this.blockNode || {};
     this.gameStatus = START;
 	this.countDownStatus = STOP;
-    // this.currentTime = 0;	
-	this.currentTime = 30;
+    this.currentTime = 0;	
+	// this.currentTime = 30;
     this.lastScoreTime = 0;
 	this.totalTap = 0;
 };
@@ -148,14 +148,14 @@ MainLayer.prototype.newBlock = function (i, j, colorType) {
 			if (j == 10 || j == 30) {
 				// seconds = 1;
 				// var pointLabel = cc.LabelTTF.create("减" + seconds + "秒", "Arial", 50);
-				awardType = "seconds";
-				award = 1.35;		
-				var pointLabel = cc.LabelTTF.create("+ 35%", "Arial", 50);				
-				block.addChild(pointLabel);
-				pointLabel.setPosition(cc.p((this.blockWidth + 70 * 0.5) * window.devicePixelRatio, (this.blockHeight * 2) * window.devicePixelRatio - this.blockHeight * 0.5));	
-				pointLabel.setAnchorPoint(cc.p(0.5, 0.5));
-				pointLabel.setColor(cc.c3b(255, 255, 255));
-				pointLabel.setZOrder(2);
+				// awardType = "seconds";
+				award = 35;		
+				// var pointLabel = cc.LabelTTF.create("+ 35%", "Arial", 50);				
+				// block.addChild(pointLabel);
+				// pointLabel.setPosition(cc.p((this.blockWidth + 70 * 0.5) * window.devicePixelRatio, (this.blockHeight * 2) * window.devicePixelRatio - this.blockHeight * 0.5));	
+				// pointLabel.setAnchorPoint(cc.p(0.5, 0.5));
+				// pointLabel.setColor(cc.c3b(255, 255, 255));
+				// pointLabel.setZOrder(2);
 				var pointIcon = cc.Sprite.create("res/protein.png");
 				block.addChild(pointIcon);
 				pointIcon.setPosition(cc.p(this.blockWidth * window.devicePixelRatio, (this.blockHeight - 20) * window.devicePixelRatio)) ;		
@@ -166,13 +166,13 @@ MainLayer.prototype.newBlock = function (i, j, colorType) {
 			if (j % 10 == 7) {
 				// seconds = 1;
 				// var pointLabel = cc.LabelTTF.create("减" + seconds + "秒", "Arial", 50);
-				award = 1;		
-				var pointLabel = cc.LabelTTF.create("奖" + award + "块", "Arial", 50);				
-				block.addChild(pointLabel);
-				pointLabel.setPosition(cc.p((this.blockWidth + 70 * 0.5) * window.devicePixelRatio, (this.blockHeight * 2) * window.devicePixelRatio - this.blockHeight * 0.5));	
-				pointLabel.setAnchorPoint(cc.p(0.5, 0.5));
-				pointLabel.setColor(cc.c3b(255, 255, 255));
-				pointLabel.setZOrder(2);
+				award = 10;		
+				// var pointLabel = cc.LabelTTF.create("奖" + award + "块", "Arial", 50);				
+				// block.addChild(pointLabel);
+				// pointLabel.setPosition(cc.p((this.blockWidth + 70 * 0.5) * window.devicePixelRatio, (this.blockHeight * 2) * window.devicePixelRatio - this.blockHeight * 0.5));	
+				// pointLabel.setAnchorPoint(cc.p(0.5, 0.5));
+				// pointLabel.setColor(cc.c3b(255, 255, 255));
+				// pointLabel.setZOrder(2);
 				var pointIcon = cc.Sprite.create("res/yogurt.png");
 				block.addChild(pointIcon);
 				pointIcon.setPosition(cc.p(this.blockWidth * window.devicePixelRatio, (this.blockHeight - 20) * window.devicePixelRatio)) ;		
@@ -237,7 +237,7 @@ MainLayer.prototype.createTopOverNode = function () {
 	
     //result
     // var resultLabel = cc.LabelTTF.create("成功", "Arial", 110 / window.devicePixelRatio);
-	var successLabel = cc.Sprite.create("image/success.png");
+	var successLabel = cc.Sprite.create("image/score.png");
     this.scoreNode.addChild(successLabel);
 	successLabel.setScaleX(spriteScale);
 	successLabel.setScaleY(spriteScale);
@@ -331,38 +331,39 @@ MainLayer.prototype.onUpdate = function (dt) {
     if (this.gameStatus == OVER) {
         return;
     }
-	if (this.currentTime <= 0) {	
-		this.currentTime = 0;
-		// this.scoreLabel.setString("时间到！" + "      块数: " + this.totalTap);
-		this.gameStatus = OVER;
-		this.createTopOverNode();   //create score node and move 
-        cc.AudioEngine.getInstance().playEffect(SOUNDS.win, false);
-		PauseAudio();        
-        this.scoreNode.bgColor.setColor(cc.c3b(178, 206, 228)); 
-        // this.scoreNode.result.setString("挑战成功");		
-		this.scoreNode.result2.setString(this.totalTap);
-        this.scoreNode.runAction(cc.MoveTo.create(0.2, cc.p(0, this.blockHeight * this.moveNum)));		
-
-		// var wxTitle = "安慕希浓醇酸奶—不睬白格，我已经踩到" + highscore + "格子啦！在" + rank[0] + "个人里已经排名第" + rank[1] + "！速度来挑战我！";
-		var wxTitle = "安慕希不睬白格赢红包，我已经踩到" + this.totalTap + "个格子啦！速度来挑战我！";
-		setWxContent(wxTitle);
-		// alert("After-game " + JSON.stringify(globalUser));
-		window.onGameOverEvent.fire({type:'gameOver', success : true, score : this.totalTap});
+	// if (this.currentTime <= 0) {	
+	// 	this.currentTime = 0;
+	// 	// this.scoreLabel.setString("时间到！" + "      块数: " + this.totalTap);
+	// 	this.gameStatus = OVER;
+		// this.createTopOverNode();   //create score node and move 
+        // cc.AudioEngine.getInstance().playEffect(SOUNDS.win, false);
+		// PauseAudio();        
+        // this.scoreNode.bgColor.setColor(cc.c3b(178, 206, 228)); 
+        // // this.scoreNode.result.setString("挑战成功");		
+		// this.scoreNode.result2.setString(this.totalTap);
+        // this.scoreNode.runAction(cc.MoveTo.create(0.2, cc.p(0, this.blockHeight * this.moveNum)));		
+        // 
+		// // var wxTitle = "安慕希浓醇酸奶—不睬白格，我已经踩到" + highscore + "格子啦！在" + rank[0] + "个人里已经排名第" + rank[1] + "！速度来挑战我！";
+		// var wxTitle = "安慕希不睬白格赢红包，我已经踩到" + this.totalTap + "个格子啦！速度来挑战我！";
+		// setWxContent(wxTitle);
+		// // alert("After-game " + JSON.stringify(globalUser));
+		// window.onGameOverEvent.fire({type:'gameOver', success : true, score : this.totalTap});
 		
-		return;
-	}
-    // this.currentTime += dt;
-    // if (this.currentTime - this.lastScoreTime > 0.09) {
-    //     this.scoreLabel.setString(getD(this.currentTime, 2) + "''");
-    //     this.lastScoreTime = this.currentTime;
-    // }
-	if (this.countDownStatus == START) {
-		this.currentTime -= dt;
-		if (this.currentTime - this.lastScoreTime > -0.09) {
-			this.scoreLabel.setString(getD(this.currentTime, 1) + "''");
+	// 	return;
+	// }
+	this.currentTime += dt;
+		if (this.currentTime - this.lastScoreTime > 0.09) {
+			this.scoreLabel.setString(getD(this.currentTime, 2) + "''");
 			this.lastScoreTime = this.currentTime;
 		}
-	} 
+	
+	// if (this.countDownStatus == START) {
+	// 	this.currentTime -= dt;
+	// 	if (this.currentTime - this.lastScoreTime > -0.09) {
+	// 		this.scoreLabel.setString(getD(this.currentTime, 1) + "''");
+	// 		this.lastScoreTime = this.currentTime;
+	// 	}
+	// } 
 };
 
 MainLayer.prototype.moveAddNewSprites = function () {
@@ -437,6 +438,7 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
                                     heightNum = 2;
                                     cc.log("end");
                                     this.gameStatus = OVER;
+									this.scoreNode.result2.setString(this.totalTap);
                                     cc.AudioEngine.getInstance().playEffect(SOUNDS.win, false);
 									PauseAudio();									
                                 }
@@ -465,8 +467,8 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
 							// richard modify
                             this.scoreNode.bgColor.setColor(cc.c3b(178, 206, 228)); 
                             // this.scoreNode.result.setString("失 败 了");
-							this.scoreNode.removeChild(this.scoreNode.success);
-							this.scoreNode.addChild(this.scoreNode.failed);
+							// this.scoreNode.removeChild(this.scoreNode.success);
+							// this.scoreNode.addChild(this.scoreNode.failed);
 							this.scoreNode.result2.setString(this.totalTap);
                             this.scoreNode.runAction(cc.MoveTo.create(0.2, cc.p(0, this.blockHeight * this.moveNum)));
 							// alert("After-game " + JSON.stringify(globalUser));
