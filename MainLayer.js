@@ -79,7 +79,8 @@ MainLayer.prototype.onEnter = function () {
     this.scoreLabel = cc.LabelTTF.create("0.00''", "Arial", 50 / window.devicePixelRatio);
 	// this.scoreLabel.setString("总时间30.00''    块数: " + this.totalTap);
     this.rootNode.addChild(this.scoreLabel);
-    this.scoreLabel.setPosition(cc.p(this.blockWidth * 4 / window.devicePixelRatio, positionY - 10));
+	
+    this.scoreLabel.setPosition(cc.p(cc.Director.getInstance().getWinSize().width / 2, positionY - 10));
 	
     this.scoreLabel.setAnchorPoint(cc.p(0.5, 0.5));
     // this.scoreLabel.setColor(cc.c3b(255, 20, 147));
@@ -113,12 +114,13 @@ MainLayer.prototype.newBlock = function (i, j, colorType) {
     //simple block
     var block = cc.Sprite.create("res/whiteBlock.png");
     block.setPosition(cc.p(this.positionX + this.blockWidth * i, this.blockHeight / 2 + this.blockHeight * j));
-	if (cc.Director.getInstance().getWinSize().width < 800) {
+	// alert(cc.Director.getInstance().getWinSize().width + "x" + cc.Director.getInstance().getWinSize().height);
+	if (cc.Director.getInstance().getWinSize().width > 320) {
+		block.setScaleX(this.scaleX * 0.99);
+		block.setScaleY(this.scaleY * 0.995);
+	} else {
 		block.setScaleX(this.scaleX * 1.01);
 		block.setScaleY(this.scaleY * 1.005);
-	} else {
-		block.setScaleX(this.scaleX);
-		block.setScaleY(this.scaleY);
 	}
     block.setZOrder(100);
     block.setAnchorPoint(cc.p(0.5, 0.5));
