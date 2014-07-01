@@ -112,7 +112,7 @@ MainLayer.prototype.onEnter = function () {
 
 MainLayer.prototype.newBlock = function (i, j, colorType) {
     //simple block
-    var block = cc.Sprite.create("res/whiteBlock.png");
+    var block = cc.Sprite.create("res/whiteBlock.png");	
     block.setPosition(cc.p(this.positionX + this.blockWidth * i, this.blockHeight / 2 + this.blockHeight * j));
 	// alert(cc.Director.getInstance().getWinSize().width + "x" + cc.Director.getInstance().getWinSize().height);
 	if (cc.Director.getInstance().getWinSize().width > 320) {
@@ -181,6 +181,14 @@ MainLayer.prototype.newBlock = function (i, j, colorType) {
 				pointIcon.setAnchorPoint(cc.p(0.5, 0.5));
 				pointIcon.setColor(cc.c3b(255, 255, 255));
 				pointIcon.setZOrder(1);				
+			}			
+			if (j == 99) {
+				var logoIcon = cc.Sprite.create("image/logo.png");
+				block.addChild(logoIcon);
+				logoIcon.setPosition(cc.p(this.blockWidth * window.devicePixelRatio, (this.blockHeight - 20) * window.devicePixelRatio)) ;		
+				logoIcon.setAnchorPoint(cc.p(0.5, 0.5));
+				logoIcon.setColor(cc.c3b(255, 255, 255));
+				logoIcon.setZOrder(1);		
 			}
             // block.setColor(cc.c3b(30, 30, 30));
 			// richard modify to new block color
