@@ -15,7 +15,7 @@ body,html
 	max-width: 1024px;
     background-color: #2D3132;/*#2D3132; */
 }
-#container {
+#container{
 	/*position:relative;
 	vertical-align:top;     解决ie浏览器背景填充时的空隙*/
 	margin: 0 auto;
@@ -26,6 +26,17 @@ body,html
 	background-size: 100% 100%; 
 	background-repeat: no-repeat;
 	
+}
+#horizontal {
+width: 100%;
+height: 100%;
+z-index: 100000;
+position: absolute;
+top: 0px;
+left: 0px;
+background: #000 url('../image/iphone.png') no-repeat center center;
+background-size: 170px auto;
+display: none;
 }
 #ad {
 	/*position:relative;
@@ -40,6 +51,7 @@ body,html
 	
 }
 #gameCanvas {
+	display:none;
 	background-color: #005C87;/*#005CA5; */
 	position: relative;
     left: 0;

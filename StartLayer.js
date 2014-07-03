@@ -83,16 +83,16 @@ StartLayer.prototype.newBlock = function (i, j) {
     // } else if (j == 1 && i == 1) {
     //     wordNum = 3
     // }
-	var welcomeText = "没有授权访问您的用户信息";
-	// alert(globalUser != undefined);
-	// alert(globalUser.nickname);
-	if (globalUser != undefined && globalUser.nickname != null && globalUser.nickname != "NICKNAME") {
-		welcomeText = "Welcome, " + globalUser.nickname;
-	}
-	var welcomeLabel = cc.LabelTTF.create(welcomeText, "Arial", 15);
-    block.addChild(welcomeLabel);
-    welcomeLabel.setPosition(cc.p(this.blockWidth / this.scaleX * 0.5 , this.blockHeight / this.scaleY));	
-    welcomeLabel.setAnchorPoint(cc.p(0.5, 0.5));
+	// var welcomeText = "没有授权访问您的用户信息";
+	// // alert(globalUser != undefined);
+	// // alert(globalUser.nickname);
+	// if (globalUser != undefined && globalUser.nickname != null && globalUser.nickname != "NICKNAME") {
+	// 	welcomeText = "Welcome, " + globalUser.nickname;
+	// }
+	// var welcomeLabel = cc.LabelTTF.create(welcomeText, "Arial", 15);
+    // block.addChild(welcomeLabel);
+    // welcomeLabel.setPosition(cc.p(this.blockWidth / this.scaleX * 0.5 , this.blockHeight / this.scaleY));	
+    // welcomeLabel.setAnchorPoint(cc.p(0.5, 0.5));
 
     var blockLabel = cc.LabelTTF.create(words[wordNum], "Arial", 100);
     // block.addChild(blockLabel);
@@ -124,7 +124,7 @@ StartLayer.prototype.newBlock = function (i, j) {
 	/***** game instruction **************/
 	var clickLabel = cc.Sprite.create("image/start.png"); // cc.LabelTTF.create('点击开始游戏', "Arial", 40);
 	block.addChild(clickLabel);
-    clickLabel.setPosition(cc.p(this.blockWidth / this.scaleX * 0.5, this.blockHeight / this.scaleY * 0.2));	
+    clickLabel.setPosition(cc.p(this.blockWidth / this.scaleX * 0.5, this.blockHeight / this.scaleY * 0.15));	
     clickLabel.setAnchorPoint(cc.p(0.5, 0.5));
 	this.startNode.enter = clickLabel;
 	

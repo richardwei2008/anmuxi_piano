@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>安慕希—浓醇酸奶</title>
+<title>安慕希浓醇酸奶·不踩白格</title>
+<meta name="description" content="安慕希不睬白格，微信红包等你拿！更有希腊之旅，I Want You!" />
 <meta name="viewport" content="width=device-width,inital-scale=0.5,maximum-scale=1, minimum-scale=1, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -12,15 +13,35 @@
 }
 </style>
 <link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="css/button.glare.css">
+<link type="text/css" href="css/loader.css" rel="stylesheet"/>
 <link rel="stylesheet" href="css/bootstrap.min.css">
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
+<script src="js/yahoo-min.js"></script>
+<script src="js/event-min.js"></script>
+<script src="js/getDevicePixelRatio-min.js"></script>
+<script src="js/json2.js"></script>
+<script src="js/storage.js"></script>
 <script src="js/WechatShare.js"></script>
 <script src="js/freeze-touch-move.js"></script>
-<script src="js/config.js"></script>
+<script src="js/config.js"></script>	
 <script type="text/javascript">		
+		window.onload = function () {
+			orientationchange();
+			window.onorientationchange = function () {
+				orientationchange();
+			}
+		}
+		function orientationchange() {
+			if (window.orientation == 0 || window.orientation == 180) {
+				//竖屏
+				document.getElementById("horizontal").style.display = 'none';
+			} else {
+				//横屏
+				document.getElementById("horizontal").style.display = 'block';
+			}
+		}
 		$(window).ready(function () {				
 			var redirect_uri = "http%3A%2F%2F" + window.location.hostname + "%2Fgame.html";
 			var url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc63c757bdae5dd41&redirect_uri="+ redirect_uri + "&response_type=code&scope=snsapi_base&state=1#wechat_redirect";
@@ -37,27 +58,81 @@
 			$('#enter').fadeOut(2000);	
 			// $('#ad').fadeIn(5000);
 			setTimeout(function(){
-				$("#ad").css("display", "block");
-			}, 6000);
+				$("#container").css("background-image", "url('image/ad.jpg')");
+				// $("#ad").css("display", "block");
+			}, 4000);
 			setTimeout(function(){
-				if (CONFIG.DEBUG) {
-					url = window.location.href.substring(0, window.location.href.lastIndexOf('/')) + "/game.html";
-				} else {
-					if (!isWeiXin()) {
-						alert("您所使用的不是微信浏览器，游戏成绩将无法参加赢红包活动");
-					}
-				}
-				window.location.href = url;
-			}, 8000);
+				$("#gameCanvas").css("display", "block");
+			}, 6000);
+			// setTimeout(function(){
+			// 	if (CONFIG.DEBUG) {
+			// 		url = window.location.href.substring(0, window.location.href.lastIndexOf('/')) + "/game.html";
+			// 	} else {
+			// 		if (!isWeiXin()) {
+			// 			alert("您所使用的不是微信浏览器，游戏成绩将无法参加赢红包活动");
+			// 		}
+			// 	}
+			// 	window.location.href = url;
+			// }, 8000);
 			// alert("window==" + $(window).width() + 'x' + $(window).height());
-			// alert("document==" + $(document).width() + 'x' + $(document).height());				
+			// alert("document==" + $(document).width() + 'x' + $(document).height());	
+
+			var canvas = $("#gameCanvas");
+			console.log("window.innerWidth=="+window.innerWidth);
+			console.log("window.innerHeight=="+window.innerHeight);
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;	
+			var ctx = canvas.get(0).getContext("2d");
+			ctx.fillStyle = "#0000FF";
+			ctx.fillRect(0, 0, canvas.width, canvas.height); 
+			console.log("canvas.width=="+canvas.width);
+			console.log("canvas.height=="+canvas.height);
+			// alert("canvas.width=="+canvas.width);
+			// alert("canvas.height=="+canvas.height);
+			// alert("body.height=="+$("body").height());
+			// alert("window==" + $(window).width() + 'x' + $(window).height());
+			// alert("document==" + $(document).width() + 'x' + $(document).height());
+			// alert("container==" + $('#container').width() + 'x' + $(container).height());
+			if (typeof(window.resolution) == "undefined") {
+				window.resolution = {
+					"width": $(document).width(),
+					"height": $(document).height()
+				};
+			}	
+
+			
 		});
-</script>
-<body>
-<div id="container">
-		<!--
-		<img id="pic" src="image/iwantu.jpg"></img>
 		
+		window.onViewBonusEvent = new YAHOO.util.CustomEvent('onViewBonusEvent');
+			function viewBonus(event, arguments, obj) {
+			try {
+				var url = window.location.href.substring(0, window.location.href.lastIndexOf('/')) + "/win.html";
+				window.location.href = url;
+				} catch (err) {
+					alert(err);
+				}
+			};
+			window.onViewBonusEvent.subscribe(viewBonus);
+		
+		$(function () {
+			if (navigator.userAgent.match(/iPhone/i) ) { // || navigator.userAgent.match(/iPad/i)
+				window.resolution.device = 'iPhone';
+			}
+		});		
+		
+		setTimeout(function animate() {
+				$('#container').css({"padding-top":"0px"});
+				$('#container').css({"padding-bottom":"0px"});		
+				$('#gameCanvas').css({"background-color":"#005C87"});
+		}, 3000);
+		
+</script>
+<script src="boot-html5.js"></script>
+<body>
+<div id="horizontal" style="display: none;"></div>
+<div id="container">		
+		<img id="pic" src="image/ad.jpg" style="display:none;"></img>
+		<!--
 		<div>
 			<div id="enter" class="button aqua" style="position:absolute; bottom:16%; right:5%; ">   
 				<div class="glare"></div> 
@@ -65,7 +140,10 @@
 			</div>
 		</div>
 		-->
+		<canvas id="gameCanvas">当前浏览器不支持HTML5 Canvas，请更换您的浏览器 </canvas>
+		<!--
 		<div id="ad" style="z-index:0;position:absolute;display: none; height:100%; width:100%; margin 0 auto; max-width:1024px;"></div>
+		-->
 		<!--
 		<div id="enter" style="position:fixed; bottom:30%; right:10%; height:10%; width:80%; margin 0 auto; max-width:1024px; background-image:url('image/click.png'); background-size: 100% 100%; background-repeat: no-repeat; "></div>
 		</div>
@@ -79,5 +157,6 @@
 			</div>
 		-->
 	</div>
+
 </body>
 </HTML>
