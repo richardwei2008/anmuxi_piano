@@ -10,6 +10,13 @@ var MainLayer = function () {
 	// this.currentTime = 30;
     this.lastScoreTime = 0;
 	this.totalTap = 0;
+	this.getRandomInt = function (min, max) {
+		return Math.floor(Math.random() * (max - min + 1)) + min;
+	};
+	this.max_35 = this.getRandomInt(3, 5);
+	this.max_10 = this.getRandomInt(5, 7);
+	this.count_35 = 0;
+	this.count_10 = 0;
 };
 
 MainLayer.prototype.onDidLoadFromCCB = function () {
@@ -79,8 +86,7 @@ MainLayer.prototype.onEnter = function () {
     this.scoreLabel = cc.LabelTTF.create("0.00''", "Arial", 50 / window.devicePixelRatio);
 	// this.scoreLabel.setString("总时间30.00''    块数: " + this.totalTap);
     this.rootNode.addChild(this.scoreLabel);
-	
-    this.scoreLabel.setPosition(cc.p(cc.Director.getInstance().getWinSize().width / 2, positionY - 10));
+    this.scoreLabel.setPosition(cc.p(this.blockWidth * 4 / window.devicePixelRatio, positionY - 10));
 	
     this.scoreLabel.setAnchorPoint(cc.p(0.5, 0.5));
     // this.scoreLabel.setColor(cc.c3b(255, 20, 147));
@@ -112,15 +118,14 @@ MainLayer.prototype.onEnter = function () {
 
 MainLayer.prototype.newBlock = function (i, j, colorType) {
     //simple block
-    var block = cc.Sprite.create("res/whiteBlock.png");	
+    var block = cc.Sprite.create("res/whiteBlock.png");
     block.setPosition(cc.p(this.positionX + this.blockWidth * i, this.blockHeight / 2 + this.blockHeight * j));
-	// alert(cc.Director.getInstance().getWinSize().width + "x" + cc.Director.getInstance().getWinSize().height);
-	if (cc.Director.getInstance().getWinSize().width > 320) {
-		block.setScaleX(this.scaleX * 0.99);
-		block.setScaleY(this.scaleY * 0.995);
-	} else {
+	if (cc.Director.getInstance().getWinSize().width < 800) {
 		block.setScaleX(this.scaleX * 1.01);
 		block.setScaleY(this.scaleY * 1.005);
+	} else {
+		block.setScaleX(this.scaleX);
+		block.setScaleY(this.scaleY);
 	}
     block.setZOrder(100);
     block.setAnchorPoint(cc.p(0.5, 0.5));
@@ -147,7 +152,7 @@ MainLayer.prototype.newBlock = function (i, j, colorType) {
 				startLabel.setColor(cc.c3b(255, 255, 255));
 				startLabel.setZOrder(1);
 			}
-			if (j == 10 || j == 30) {
+			if (j % 17 == 7 && this.count_35 < this.max_35) {
 				// seconds = 1;
 				// var pointLabel = cc.LabelTTF.create("减" + seconds + "秒", "Arial", 50);
 				// awardType = "seconds";
@@ -163,9 +168,10 @@ MainLayer.prototype.newBlock = function (i, j, colorType) {
 				pointIcon.setPosition(cc.p(this.blockWidth * window.devicePixelRatio, (this.blockHeight - 20) * window.devicePixelRatio)) ;		
 				pointIcon.setAnchorPoint(cc.p(0.5, 0.5));
 				pointIcon.setColor(cc.c3b(255, 255, 255));
-				pointIcon.setZOrder(1);				
-			}
-			if (j % 10 == 7) {
+				pointIcon.setZOrder(1);	
+				this.count_35++;
+			} else 
+			if (j % 11 == 5 && this.count_10 < this.max_10) {
 				// seconds = 1;
 				// var pointLabel = cc.LabelTTF.create("减" + seconds + "秒", "Arial", 50);
 				award = 10;		
@@ -180,15 +186,16 @@ MainLayer.prototype.newBlock = function (i, j, colorType) {
 				pointIcon.setPosition(cc.p(this.blockWidth * window.devicePixelRatio, (this.blockHeight - 20) * window.devicePixelRatio)) ;		
 				pointIcon.setAnchorPoint(cc.p(0.5, 0.5));
 				pointIcon.setColor(cc.c3b(255, 255, 255));
-				pointIcon.setZOrder(1);				
-			}			
+				pointIcon.setZOrder(1);	
+				this.count_10++;
+			}
 			if (j == 99) {
 				var logoIcon = cc.Sprite.create("image/logo.png");
 				block.addChild(logoIcon);
 				logoIcon.setPosition(cc.p(this.blockWidth * window.devicePixelRatio, (this.blockHeight - 20) * window.devicePixelRatio)) ;		
 				logoIcon.setAnchorPoint(cc.p(0.5, 0.5));
 				logoIcon.setColor(cc.c3b(255, 255, 255));
-				logoIcon.setZOrder(1);		
+				logoIcon.setZOrder(1);				
 			}
             // block.setColor(cc.c3b(30, 30, 30));
 			// richard modify to new block color
@@ -296,13 +303,14 @@ MainLayer.prototype.createTopOverNode = function () {
     // this.scoreNode.back = backLabel;
 	this.scoreNode.back = btnBack;
 	
-	//share
-    // var shareLabel = cc.LabelTTF.create("炫耀", "Arial", 40);
-    // this.scoreNode.addChild(shareLabel);
-    // shareLabel.setPosition(cc.p(180, 260));
-    // shareLabel.setAnchorPoint(cc.p(0.5, 0.5));    
-    // shareLabel.setColor(cc.c3b(178, 206, 228));
-    // this.scoreNode.share = shareLabel;
+	// bonus
+    var btnBonus = cc.Sprite.create("image/bonus.png");
+	btnBonus.setScaleX(spriteScale);
+	btnBonus.setScaleY(spriteScale);
+    this.scoreNode.addChild(btnBonus);
+    btnBonus.setPosition(cc.p(this.blockWidth * 2, btnBackY));
+    btnBonus.setAnchorPoint(cc.p(0.5, 0.5));   
+    this.scoreNode.bonus = btnBonus;
 	
 	//rank
 	var btnRankX = this.blockWidth * 3;
@@ -447,6 +455,7 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
                                 if (block.blockData.row == (this.pianoLengthIndex - 1)) { //when last row ,game success end, move two height
                                     heightNum = 2;
                                     cc.log("end");
+									window.onGameOverEvent.fire({type:'gameOver', success : false, score : this.totalTap});
                                     this.gameStatus = OVER;
 									this.scoreNode.result2.setString(this.totalTap);
                                     cc.AudioEngine.getInstance().playEffect(SOUNDS.win, false);
@@ -493,10 +502,21 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
         //back
         var backRect = cc.rectCreate(this.scoreNode.back.getPosition(), [50, 30]);
         if (cc.rectContainsPoint(backRect, this.pBegan)) {
-            this.scoreNode.back.runAction(cc.Sequence.create(cc.ScaleTo.create(0.1, 1.005),
+            this.scoreNode.back.runAction(cc.Sequence.create(cc.ScaleTo.create(0.001, 0.999),
                 cc.CallFunc.create(function () {
                     cc.AudioEngine.getInstance().stopAllEffects();
                     cc.BuilderReader.runScene("", "MainLayer");
+                })
+            ));
+        }
+		
+		var viewBonusEvent = {type:'viewBonus', success : true, score : this.totalTap};
+		var bonusRect = cc.rectCreate(this.scoreNode.bonus.getPosition(), [50, 30]);
+        if (cc.rectContainsPoint(bonusRect, this.pBegan)) {
+            this.scoreNode.bonus.runAction(cc.Sequence.create(cc.ScaleTo.create(0.001, 0.999),
+                cc.CallFunc.create(function () {
+                    cc.AudioEngine.getInstance().stopAllEffects();
+                    window.onViewBonusEvent.fire(viewBonusEvent);
                 })
             ));
         }
@@ -521,10 +541,10 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
 		var fireEvent = {type:'viewResult', success : true, score : this.totalTap};
         var rankRect = cc.rectCreate(this.scoreNode.rank.getPosition(), [50, 30]);
         if (cc.rectContainsPoint(rankRect, this.pBegan)) {
-            this.scoreNode.rank.runAction(cc.Sequence.create(cc.ScaleTo.create(0.05, 1.05),
+            this.scoreNode.rank.runAction(cc.Sequence.create(cc.ScaleTo.create(0.001, 0.999),
                 cc.CallFunc.create(function () {
                     cc.AudioEngine.getInstance().stopAllEffects();
-					window.onViewResultEvent.fire(fireEvent);					
+					window.onViewResultEvent.fire(fireEvent);	
                 })
             ));
         }

@@ -66,14 +66,29 @@
 			});
 			window.onViewResultEvent = new YAHOO.util.CustomEvent('onViewResultEvent');
 			function viewResult(event, arguments, obj) {
-				var url = window.location.href.substring(0, window.location.href.lastIndexOf('/')) + "/result.html";
+				try{
+					var url = window.location.href.substring(0, window.location.href.lastIndexOf('/')) + "/result.html";
 				if (globalUser.openid != null && globalUser.openid != "TESTID") {
 					url += "?openId=" + globalUser.openid;
 				}
 				window.location.href = url;
+				} catch (err) {
+					alert(err);
+				}
 				// alert("Before-viewResult " + JSON.stringify(globalUser));
 			};
 			window.onViewResultEvent.subscribe(viewResult);
+			
+			window.onViewBonusEvent = new YAHOO.util.CustomEvent('onViewBonusEvent');
+			function viewBonus(event, arguments, obj) {
+			try {
+				var url = window.location.href.substring(0, window.location.href.lastIndexOf('/')) + "/win.html";
+				window.location.href = url;
+				} catch (err) {
+					alert(err);
+				}
+			};
+			window.onViewBonusEvent.subscribe(viewBonus);
 		};
 		window.onGameOverEvent.subscribe(submitScore);
 		
@@ -102,8 +117,8 @@
 			var resultObj = eval(result);
 			globalUser = JSON.parse(resultObj.result);
 			// alert("After-authCallback " + JSON.stringify(globalUser));
-			if (globalUser.nickname == null) {
-				alert("您还没有关注公众号,请先关注");
+			if (!CONFIG.DEBUG && globalUser.nickname == null) {
+				alert("您还没有关注公众号，请先关注！");
 				window.location.href = CONFIG.DOMAIN;
 			}
 			// window.onGameStartEvent.fire({type:'gameStart', openId : globalUser.openId, success : true});
@@ -116,7 +131,7 @@
 			return null;    
 		};
 		$(document).ready(function () {
-			if (!CONFIG.DEBUG && isWeiXin()) {
+			if (isWeiXin() && !CONFIG.DEBUG) {
 				var code = getQueryString("code");
 				$.ajax({
 					async: false,       
@@ -130,7 +145,8 @@
 					data: {code:code}, //传递本页面获取的code到后台，以便后台获取openid      
 					timeout: 5000,       
 					success: function (result) {         
-						callback(result);      
+						callback(result);  
+						// alert(result);
 					},       
 					error: function (jqXHR, textStatus, errorThrown) { 
 						// alert(textStatus);

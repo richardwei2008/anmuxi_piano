@@ -1,4 +1,5 @@
-﻿(function () {
+﻿
+(function () {
 	if (document.addEventListener) {
 		document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
 	} else if (document.attachEvent) {

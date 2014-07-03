@@ -30,12 +30,15 @@
 			$('#tap').click(function(){
 				window.location.href = url;
 			});
-			setTimeout(function(){
-				$("#tap").animate({left:'200px'}, "slow");
-			}, 200);
+			// setTimeout(function(){
+			// 	$("#tap").animate({left:'200px'}, "slow");
+			// }, 200);
 			
 			$('#enter').fadeOut(2000);	
-			$('#ad').fadeIn(5000);
+			// $('#ad').fadeIn(5000);
+			setTimeout(function(){
+				$("#ad").css("display", "block");
+			}, 6000);
 			setTimeout(function(){
 				if (CONFIG.DEBUG) {
 					url = window.location.href.substring(0, window.location.href.lastIndexOf('/')) + "/game.html";
@@ -45,7 +48,7 @@
 					}
 				}
 				window.location.href = url;
-			}, 6000);
+			}, 8000);
 			// alert("window==" + $(window).width() + 'x' + $(window).height());
 			// alert("document==" + $(document).width() + 'x' + $(document).height());				
 		});
@@ -62,7 +65,7 @@
 			</div>
 		</div>
 		-->
-		<div id="ad" style="z-index:0;position:absolute;DISPLAY: none;"></div>
+		<div id="ad" style="z-index:0;position:absolute;display: none; height:100%; width:100%; margin 0 auto; max-width:1024px;"></div>
 		<!--
 		<div id="enter" style="position:fixed; bottom:30%; right:10%; height:10%; width:80%; margin 0 auto; max-width:1024px; background-image:url('image/click.png'); background-size: 100% 100%; background-repeat: no-repeat; "></div>
 		</div>
