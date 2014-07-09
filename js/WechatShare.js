@@ -31,21 +31,21 @@
 			"subscribe_time": null
 		};
 		window.shareData = {
-			"imgUrl": "http://beyondwechattest.sinaapp.com/image/icon.jpg",
+			"imgUrl": window.location.href.substring(0, window.location.href.lastIndexOf('/')) + "/image/icon.jpg",
 			//可以是页面的头像，也可以是自己定义的一张图片不变，每个页面可以有这个JS
-			"timeLineLink": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc63c757bdae5dd41&redirect_uri=http%3A%2F%2Fbeyondwechattest.sinaapp.com%2Findex.html?&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect",
-			"sendFriendLink": "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc63c757bdae5dd41&redirect_uri=http%3A%2F%2Fbeyondwechattest.sinaapp.com%2Findex.html?&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect",
-			"weiboLink": "http://beyondwechattest.sinaapp.com",
+			"timeLineLink": window.location.href.substring(0, window.location.href.lastIndexOf('/')) + "/index.html",
+			"sendFriendLink": window.location.href.substring(0, window.location.href.lastIndexOf('/')) + "/index.html",
+			"weiboLink": window.location.href.substring(0, window.location.href.lastIndexOf('/')),
 			//发送朋友圈
-			"tTitle": "伊利·安慕希浓醇酸奶—不睬白格，红包等你拿！速来挑战我！",
-			"tContent": "不睬白格，微信红包等你拿！更有希腊之旅，I Want You!",
+			"tTitle": "听好声音 喝安慕希 抢百万微信红包！",
+			"tContent": "伊利安慕希不踩白格 搶百萬微信紅包 I want you！",
 			//发送给朋友
-			"fTitle": "伊利·安慕希浓醇酸奶—不睬白格，红包等你拿！速来挑战我！",
-			"fContent": "不睬白格，微信红包等你拿！更有希腊之旅，I Want You!",
-			"wContent": "伊利·安慕希浓醇酸奶—不睬白格，红包等你拿！速来挑战我！"
+			"fTitle": "听好声音 喝安慕希 抢百万微信红包！",
+			"fContent": "伊利安慕希不踩白格 搶百萬微信紅包 I want you！",
+			"wContent": "听好声音 喝安慕希 抢百万微信红包！"
 		};
-		var content = "不睬白格，微信红包等你拿！更有希腊之旅，I Want You!";
-		var title = "伊利·安慕希浓醇酸奶—不睬白格，红包等你拿！";		
+		var content = "伊利安慕希不踩白格 搶百萬微信紅包 I want you！";
+		var title = "听好声音 喝安慕希 抢百万微信红包！";		
 		// if (url.indexOf('?') < 0) {
 		// 	url = url + '?user=richard';
 		// }
@@ -137,7 +137,7 @@
 		if (typeof(window.shareData) != "undefined") {
 			window.shareData["tTitle"] = title;
 			window.shareData["fTitle"] = title;
-			window.shareData["wContent"] = title + " —— " + window.shareData["fContent"] + "【https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc63c757bdae5dd41&redirect_uri=http%3A%2F%2Fbeyondwechattest.sinaapp.com%2Findex.html?&response_type=code&scope=snsapi_userinfo&state=1#wechat_redirect】";
+			window.shareData["wContent"] = title + " —— " + window.shareData["fContent"];
 		}
 	};
 })();

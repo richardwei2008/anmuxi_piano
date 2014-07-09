@@ -2,8 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>安慕希浓醇酸奶·不踩白格</title>
-<meta name="description" content="安慕希不睬白格，微信红包等你拿！更有希腊之旅，I Want You!" />
+<title>伊利安慕希不踩白格游戏</title>
+<meta name="description" content="伊利安慕希不踩白格 抢百万微信红包 I want you！" />
 <meta name="viewport" content="width=device-width,inital-scale=0.5,maximum-scale=1, minimum-scale=1, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -34,6 +34,9 @@
 			}
 		}
 		function orientationchange() {
+			if (window.orientation == undefined) {
+				return;
+			}
 			if (window.orientation == 0 || window.orientation == 180) {
 				//竖屏
 				document.getElementById("horizontal").style.display = 'none';
@@ -104,15 +107,15 @@
 		});
 		
 		window.onViewBonusEvent = new YAHOO.util.CustomEvent('onViewBonusEvent');
-			function viewBonus(event, arguments, obj) {
-			try {
-				var url = window.location.href.substring(0, window.location.href.lastIndexOf('/')) + "/win.html";
-				window.location.href = url;
-				} catch (err) {
-					alert(err);
-				}
-			};
-			window.onViewBonusEvent.subscribe(viewBonus);
+		function viewBonus(event, arguments, obj) {
+		try {
+			var url = window.location.href.substring(0, window.location.href.lastIndexOf('/')) + "/win.html";
+			window.location.href = url;
+			} catch (err) {
+				alert(err);
+			}
+		};
+		window.onViewBonusEvent.subscribe(viewBonus);
 		
 		$(function () {
 			if (navigator.userAgent.match(/iPhone/i) ) { // || navigator.userAgent.match(/iPad/i)
