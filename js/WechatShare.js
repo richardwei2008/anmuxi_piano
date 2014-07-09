@@ -55,7 +55,7 @@
 				"img_url" : window.shareData.imgUrl,
 				"img_width" : "640",
 				"img_height" : "640",
-				"link" : window.shareData.sendFriendLink + "&source=friend",
+				"link" : window.shareData.sendFriendLink,
 				"desc" : window.shareData.fContent,
 				"title" : window.shareData.fTitle
 			}, function (res) {});
@@ -66,7 +66,7 @@
 				"img_url" : window.shareData.imgUrl,
 				"img_width" : "640",
 				"img_height" : "640",
-				"link" : window.shareData.timeLineLink + "&source=timeline",
+				"link" : window.shareData.timeLineLink,
 				"desc" : window.shareData.tContent,
 				"title" : window.shareData.tTitle
 			}, function (res) {});
@@ -76,7 +76,7 @@
 		WeixinJSBridge.on('menu:share:weibo', function (argv) {
 			WeixinJSBridge.invoke('shareWeibo', {
 				"content" : window.shareData.tTitle,
-				"url" : window.shareData.weiboLink + "&source=weibo",
+				"url" : window.shareData.weiboLink,
 			}, function (res) {});
 		});
 		// 分享到Facebook
@@ -85,7 +85,7 @@
 				"img_url" : window.shareData.imgUrl,
 				"img_width" : "640",
 				"img_height" : "640",
-				"link" : window.shareData.weiboLink + "&source=facebook",
+				"link" : window.shareData.weiboLink,
 				"desc" : window.shareData.tTitle,
 				"title" : window.shareData.tContent
 			}, function (res) {});
