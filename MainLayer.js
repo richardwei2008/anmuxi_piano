@@ -434,33 +434,41 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
 
                         //touch white ,game over
                         else {
-                            this.createTopOverNode();   //create score node and move 
+                            
                             this.gameStatus = OVER;
                             // cc.AudioEngine.getInstance().playEffect(SOUNDS.error, false);
 							// PauseAudio();
                             block.setColor(cc.c3b(255, 0, 0)); /* red */
                             block.runAction(cc.Sequence.create(
                                 cc.ScaleTo.create(0, this.scaleX * 4 / 5, this.scaleY * 4 / 5),
-                                cc.ScaleTo.create(0.2, this.scaleX, this.scaleY)
-                            ));
+                                cc.ScaleTo.create(0.2, this.scaleX, this.scaleY),
+								cc.ScaleTo.create(0, this.scaleX * 4 / 5, this.scaleY * 4 / 5),
+                                cc.ScaleTo.create(0.2, this.scaleX, this.scaleY),
+								cc.ScaleTo.create(0, this.scaleX * 4 / 5, this.scaleY * 4 / 5),
+                                cc.ScaleTo.create(0.2, this.scaleX, this.scaleY),
+								cc.CallFunc.create(function () {
+									this.createTopOverNode();   //create score node and move 
+									// richard modify
+									this.scoreNode._children[0] = this.bgColor;
+									this.scoreNode.removeChild(this.scoreNode.sh1);
+									this.scoreNode.addChild(this.scoreNode.fh1);
+									this.scoreNode.removeChild(this.scoreNode.bonus);
+									this.scoreNode.addChild(this.scoreNode.again);
+									this.scoreNode.removeChild(this.scoreNode.sh2);
+									this.scoreNode.addChild(this.scoreNode.fh2);
+									this.rootNode.removeChild(this.scoreBg);
+									this.rootNode.removeChild(this.scoreLabel);
+									// this.scoreNode.result.setString("失 败 了");
+									// this.scoreNode.removeChild(this.scoreNode.success);
+									// this.scoreNode.addChild(this.scoreNode.failed);
+									// this.scoreNode.result2.setString(this.totalTap);
+									this.scoreNode.runAction(cc.MoveTo.create(0.2, cc.p(0, this.blockHeight * this.moveNum)));	
+									// alert("After-game " + JSON.stringify(globalUser));
+									// window.onGameOverEvent.fire({type:'gameOver', success : false, score : this.totalTap})
+								}, this)
+                            ), this);
+							
                             
-							// richard modify
-							this.scoreNode._children[0] = this.bgColor;
-							this.scoreNode.removeChild(this.scoreNode.sh1);
-							this.scoreNode.addChild(this.scoreNode.fh1);
-							this.scoreNode.removeChild(this.scoreNode.bonus);
-							this.scoreNode.addChild(this.scoreNode.again);
-							this.scoreNode.removeChild(this.scoreNode.sh2);
-							this.scoreNode.addChild(this.scoreNode.fh2);
-							this.rootNode.removeChild(this.scoreBg);
-							this.rootNode.removeChild(this.scoreLabel);
-                            // this.scoreNode.result.setString("失 败 了");
-							// this.scoreNode.removeChild(this.scoreNode.success);
-							// this.scoreNode.addChild(this.scoreNode.failed);
-							// this.scoreNode.result2.setString(this.totalTap);
-							this.scoreNode.runAction(cc.MoveTo.create(0.2, cc.p(0, this.blockHeight * this.moveNum)));	
-							// alert("After-game " + JSON.stringify(globalUser));
-							// window.onGameOverEvent.fire({type:'gameOver', success : false, score : this.totalTap})
                         }
                     }
                 }

@@ -44,42 +44,34 @@
 				//横屏
 				document.getElementById("horizontal").style.display = 'block';
 			}
-		}
-		$(window).ready(function () {				
-			var redirect_uri = "http%3A%2F%2F" + window.location.hostname + "%2Fgame.html";
-			var url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxc63c757bdae5dd41&redirect_uri="+ redirect_uri + "&response_type=code&scope=snsapi_base&state=1#wechat_redirect";
-			$('#enter').click(function(){
-				window.location.href = url;
-			});	
-			$('#tap').click(function(){
-				window.location.href = url;
-			});
-			// setTimeout(function(){
-			// 	$("#tap").animate({left:'200px'}, "slow");
-			// }, 200);
+		};
+		
+		
+		function tapContainer() {
+				
+				return function(){
+						// $("#container").css("background-image", "url('image/ad.jpg')");
+						$("#ad").css("display", "block");
+				};
+			};
 			
-			$('#enter').fadeOut(2000);	
-			// $('#ad').fadeIn(5000);
-			setTimeout(function(){
-				$("#container").css("background-image", "url('image/ad.jpg')");
-				// $("#ad").css("display", "block");
-			}, 4000);
-			setTimeout(function(){
-				$("#gameCanvas").css("display", "block");
-			}, 6000);
+		function tapAd() {
+				return function() {
+						$("#ad").css("display", "none");
+						$("#gameCanvas").css("display", "block");
+					};
+		};		
+			
+		$(window).ready(function () {	
+			
 			// setTimeout(function(){
-			// 	if (CONFIG.DEBUG) {
-			// 		url = window.location.href.substring(0, window.location.href.lastIndexOf('/')) + "/game.html";
-			// 	} else {
-			// 		if (!isWeiXin()) {
-			// 			alert("您所使用的不是微信浏览器，游戏成绩将无法参加赢红包活动");
-			// 		}
-			// 	}
-			// 	window.location.href = url;
-			// }, 8000);
-			// alert("window==" + $(window).width() + 'x' + $(window).height());
-			// alert("document==" + $(document).width() + 'x' + $(document).height());	
-
+			// 	$("#container").css("background-image", "url('image/ad.jpg')");				
+			// }, 4000);
+			// setTimeout(function(){
+			// 	$("#gameCanvas").css("display", "block");
+			// }, 6000);
+			
+			
 			var canvas = $("#gameCanvas");
 			console.log("window.innerWidth=="+window.innerWidth);
 			console.log("window.innerHeight=="+window.innerHeight);
@@ -102,8 +94,10 @@
 					"height": $(document).height()
 				};
 			}	
-
-			
+			$("#container").on("click", tapContainer());
+			$("#container").on("tap", tapContainer());
+			$("#ad").on("click", tapAd());
+			$("#ad").on("tap", tapAd());
 		});
 		
 		window.onViewBonusEvent = new YAHOO.util.CustomEvent('onViewBonusEvent');
@@ -133,33 +127,9 @@
 <script src="boot-html5.js"></script>
 <body>
 <div id="horizontal" style="display: none;"></div>
-<div id="container">		
-		<img id="pic" src="image/ad.jpg" style="display:none;"></img>
-		<!--
-		<div>
-			<div id="enter" class="button aqua" style="position:absolute; bottom:16%; right:5%; ">   
-				<div class="glare"></div> 
-				进入游戏
-			</div>
-		</div>
-		-->
-		<canvas id="gameCanvas">当前浏览器不支持HTML5 Canvas，请更换您的浏览器 </canvas>
-		<!--
-		<div id="ad" style="z-index:0;position:absolute;display: none; height:100%; width:100%; margin 0 auto; max-width:1024px;"></div>
-		-->
-		<!--
-		<div id="enter" style="position:fixed; bottom:30%; right:10%; height:10%; width:80%; margin 0 auto; max-width:1024px; background-image:url('image/click.png'); background-size: 100% 100%; background-repeat: no-repeat; "></div>
-		</div>
-		
-			<div id="tap" style="position:fixed; bottom:15%; right:20%; height:20%; width:20%; opacity:0.7; margin 0 auto; max-width:1024px; background-image:url('image/tap.png'); background-size: 100% 100%; background-repeat: no-repeat; "></div>
-			
-		-->
-		<!--
-			<div id="subscribe" style="position:fixed; bottom:5%; right:10%; height:20%; width:20%; margin 0 auto; max-width:1024px; color:rgb(255,0,0); font-size: 16">   
-				<a href="weixin://addfriend/beyondsocial"><b>点击关注</b></a>
-			</div>
-		-->
-	</div>
-
+<div id="ad" style="display: none;"></div>
+<div id="container">
+	<canvas id="gameCanvas">当前浏览器不支持HTML5 Canvas，请更换您的浏览器 </canvas>
+</div>
 </body>
 </HTML>
