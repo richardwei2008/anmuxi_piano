@@ -51,15 +51,15 @@
 				
 				return function(){
 						// $("#container").css("background-image", "url('image/ad.jpg')");
-						$("#ad").css("display", "block");
+						$("#ad").css("display", "block");						
 				};
 			};
 			
 		function tapAd() {
 				return function() {
-						$("#ad").css("display", "none");
-						$("#gameCanvas").css("display", "block");
-					};
+						$("#ad").remove();
+						$("#gameCanvas").css("display", "block");						
+				};
 		};		
 			
 		$(window).ready(function () {	

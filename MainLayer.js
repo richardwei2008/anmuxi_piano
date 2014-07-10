@@ -109,59 +109,6 @@ MainLayer.prototype.onEnter = function () {
 	this.logoIcon.setColor(cc.c3b(255, 255, 255));
 	this.logoIcon.setZOrder(1);		
 	
-	
-	
-	//color bg
-    this.bgColor = cc.Sprite.create("image/last.jpg");
-    this.bgColor.setPosition(cc.p(0, 0)); // 
-    this.bgColor.setScaleX(window.resolution.width / 640);
-    this.bgColor.setScaleY(window.resolution.height / 1136);
-    this.bgColor.setAnchorPoint(cc.p(0, 0));
-    this.bgColor.setColor(cc.c3b(178, 206, 228));
-   
-    //mode
-	var spriteScale = 1 / window.devicePixelRatio;
-		
-    this.successHeader1 = cc.Sprite.create("image/success_h1.png");    
-	this.successHeader1.setScaleX(spriteScale);
-	this.successHeader1.setScaleY(spriteScale);
-    this.successHeader1.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 3));
-    this.successHeader1.setAnchorPoint(cc.p(0.5, 0.5));
-	
-	
-	this.failureHeader1 = cc.Sprite.create("image/failure_h1.png");    
-	this.failureHeader1.setScaleX(spriteScale);
-	this.failureHeader1.setScaleY(spriteScale);
-    this.failureHeader1.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 3));
-    this.failureHeader1.setAnchorPoint(cc.p(0.5, 0.5));
-	
-    //result
-	this.successLabel = cc.Sprite.create("image/success_h2.png");
-    this.successLabel.setScaleX(spriteScale);
-	this.successLabel.setScaleY(spriteScale);
-    this.successLabel.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 2 - 100 / window.devicePixelRatio ));
-    this.successLabel.setAnchorPoint(cc.p(0.5, 0.5));
-	
-	this.failedLabel = cc.Sprite.create("image/failure_h2.png"); // cc.LabelTTF.create("失  败  了", "Arial", 60 / window.devicePixelRatio);   
-	this.failedLabel.setScaleX(spriteScale);
-	this.failedLabel.setScaleY(spriteScale);	
-	this.failedLabel.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 2 - 100 / window.devicePixelRatio ));
-    this.failedLabel.setAnchorPoint(cc.p(0.5, 0.5));    
-		
-	// bonus
-    this.btnBonus = cc.Sprite.create("image/bonus.png");
-	this.btnBonus.setScaleX(0.8);
-	this.btnBonus.setScaleY(0.8);
-    this.btnBonus.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 1.1));
-    this.btnBonus.setAnchorPoint(cc.p(0.5, 0.5));   
-    	
-	this.btnAgain = cc.Sprite.create("image/again.png");
-	this.btnAgain.setScaleX(0.8);
-	this.btnAgain.setScaleY(0.8);
-    this.btnAgain.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 1.1));
-    this.btnAgain.setAnchorPoint(cc.p(0.5, 0.5));   
-    
-	
     //tables
     this.tables = new Array(this.pianoLengthIndex);
     for (var j = 0; j < this.pianoLength; j++) {
@@ -217,12 +164,7 @@ MainLayer.prototype.newBlock = function (i, j, colorType) {
 				// var pointLabel = cc.LabelTTF.create("减" + seconds + "秒", "Arial", 50);
 				// awardType = "seconds";
 				award = 20;		
-				// var pointLabel = cc.LabelTTF.create("+ 35%", "Arial", 50);				
-				// block.addChild(pointLabel);
-				// pointLabel.setPosition(cc.p((this.blockWidth + 70 * 0.5) * window.devicePixelRatio, (this.blockHeight * 2) * window.devicePixelRatio - this.blockHeight * 0.5));	
-				// pointLabel.setAnchorPoint(cc.p(0.5, 0.5));
-				// pointLabel.setColor(cc.c3b(255, 255, 255));
-				// pointLabel.setZOrder(2);
+			
 				var pointIcon = cc.Sprite.create("res/protein.png");
 				block.addChild(pointIcon);
 				pointIcon.setPosition(cc.p(this.blockWidth * window.devicePixelRatio, (this.blockHeight - 20) * window.devicePixelRatio)) ;		
@@ -235,12 +177,7 @@ MainLayer.prototype.newBlock = function (i, j, colorType) {
 				// seconds = 1;
 				// var pointLabel = cc.LabelTTF.create("减" + seconds + "秒", "Arial", 50);
 				award = 5;		
-				// var pointLabel = cc.LabelTTF.create("奖" + award + "块", "Arial", 50);				
-				// block.addChild(pointLabel);
-				// pointLabel.setPosition(cc.p((this.blockWidth + 70 * 0.5) * window.devicePixelRatio, (this.blockHeight * 2) * window.devicePixelRatio - this.blockHeight * 0.5));	
-				// pointLabel.setAnchorPoint(cc.p(0.5, 0.5));
-				// pointLabel.setColor(cc.c3b(255, 255, 255));
-				// pointLabel.setZOrder(2);
+				
 				var pointIcon = cc.Sprite.create("res/yogurt.png");
 				block.addChild(pointIcon);
 				pointIcon.setPosition(cc.p(this.blockWidth * window.devicePixelRatio, (this.blockHeight - 20) * window.devicePixelRatio)) ;		
@@ -250,12 +187,6 @@ MainLayer.prototype.newBlock = function (i, j, colorType) {
 				this.count_5++;
 			}
 			if (j == 30) {
-				// var logoIcon = cc.Sprite.create("image/logo.png");
-				// block.addChild(logoIcon);
-				// logoIcon.setPosition(cc.p(this.blockWidth * window.devicePixelRatio, (this.blockHeight - 20) * window.devicePixelRatio)) ;		
-				// logoIcon.setAnchorPoint(cc.p(0.5, 0.5));
-				// logoIcon.setColor(cc.c3b(255, 255, 255));
-				// logoIcon.setZOrder(1);	
 				block.addChild(this.logoIcon);				
 			}
             // block.setColor(cc.c3b(30, 30, 30));
@@ -273,33 +204,101 @@ MainLayer.prototype.newBlock = function (i, j, colorType) {
 MainLayer.prototype.createTopOverNode = function () {
     //top score node
     this.scoreNode = cc.Node.create();
-	
 	this.scoreNode.setPosition(cc.p(0, this.blockHeight * this.pianoLength));
-	
-    this.scoreNode.setAnchorPoint(cc.p(0, 0));
+	this.scoreNode.setAnchorPoint(cc.p(0, 0));
     this.scoreNode.setZOrder(130);
     this.blockNode.addChild(this.scoreNode);
-
+	//color bg
+	var bgColor = cc.Sprite.create("image/last.png");
+	bgColor.setPosition(cc.p(0, 0)); // 
+	bgColor.setScaleX(window.resolution.width / 160);
+	bgColor.setScaleY(window.resolution.height / 284);
+	bgColor.setAnchorPoint(cc.p(0, 0));
+    
     //color bg
-    this.scoreNode.addChild(this.bgColor);
-    this.scoreNode.bgColor = this.bgColor;
+    this.scoreNode.addChild(bgColor);
+    this.scoreNode.bgColor = bgColor;
 		
-	this.scoreNode.addChild(this.successHeader1);
-	this.scoreNode.sh1 = this.successHeader1;
+	var spriteScale = 1 / window.devicePixelRatio;
 	
-	this.scoreNode.fh1 = this.failureHeader1;
+	var successHeader1 = cc.LabelTTF.create("恭喜您", "Arial", 110);    
+	successHeader1.setScaleX(spriteScale);
+	successHeader1.setScaleY(spriteScale);
+    successHeader1.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 3));
+    successHeader1.setAnchorPoint(cc.p(0.5, 0.5));		
+	
+	var successHeader2 = cc.LabelTTF.create("通关了!", "Arial", 110);    
+	successHeader2.setScaleX(spriteScale);
+	successHeader2.setScaleY(spriteScale);
+    successHeader2.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 3 - 120 / window.devicePixelRatio));
+    successHeader2.setAnchorPoint(cc.p(0.5, 0.5));	
+	
+	this.scoreNode.addChild(successHeader1);
+	this.scoreNode.sh1 = successHeader1;
+	this.scoreNode.addChild(successHeader2);
+	this.scoreNode.sh2 = successHeader2;
+	
+	var failureHeader1 = cc.LabelTTF.create("抱歉", "Arial", 110);    
+	failureHeader1.setScaleX(spriteScale);
+	failureHeader1.setScaleY(spriteScale);
+    failureHeader1.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 3));
+    failureHeader1.setAnchorPoint(cc.p(0.5, 0.5));
+	
+	var failureHeader2 = cc.LabelTTF.create("游戏失败了", "Arial", 110);    
+	failureHeader2.setScaleX(spriteScale);
+	failureHeader2.setScaleY(spriteScale);
+    failureHeader2.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 3 - 120 / window.devicePixelRatio));
+    failureHeader2.setAnchorPoint(cc.p(0.5, 0.5));	
+	this.scoreNode.fh1 = failureHeader1;
+	this.scoreNode.fh2 = failureHeader2;
 	
     //result
-    this.scoreNode.addChild(this.successLabel);
-	this.scoreNode.sh2 = this.successLabel;
+	var successLabel1 = cc.LabelTTF.create("伊利安慕希给您", "Arial", 100 / window.devicePixelRatio); 
+    successLabel1.setScaleX(spriteScale);
+	successLabel1.setScaleY(spriteScale);
+    successLabel1.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 2 - 75 / window.devicePixelRatio ));
+    successLabel1.setAnchorPoint(cc.p(0.5, 0.5));
+    this.scoreNode.addChild(successLabel1);
+	this.scoreNode.sc1 = successLabel1;
 	
-	this.scoreNode.fh2 = this.failedLabel;
+	var successLabel2 = cc.LabelTTF.create("发了一个红包", "Arial", 110 / window.devicePixelRatio); 
+    successLabel2.setScaleX(spriteScale);
+	successLabel2.setScaleY(spriteScale);
+    successLabel2.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 2 - 150 / window.devicePixelRatio ));
+    successLabel2.setAnchorPoint(cc.p(0.5, 0.5));
+    this.scoreNode.addChild(successLabel2);
+	this.scoreNode.sc2 = successLabel2;
+	
+	var failedLabel = cc.LabelTTF.create("继续努力吧!", "Arial", 120 / window.devicePixelRatio);   
+	failedLabel.setScaleX(spriteScale);
+	failedLabel.setScaleY(spriteScale);	
+	failedLabel.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 2 - 140 / window.devicePixelRatio ));
+    failedLabel.setAnchorPoint(cc.p(0.5, 0.5)); 
+	this.scoreNode.fc1 = failedLabel;
 	
 	// bonus
-    this.scoreNode.addChild(this.btnBonus);
-    this.scoreNode.bonus = this.btnBonus;
+    var btnBonus = cc.Sprite.create("image/bonus.png");
+	btnBonus.setScaleX(0.8 * 2/ window.devicePixelRatio);
+	btnBonus.setScaleY(0.8 * 2/ window.devicePixelRatio);
+    btnBonus.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 1.1));
+    btnBonus.setAnchorPoint(cc.p(0.5, 0.5)); 
+    this.scoreNode.addChild(btnBonus);
+    this.scoreNode.bonus = btnBonus;
 	   
-    this.scoreNode.again = this.btnAgain;	
+	var btnAgain = cc.Sprite.create("image/again.png");
+	btnAgain.setScaleX(0.8 * 2/ window.devicePixelRatio);
+	btnAgain.setScaleY(0.8 * 2/ window.devicePixelRatio);
+    btnAgain.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 1.1));
+    btnAgain.setAnchorPoint(cc.p(0.5, 0.5));      
+    this.scoreNode.again = btnAgain;	
+	
+	var footerLabel = cc.LabelTTF.create("如果您喜欢这个游戏，那么请分享您的好友吧!", "Arial", 35 / window.devicePixelRatio);   
+	footerLabel.setScaleX(spriteScale);
+	footerLabel.setScaleY(spriteScale);	
+	footerLabel.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 0.85));
+    footerLabel.setAnchorPoint(cc.p(0.5, 0.5)); 
+	this.scoreNode.addChild(footerLabel);
+	   	
 };
 
 
@@ -307,39 +306,11 @@ MainLayer.prototype.onUpdate = function (dt) {
     if (this.gameStatus == OVER) {
         return;
     }
-	// if (this.currentTime <= 0) {	
-	// 	this.currentTime = 0;
-	// 	// this.scoreLabel.setString("时间到！" + "      块数: " + this.totalTap);
-	// 	this.gameStatus = OVER;
-		// this.createTopOverNode();   //create score node and move 
-        // cc.AudioEngine.getInstance().playEffect(SOUNDS.win, false);
-		// PauseAudio();        
-        // this.scoreNode.bgColor.setColor(cc.c3b(178, 206, 228)); 
-        // // this.scoreNode.result.setString("挑战成功");		
-		// this.scoreNode.result2.setString(this.totalTap);
-        // this.scoreNode.runAction(cc.MoveTo.create(0.2, cc.p(0, this.blockHeight * this.moveNum)));		
-        // 
-		// // var wxTitle = "安慕希浓醇酸奶—不睬白格，我已经踩到" + highscore + "格子啦！在" + rank[0] + "个人里已经排名第" + rank[1] + "！速度来挑战我！";
-		// var wxTitle = "安慕希不睬白格赢红包，我已经踩到" + this.totalTap + "个格子啦！速度来挑战我！";
-		// setWxContent(wxTitle);
-		// // alert("After-game " + JSON.stringify(globalUser));
-		// window.onGameOverEvent.fire({type:'gameOver', success : true, score : this.totalTap});
-		
-	// 	return;
-	// }
 	this.currentTime += dt;
-		if (this.currentTime - this.lastScoreTime > 0.09) {
-			this.scoreLabel.setString(getD(this.currentTime, 2) + "''");
-			this.lastScoreTime = this.currentTime;
-		}
-	
-	// if (this.countDownStatus == START) {
-	// 	this.currentTime -= dt;
-	// 	if (this.currentTime - this.lastScoreTime > -0.09) {
-	// 		this.scoreLabel.setString(getD(this.currentTime, 1) + "''");
-	// 		this.lastScoreTime = this.currentTime;
-	// 	}
-	// } 
+	if (this.currentTime - this.lastScoreTime > 0.09) {
+		this.scoreLabel.setString(getD(this.currentTime, 2) + "''");
+		this.lastScoreTime = this.currentTime;
+	}
 };
 
 MainLayer.prototype.moveAddNewSprites = function () {
@@ -449,13 +420,17 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
 								cc.CallFunc.create(function () {
 									this.createTopOverNode();   //create score node and move 
 									// richard modify
-									this.scoreNode._children[0] = this.bgColor;
 									this.scoreNode.removeChild(this.scoreNode.sh1);
 									this.scoreNode.addChild(this.scoreNode.fh1);
-									this.scoreNode.removeChild(this.scoreNode.bonus);
-									this.scoreNode.addChild(this.scoreNode.again);
 									this.scoreNode.removeChild(this.scoreNode.sh2);
 									this.scoreNode.addChild(this.scoreNode.fh2);
+									this.scoreNode.removeChild(this.scoreNode.sc1);
+									this.scoreNode.removeChild(this.scoreNode.sc2);
+									this.scoreNode.addChild(this.scoreNode.fc1);									
+									
+									this.scoreNode.removeChild(this.scoreNode.bonus);
+									this.scoreNode.addChild(this.scoreNode.again);
+									
 									this.rootNode.removeChild(this.scoreBg);
 									this.rootNode.removeChild(this.scoreLabel);
 									// this.scoreNode.result.setString("失 败 了");
@@ -497,34 +472,6 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
                 })
             ));
         }
-		
-		//share
-		// var shareRect = cc.rectCreate(this.scoreNode.share.getPosition(), [50, 30]);
-		// if (cc.rectContainsPoint(shareRect, this.pBegan)) {
-		// 	this.scoreNode.share.runAction(cc.Sequence.create(cc.ScaleTo.create(0.1, 1.1),
-		// 			cc.CallFunc.create(function () {
-		// 				cc.AudioEngine.getInstance().stopAllEffects();
-		// 				// cc.BuilderReader.runScene("", "MainLayer");
-		// 				var title = "安慕希别踩白格赢红包";
-		// 				var link = "http://www.36kr.com";
-		// 				var desc = "我在安慕希浓醇酸奶-别踩白块-微信红包的游戏中获得" + this.totalTap + "的成绩";
-		// 				var imgUrl = "http://192.168.1.9/image/icon.jpg";
-		// 				ShareToWeibo(imgUrl, link, title, desc);
-		// 			})
-		// 		)
-		// 	);
-		// }
-        //rank
-		// var fireEvent = {type:'viewResult', success : true, score : this.totalTap};
-        // var rankRect = cc.rectCreate(this.scoreNode.rank.getPosition(), [50, 30]);
-        // if (cc.rectContainsPoint(rankRect, this.pBegan)) {
-        //     this.scoreNode.rank.runAction(cc.Sequence.create(cc.ScaleTo.create(0.001, 0.999),
-        //         cc.CallFunc.create(function () {
-        //             cc.AudioEngine.getInstance().stopAllEffects();
-		// 			window.onViewResultEvent.fire(fireEvent);	
-        //         })
-        //     ));
-        // }
     }
 };
 
