@@ -224,19 +224,27 @@ MainLayer.prototype.createTopOverNode = function () {
 	var successHeader1 = cc.LabelTTF.create("恭喜您", "Arial", 110);    
 	successHeader1.setScaleX(spriteScale);
 	successHeader1.setScaleY(spriteScale);
-    successHeader1.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 3));
+    successHeader1.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 3.3));
     successHeader1.setAnchorPoint(cc.p(0.5, 0.5));		
 	
 	var successHeader2 = cc.LabelTTF.create("通关了!", "Arial", 110);    
 	successHeader2.setScaleX(spriteScale);
 	successHeader2.setScaleY(spriteScale);
-    successHeader2.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 3 - 120 / window.devicePixelRatio));
+    successHeader2.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 3.3 - 120 / window.devicePixelRatio));
     successHeader2.setAnchorPoint(cc.p(0.5, 0.5));	
+	
+	var successHeader3 = cc.LabelTTF.create("100分", "Arial", 140);    
+	successHeader3.setScaleX(spriteScale);
+	successHeader3.setScaleY(spriteScale);
+    successHeader3.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 2.8 - 120 / window.devicePixelRatio));
+    successHeader3.setAnchorPoint(cc.p(0.5, 0.5));	
 	
 	this.scoreNode.addChild(successHeader1);
 	this.scoreNode.sh1 = successHeader1;
 	this.scoreNode.addChild(successHeader2);
 	this.scoreNode.sh2 = successHeader2;
+	this.scoreNode.addChild(successHeader3);
+	this.scoreNode.sh3 = successHeader3;
 	
 	var failureHeader1 = cc.LabelTTF.create("抱歉", "Arial", 110);    
 	failureHeader1.setScaleX(spriteScale);
@@ -424,6 +432,7 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
 									this.scoreNode.addChild(this.scoreNode.fh1);
 									this.scoreNode.removeChild(this.scoreNode.sh2);
 									this.scoreNode.addChild(this.scoreNode.fh2);
+									this.scoreNode.removeChild(this.scoreNode.sh3);
 									this.scoreNode.removeChild(this.scoreNode.sc1);
 									this.scoreNode.removeChild(this.scoreNode.sc2);
 									this.scoreNode.addChild(this.scoreNode.fc1);									
