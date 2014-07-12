@@ -11,10 +11,42 @@
 <style>body {
 	MARGIN: 0px;
 }
+.dialogShadow{
+	background-color:rgba(0, 0, 0, 0.4);
+	background-size: 170px auto;
+	position: absolute ;
+	margin: 0 auto;
+	width: 100%;
+	height: 100%;	
+	top:0;
+	left:0;
+	z-index:1;
+	display:none;
+}
+.dialogBox {
+	width:300px;
+	height:200px;
+	position:absolute;
+	z-index:2;
+	display: none;
+	border:0;
+} 
+.div1{
+	background-image:url('image/dialogbg.png'); 
+}
+.div2{
+	background-image:url('image/dialogbg.png'); 
+}
+.div3{
+	background-image:url('image/dialogbg.png'); 
+}
+/*当然你可以自定义添加或更改更多的样式都无所谓*/
 </style>
 <link rel="stylesheet" href="css/style.css">
 <link type="text/css" href="css/loader.css" rel="stylesheet"/>
 <link rel="stylesheet" href="css/bootstrap.min.css">
+
+
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="js/jquery.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
@@ -25,7 +57,27 @@
 <script src="js/storage.js"></script>
 <script src="js/WechatShare.js"></script>
 <script src="js/freeze-touch-move.js"></script>
-<script src="js/config.js"></script>	
+<script src="js/config.js"></script>
+
+<script type="text/javascript">
+//显示的方法，说明：前缀的div1、div2、body等，均为Id值
+function showDialogBox(divNum)
+{
+	var dialogBoxId = "#div"+divNum;
+	$("#dialogBox").css("display", "block"); 
+	$(dialogBoxId).css("display", "block"); 
+	$(dialogBoxId).css("top", window.innerHeight/2-400/2); 
+	$(dialogBoxId).css("left", window.innerWidth/2-300/2); 
+}
+
+//关闭显示
+function closeDialogBox(divNum)
+{
+	var dialogBoxId = "#div"+divNum;
+	$(dialogBoxId).css("display", "none");
+	$("#dialogBox").css("display", "none"); 
+}
+   </script>	
 <script type="text/javascript">		
 		window.onload = function () {
 			orientationchange();
@@ -50,7 +102,6 @@
 		function tapContainer() {
 				
 				return function(){
-						// $("#container").css("background-image", "url('image/ad.jpg')");
 						$("#ad").css("display", "block");						
 				};
 			};
@@ -63,14 +114,6 @@
 		};		
 			
 		$(window).ready(function () {	
-			
-			// setTimeout(function(){
-			// 	$("#container").css("background-image", "url('image/ad.jpg')");				
-			// }, 4000);
-			// setTimeout(function(){
-			// 	$("#gameCanvas").css("display", "block");
-			// }, 6000);
-			
 			
 			var canvas = $("#gameCanvas");
 			console.log("window.innerWidth=="+window.innerWidth);
@@ -98,6 +141,7 @@
 			$("#container").on("tap", tapContainer());
 			$("#ad").on("click", tapAd());
 			$("#ad").on("tap", tapAd());
+			showDialogBox(1);
 		});
 		
 		window.onViewBonusEvent = new YAHOO.util.CustomEvent('onViewBonusEvent');
@@ -128,6 +172,44 @@
 <body>
 <div id="horizontal" style="display: none;"></div>
 <div id="ad" style="display: none;"></div>
+<div id="dialogBox" class="dialogShadow">
+	<div id="div1" class="dialogBox div1"><!--么么哒，恭喜你抢到了-->
+		   <div id="div13" style="width:100%;height:20px; background-image:url('image/closebar.png'); " align="right">
+				   <div onClick="closeDialogBox(1)" style="float:right; width:20px; height:20px;cursor:hand;background-image:url('image/closebt.png');background-repeat: no-repeat;">
+				   </div>
+		   </div>
+		   <div style="margin: 10px; margin-top: 30px; width:100%;height:40%; background-image:url('image/dcontent1.png');background-repeat: no-repeat;" align="center">
+		   </div>
+			<div id="div1Confirm" style="position:relative;margin-left: auto;
+	margin-right: auto; margin-top: 10px; margin-bottom: 10px; width:120px;height:30%; background-image:url('image/confirm.png');background-repeat: no-repeat;" align="center">
+		   </div>
+	</div>
+	<div id="div2" class="dialogBox div2"><!--么么哒，手气不好，-->
+		   <div id="div23" style="width:100%;height:20px; background-image:url('image/closebar.png'); " align="right">
+				   <div onClick="closeDialogBox(2)" style="float:right; width:20px; height:20px;cursor:hand;background-image:url('image/closebt.png');background-repeat: no-repeat;">
+				   </div>
+		   </div>
+			<div style="position:relative;margin-left: auto;
+	margin-right: auto; margin-top: 30px; width:80%;height:40%; background-image:url('image/dcontent2.png');background-repeat: no-repeat;" align="center">
+		   </div>
+			<div onClick="closeDialogBox(2)" id="div2Confirm" style="position:relative;margin-left: auto;
+	margin-right: auto; margin-top: 10px; margin-bottom: 10px; width:120px;height:30%; background-image:url('image/confirm.png');background-repeat: no-repeat;" align="center">
+		   </div>
+	</div>
+	<div id="div3" class="dialogBox div3"><!--么么哒,亲,明天再来哟~-->
+		   <div id="div33" style="width:100%;height:20px; background-image:url('image/closebar.png'); " align="right">
+				   <div onClick="closeDialogBox(3)" style="float:right; width:20px; height:20px;cursor:hand;background-image:url('image/closebt.png');background-repeat: no-repeat;">
+				   </div>
+		   </div>
+		   
+			<div style="position:relative;margin-left: auto;
+	margin-right: auto; margin-top: 40px; width:80%;height:30%; background-image:url('image/dcontent3.png');background-repeat: no-repeat;" align="center">
+		   </div>
+			<div onClick="closeDialogBox(3)" id="div3Confirm" style="position:relative;margin-left: auto;
+	margin-right: auto; margin-top: 10px; margin-bottom: 10px; width:120px;height:30%; background-image:url('image/confirm.png');background-repeat: no-repeat;" align="center">
+		   </div>
+	</div>
+</div>
 <div id="container">
 	<canvas id="gameCanvas">当前浏览器不支持HTML5 Canvas，请更换您的浏览器 </canvas>
 </div>
