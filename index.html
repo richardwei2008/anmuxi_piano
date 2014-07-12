@@ -112,6 +112,21 @@ function closeDialogBox(divNum)
 						$("#gameCanvas").css("display", "block");						
 				};
 		};		
+		
+		function confirmAndDraw() {
+			 $.ajax({
+			 	type : 'POST',
+			 	url : "/api/finishgame",
+			 	data : getCsrfToken(),
+			 	dataType : 'json',
+			 	success : function (data, textStatus, xhr) {
+			 							
+			 	},
+			 	error : function (xhr, textStatus, errorThrown) {
+					alert("Post-submit (failed) " + xhr.responseText);	
+				}
+			});
+		}
 			
 		$(window).ready(function () {	
 			
@@ -141,6 +156,8 @@ function closeDialogBox(divNum)
 			$("#container").on("tap", tapContainer());
 			$("#ad").on("click", tapAd());
 			$("#ad").on("tap", tapAd());
+			$("#div1Confirm").on("tap", confirmAndDraw());
+			$("#div1Confirm").on("click", confirmAndDraw());
 			showDialogBox(1);
 		});
 		
