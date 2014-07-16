@@ -38,13 +38,13 @@
 			"weiboLink": window.location.href.substring(0, window.location.href.lastIndexOf('/')),
 			//发送朋友圈
 			"tTitle": "听好声音 喝安慕希 抢百万微信红包！",
-			"tContent": "伊利安慕希不踩白格 搶百萬微信紅包 I want you！",
+			"tContent": "伊利安慕希不踩白格 抢百万微信红包 I want you！",
 			//发送给朋友
 			"fTitle": "听好声音 喝安慕希 抢百万微信红包！",
-			"fContent": "伊利安慕希不踩白格 搶百萬微信紅包 I want you！",
+			"fContent": "伊利安慕希不踩白格 抢百万微信红包 I want you！",
 			"wContent": "听好声音 喝安慕希 抢百万微信红包！"
 		};
-		var content = "伊利安慕希不踩白格 搶百萬微信紅包 I want you！";
+		var content = "伊利安慕希不踩白格 抢百万微信红包 I want you！";
 		var title = "听好声音 喝安慕希 抢百万微信红包！";		
 		// if (url.indexOf('?') < 0) {
 		// 	url = url + '?user=richard';
