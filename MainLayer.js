@@ -44,17 +44,18 @@ MainLayer.prototype.onDidLoadFromCCB = function () {
 MainLayer.prototype.onEnter = function () {
     cc.log("game mode==" + GAME_MODE);
     // return;
-	
-	
     var winSize = cc.Director.getInstance().getWinSize();
-    this.blockWidth = winSize.width / 4;
+	this.blockWidth = winSize.width / 4;
     this.blockHeight = winSize.height / 4;
-    this.scaleX = (this.blockWidth - 2) / 320;
-    this.scaleY = (this.blockHeight - 2) / 500;
+    this.blockScaleX = (this.blockWidth - 2) / 320;
+    this.blockScaleY = (this.blockHeight - 2) / 500;
+	this.scaleX = winSize.width / 320;
+	this.scaleY = winSize.height / 568;
+	this.dpiScale = 1 / window.devicePixelRatio;
 	this.moveNum = 0;
 	
-	console.log("[blockWidth , blockHeight]: [" + this.blockWidth + ", " + this.blockHeight + "] ");
-	console.log("[scaleX , scaleY]: [" + this.scaleX + ", " + this.scaleY + "] ");
+	alert("[blockWidth , blockHeight]: [" + this.blockWidth + ", " + this.blockHeight + "] ");
+	alert("[scaleX , scaleY]: [" + this.scaleX + ", " + this.scaleY + "] ");
 	
 	this.positionX = this.blockWidth / 2;
 	// for NO_BORDER mode
@@ -71,11 +72,11 @@ MainLayer.prototype.onEnter = function () {
 
 	  //score font
 	this.scoreBg = cc.Sprite.create("res/scoreBlock.png");
-	this.scoreBg.setScaleY(this.scaleX);	
-	this.scoreBg.setScaleY(this.scaleY);
-	// console.log("scaleY==" + this.scaleY);    
-	var positionY = winSize.height - 40 * this.scaleY;
-    this.scoreBg.setPosition(cc.p(this.blockWidth * 4 / window.devicePixelRatio, positionY));
+	this.scoreBg.setScaleY(this.blockScaleX);	
+	this.scoreBg.setScaleY(this.blockScaleY);
+	// console.log("scaleY==" + this.blockScaleY);    
+	var positionY = winSize.height - 40 * this.blockScaleY;
+    this.scoreBg.setPosition(cc.p(this.blockWidth * 2, positionY));
     // console.log("winSizeHeight==" + winSize.height); 
 	// console.log("scoreBgHeight==" + this.scoreBg._contentSize.height); 
 	// console.log("positionY==" + positionY);    
@@ -83,11 +84,12 @@ MainLayer.prototype.onEnter = function () {
 	this.rootNode.addChild(this.scoreBg);
     // this.scoreBg.setColor(cc.c3b(0, 92, 165));
     this.scoreBg.setZOrder(199);
-    this.scoreLabel = cc.LabelTTF.create("0.00''", "Arial", 50 / window.devicePixelRatio);
+    this.scoreLabel = cc.LabelTTF.create("0.00''", "Arial", 40);
 	// this.scoreLabel.setString("总时间30.00''    块数: " + this.totalTap);
     this.rootNode.addChild(this.scoreLabel);
-    this.scoreLabel.setPosition(cc.p(this.blockWidth * 4 / window.devicePixelRatio, positionY - 10));
-	
+    this.scoreLabel.setScaleX(this.dpiScale);	
+	this.scoreLabel.setScaleY(this.dpiScale);
+	this.scoreLabel.setPosition(cc.p(this.blockWidth * 2, positionY - 10 * this.dpiScale));
     this.scoreLabel.setAnchorPoint(cc.p(0.5, 0.5));
     // this.scoreLabel.setColor(cc.c3b(255, 20, 147));
 	// richard modify change score color
@@ -95,7 +97,7 @@ MainLayer.prototype.onEnter = function () {
     this.scoreLabel.setZOrder(200);
 	
 	// effect
-	this.effectLabel = cc.LabelTTF.create("I Want U!", "Arial", 110 / window.devicePixelRatio);
+	this.effectLabel = cc.LabelTTF.create("I Want U!", "Arial", 110);
 	// this.rootNode.addChild(effectLabel);
     this.effectLabel.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 2));
     this.effectLabel.setAnchorPoint(cc.p(0.5, 0.5));
@@ -127,12 +129,12 @@ MainLayer.prototype.newBlock = function (i, j, colorType) {
     //simple block
     var block = cc.Sprite.create("res/whiteBlock.png");
     block.setPosition(cc.p(this.positionX + this.blockWidth * i, this.blockHeight / 2 + this.blockHeight * j));
-	if (cc.Director.getInstance().getWinSize().width < 800) {
-		block.setScaleX(this.scaleX * 1.01);
-		block.setScaleY(this.scaleY * 1.005);
+	if (cc.Director.getInstance().getWinSize().width < 400) {
+		block.setScaleX(this.blockScaleX * 1.01);
+		block.setScaleY(this.blockScaleY * 1.005);
 	} else {
-		block.setScaleX(this.scaleX);
-		block.setScaleY(this.scaleY);
+		block.setScaleX(this.blockScaleX);
+		block.setScaleY(this.blockScaleY);
 	}
     block.setZOrder(100);
     block.setAnchorPoint(cc.p(0.5, 0.5));
@@ -150,10 +152,10 @@ MainLayer.prototype.newBlock = function (i, j, colorType) {
 				// add start label to the block
 				var startLabel = cc.LabelTTF.create("Start", "Arial", 90);
 				block.addChild(startLabel);
-				// alert("[blockWidth , blockHeight]: [" + this.blockWidth + ", " + this.blockHeight + "] ");
-				// alert("[scaleX , scaleY]: [" + this.scaleX + ", " + this.scaleY + "] ");
-				console.log("[blockWidth , blockHeight]: [" + this.blockWidth + ", " + this.blockHeight + "] ");
-				console.log("[scaleX , scaleY]: [" + this.scaleX + ", " + this.scaleY + "] ");
+				// alert("window.devicePixelRatio: " + window.devicePixelRatio);
+				// alert("this.blockWidth * window.devicePixelRatio: " + this.blockWidth * window.devicePixelRatio);
+				startLabel.setScaleX(this.scaleX);
+				startLabel.setScaleY(this.scaleY);
 				startLabel.setPosition(cc.p(this.blockWidth * window.devicePixelRatio, this.blockHeight * window.devicePixelRatio));	
 				startLabel.setAnchorPoint(cc.p(0.5, 0.5));
 				startLabel.setColor(cc.c3b(255, 255, 255));
@@ -163,9 +165,10 @@ MainLayer.prototype.newBlock = function (i, j, colorType) {
 				// seconds = 1;
 				// var pointLabel = cc.LabelTTF.create("减" + seconds + "秒", "Arial", 50);
 				award = 5;		
-				
 				var pointIcon = cc.Sprite.create("res/yogurt.png");
 				block.addChild(pointIcon);
+				pointIcon.setScaleX(this.scaleX);
+				pointIcon.setScaleY(this.scaleY);
 				pointIcon.setPosition(cc.p(this.blockWidth * window.devicePixelRatio, (this.blockHeight - 20) * window.devicePixelRatio)) ;		
 				pointIcon.setAnchorPoint(cc.p(0.5, 0.5));
 				pointIcon.setColor(cc.c3b(255, 255, 255));
@@ -178,7 +181,9 @@ MainLayer.prototype.newBlock = function (i, j, colorType) {
 				// awardType = "seconds";
 				award = 20;		
 				var pointIcon = cc.Sprite.create("res/protein.png");
-				block.addChild(pointIcon);
+				block.addChild(pointIcon);	
+				pointIcon.setScaleX(this.scaleX);
+				pointIcon.setScaleY(this.scaleY);				
 				pointIcon.setPosition(cc.p(this.blockWidth * window.devicePixelRatio, (this.blockHeight - 20) * window.devicePixelRatio)) ;		
 				pointIcon.setAnchorPoint(cc.p(0.5, 0.5));
 				pointIcon.setColor(cc.c3b(255, 255, 255));
@@ -219,24 +224,22 @@ MainLayer.prototype.createTopOverNode = function () {
     this.scoreNode.addChild(bgColor);
     this.scoreNode.bgColor = bgColor;
 		
-	var spriteScale = 1 / window.devicePixelRatio;
-	
-	var successHeader1 = cc.LabelTTF.create("恭喜您", "Arial", 110);    
-	successHeader1.setScaleX(spriteScale);
-	successHeader1.setScaleY(spriteScale);
+	var successHeader1 = cc.LabelTTF.create("恭喜您", "Arial", 50 * this.scaleY);    
+	successHeader1.setScaleX(1);
+	successHeader1.setScaleY(1);
     successHeader1.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 3.3));
     successHeader1.setAnchorPoint(cc.p(0.5, 0.5));		
 	
-	var successHeader2 = cc.LabelTTF.create("通关了!", "Arial", 110);    
-	successHeader2.setScaleX(spriteScale);
-	successHeader2.setScaleY(spriteScale);
-    successHeader2.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 3.3 - 120 / window.devicePixelRatio));
+	var successHeader2 = cc.LabelTTF.create("通关了!", "Arial", 50 * this.scaleY);    
+	successHeader2.setScaleX(1);
+	successHeader2.setScaleY(1);
+    successHeader2.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 3.3 - 60 * this.scaleY));
     successHeader2.setAnchorPoint(cc.p(0.5, 0.5));	
 	
-	var successHeader3 = cc.LabelTTF.create("100分", "Arial", 140);    
-	successHeader3.setScaleX(spriteScale);
-	successHeader3.setScaleY(spriteScale);
-    successHeader3.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 2.8 - 120 / window.devicePixelRatio));
+	var successHeader3 = cc.LabelTTF.create("100分", "Arial", 70 * this.scaleY);    
+	successHeader3.setScaleX(1);
+	successHeader3.setScaleY(1);
+    successHeader3.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 2.8 - 60 * this.scaleY));
     successHeader3.setAnchorPoint(cc.p(0.5, 0.5));	
 	
 	this.scoreNode.addChild(successHeader1);
@@ -246,64 +249,64 @@ MainLayer.prototype.createTopOverNode = function () {
 	this.scoreNode.addChild(successHeader3);
 	this.scoreNode.sh3 = successHeader3;
 	
-	var failureHeader1 = cc.LabelTTF.create("抱歉", "Arial", 110);    
-	failureHeader1.setScaleX(spriteScale);
-	failureHeader1.setScaleY(spriteScale);
+	var failureHeader1 = cc.LabelTTF.create("抱歉", "Arial", 50 * this.scaleY);    
+	failureHeader1.setScaleX(1);
+	failureHeader1.setScaleY(1);
     failureHeader1.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 3));
     failureHeader1.setAnchorPoint(cc.p(0.5, 0.5));
 	
-	var failureHeader2 = cc.LabelTTF.create("游戏失败了", "Arial", 110);    
-	failureHeader2.setScaleX(spriteScale);
-	failureHeader2.setScaleY(spriteScale);
-    failureHeader2.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 3 - 120 / window.devicePixelRatio));
+	var failureHeader2 = cc.LabelTTF.create("游戏失败了", "Arial", 50 * this.scaleY);    
+	failureHeader2.setScaleX(1);
+	failureHeader2.setScaleY(1);
+    failureHeader2.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 3 - 60 * this.scaleY));
     failureHeader2.setAnchorPoint(cc.p(0.5, 0.5));	
 	this.scoreNode.fh1 = failureHeader1;
 	this.scoreNode.fh2 = failureHeader2;
 	
     //result
-	var successLabel1 = cc.LabelTTF.create("伊利安慕希给您", "Arial", 100 / window.devicePixelRatio); 
-    successLabel1.setScaleX(spriteScale);
-	successLabel1.setScaleY(spriteScale);
-    successLabel1.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 2 - 75 / window.devicePixelRatio ));
+	var successLabel1 = cc.LabelTTF.create("伊利安慕希给您", "Arial", 30 * this.scaleY); 
+    successLabel1.setScaleX(1);
+	successLabel1.setScaleY(1);
+    successLabel1.setPosition(cc.p(this.blockWidth * 2, (this.blockHeight + 90) * this.scaleY));
     successLabel1.setAnchorPoint(cc.p(0.5, 0.5));
     this.scoreNode.addChild(successLabel1);
 	this.scoreNode.sc1 = successLabel1;
 	
-	var successLabel2 = cc.LabelTTF.create("发了一个红包", "Arial", 110 / window.devicePixelRatio); 
-    successLabel2.setScaleX(spriteScale);
-	successLabel2.setScaleY(spriteScale);
-    successLabel2.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 2 - 150 / window.devicePixelRatio ));
+	var successLabel2 = cc.LabelTTF.create("发了一个红包", "Arial", 35 * this.scaleY); 
+    successLabel2.setScaleX(1);
+	successLabel2.setScaleY(1);
+    successLabel2.setPosition(cc.p(this.blockWidth * 2, (this.blockHeight + 50) * this.scaleY));
     successLabel2.setAnchorPoint(cc.p(0.5, 0.5));
     this.scoreNode.addChild(successLabel2);
 	this.scoreNode.sc2 = successLabel2;
 	
-	var failedLabel = cc.LabelTTF.create("继续努力吧!", "Arial", 120 / window.devicePixelRatio);   
-	failedLabel.setScaleX(spriteScale);
-	failedLabel.setScaleY(spriteScale);	
-	failedLabel.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 2 - 140 / window.devicePixelRatio ));
+	var failedLabel = cc.LabelTTF.create("继续努力吧!", "Arial", 35 * this.scaleY);   
+	failedLabel.setScaleX(1);
+	failedLabel.setScaleY(1);	
+	failedLabel.setPosition(cc.p(this.blockWidth * 2, (this.blockHeight + 50) * this.scaleY));
     failedLabel.setAnchorPoint(cc.p(0.5, 0.5)); 
 	this.scoreNode.fc1 = failedLabel;
 	
 	// bonus
     var btnBonus = cc.Sprite.create("image/bonus.png");
-	btnBonus.setScaleX(0.8 * 2/ window.devicePixelRatio);
-	btnBonus.setScaleY(0.8 * 2/ window.devicePixelRatio);
-    btnBonus.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 1.1));
+	btnBonus.setScaleX(this.scaleX * this.dpiScale);
+	btnBonus.setScaleY(this.scaleY * this.dpiScale);
+    btnBonus.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 1 * this.scaleY));
     btnBonus.setAnchorPoint(cc.p(0.5, 0.5)); 
     this.scoreNode.addChild(btnBonus);
     this.scoreNode.bonus = btnBonus;
-	   
+
 	var btnAgain = cc.Sprite.create("image/again.png");
-	btnAgain.setScaleX(0.8 * 2/ window.devicePixelRatio);
-	btnAgain.setScaleY(0.8 * 2/ window.devicePixelRatio);
-    btnAgain.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 1.1));
+	btnAgain.setScaleX(this.scaleX * this.dpiScale);
+	btnAgain.setScaleY(this.scaleY * this.dpiScale);
+    btnAgain.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 1 * this.scaleY));
     btnAgain.setAnchorPoint(cc.p(0.5, 0.5));      
     this.scoreNode.again = btnAgain;	
 	
-	var footerLabel = cc.LabelTTF.create("如果您喜欢这个游戏，那么请分享您的好友吧!", "Arial", 35 / window.devicePixelRatio);   
-	footerLabel.setScaleX(spriteScale);
-	footerLabel.setScaleY(spriteScale);	
-	footerLabel.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 0.85));
+	var footerLabel = cc.LabelTTF.create("如果您喜欢这个游戏，那么请分享您的好友吧!", "Arial", 18);   // fixed font size and scale
+	footerLabel.setScaleX(1 * this.dpiScale);
+	footerLabel.setScaleY(1 * this.dpiScale);	
+	footerLabel.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 0.7 * this.scaleY));
     footerLabel.setAnchorPoint(cc.p(0.5, 0.5)); 
 	this.scoreNode.addChild(footerLabel);
 	   	
@@ -405,8 +408,8 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
                                 this.moveNum += 1;
 								this.totalTap += 1;
                                 block.runAction(cc.Sequence.create(
-                                    cc.ScaleTo.create(0, this.scaleX * 4 / 5, this.scaleY),
-                                    cc.ScaleTo.create(0.2, this.scaleX, this.scaleY)
+                                    cc.ScaleTo.create(0, this.blockScaleX * 4 / 5, this.blockScaleY),
+                                    cc.ScaleTo.create(0.2, this.blockScaleX, this.blockScaleY)
                                 ));
                             }
                         }
@@ -419,12 +422,12 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
 							// PauseAudio();
                             block.setColor(cc.c3b(255, 0, 0)); /* red */
                             block.runAction(cc.Sequence.create(
-                                cc.ScaleTo.create(0, this.scaleX * 4 / 5, this.scaleY * 4 / 5),
-                                cc.ScaleTo.create(0.2, this.scaleX, this.scaleY),
-								cc.ScaleTo.create(0, this.scaleX * 4 / 5, this.scaleY * 4 / 5),
-                                cc.ScaleTo.create(0.2, this.scaleX, this.scaleY),
-								cc.ScaleTo.create(0, this.scaleX * 4 / 5, this.scaleY * 4 / 5),
-                                cc.ScaleTo.create(0.2, this.scaleX, this.scaleY),
+                                cc.ScaleTo.create(0, this.blockScaleX * 4 / 5, this.blockScaleY * 4 / 5),
+                                cc.ScaleTo.create(0.2, this.blockScaleX, this.blockScaleY),
+								cc.ScaleTo.create(0, this.blockScaleX * 4 / 5, this.blockScaleY * 4 / 5),
+                                cc.ScaleTo.create(0.2, this.blockScaleX, this.blockScaleY),
+								cc.ScaleTo.create(0, this.blockScaleX * 4 / 5, this.blockScaleY * 4 / 5),
+                                cc.ScaleTo.create(0.2, this.blockScaleX, this.blockScaleY),
 								cc.CallFunc.create(function () {
 									this.createTopOverNode();   //create score node and move 
 									// richard modify
