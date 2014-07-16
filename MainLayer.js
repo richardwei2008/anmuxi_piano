@@ -159,21 +159,7 @@ MainLayer.prototype.newBlock = function (i, j, colorType) {
 				startLabel.setColor(cc.c3b(255, 255, 255));
 				startLabel.setZOrder(1);
 			}
-			if (j % 11 == 7 && this.count_20 < this.max_20) {
-				// seconds = 1;
-				// var pointLabel = cc.LabelTTF.create("减" + seconds + "秒", "Arial", 50);
-				// awardType = "seconds";
-				award = 20;		
-			
-				var pointIcon = cc.Sprite.create("res/protein.png");
-				block.addChild(pointIcon);
-				pointIcon.setPosition(cc.p(this.blockWidth * window.devicePixelRatio, (this.blockHeight - 20) * window.devicePixelRatio)) ;		
-				pointIcon.setAnchorPoint(cc.p(0.5, 0.5));
-				pointIcon.setColor(cc.c3b(255, 255, 255));
-				pointIcon.setZOrder(1);	
-				this.count_20++;
-			} else 
-			if (j % 5 == 3 && this.count_5 < this.max_5) {
+			if (j % 3 == 0 && this.count_5 < this.max_5) {
 				// seconds = 1;
 				// var pointLabel = cc.LabelTTF.create("减" + seconds + "秒", "Arial", 50);
 				award = 5;		
@@ -185,7 +171,21 @@ MainLayer.prototype.newBlock = function (i, j, colorType) {
 				pointIcon.setColor(cc.c3b(255, 255, 255));
 				pointIcon.setZOrder(1);	
 				this.count_5++;
-			}
+			} else 
+			if (j % 11 == 3  && this.count_20 < this.max_20) {
+				// seconds = 1;
+				// var pointLabel = cc.LabelTTF.create("减" + seconds + "秒", "Arial", 50);
+				// awardType = "seconds";
+				award = 20;		
+				var pointIcon = cc.Sprite.create("res/protein.png");
+				block.addChild(pointIcon);
+				pointIcon.setPosition(cc.p(this.blockWidth * window.devicePixelRatio, (this.blockHeight - 20) * window.devicePixelRatio)) ;		
+				pointIcon.setAnchorPoint(cc.p(0.5, 0.5));
+				pointIcon.setColor(cc.c3b(255, 255, 255));
+				pointIcon.setZOrder(1);	
+				this.count_20++;
+			}  
+			
 			if (j == 30) {
 				block.addChild(this.logoIcon);				
 			}
