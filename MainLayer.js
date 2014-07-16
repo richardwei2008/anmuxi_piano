@@ -463,7 +463,7 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
         //back
         var backRect = cc.rectCreate(this.scoreNode.again.getPosition(), [50, 30]);
         if (cc.rectContainsPoint(backRect, this.pBegan)) {
-            this.scoreNode.again.runAction(cc.Sequence.create(cc.ScaleTo.create(0.001, 0.999),
+            this.scoreNode.again.runAction(cc.Sequence.create(
                 cc.CallFunc.create(function () {
                     cc.AudioEngine.getInstance().stopAllEffects();
                     cc.BuilderReader.runScene("", "MainLayer");
@@ -474,7 +474,7 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
 		var viewBonusEvent = {type:'viewBonus', success : true, score : this.totalTap};
 		var bonusRect = cc.rectCreate(this.scoreNode.bonus.getPosition(), [50, 30]);
         if (cc.rectContainsPoint(bonusRect, this.pBegan)) {
-            this.scoreNode.bonus.runAction(cc.Sequence.create(cc.ScaleTo.create(0.001, 0.999),
+            this.scoreNode.bonus.runAction(cc.Sequence.create(
                 cc.CallFunc.create(function () {
                     cc.AudioEngine.getInstance().stopAllEffects();
                     window.onViewBonusEvent.fire(viewBonusEvent);
