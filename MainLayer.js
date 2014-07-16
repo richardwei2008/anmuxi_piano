@@ -398,7 +398,7 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
 									this.rootNode.removeChild(this.scoreBg);
 									this.rootNode.removeChild(this.scoreLabel);
 									// this.scoreNode.result2.setString(this.totalTap);
-                                    cc.AudioEngine.getInstance().playEffect(SOUNDS.win, false);
+                                    // cc.AudioEngine.getInstance().playEffect(SOUNDS.win, false);
 									// PauseAudio();									
                                 }
                                 this.blockNode.runAction(cc.MoveTo.create(0.2, cc.p(0, (this.blockNode.getPositionY() - this.blockHeight * heightNum))));
