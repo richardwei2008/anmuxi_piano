@@ -54,8 +54,8 @@ MainLayer.prototype.onEnter = function () {
 	this.dpiScale = 1 / window.devicePixelRatio;
 	this.moveNum = 0;
 	
-	alert("[blockWidth , blockHeight]: [" + this.blockWidth + ", " + this.blockHeight + "] ");
-	alert("[scaleX , scaleY]: [" + this.scaleX + ", " + this.scaleY + "] ");
+	// alert("[blockWidth , blockHeight]: [" + this.blockWidth + ", " + this.blockHeight + "] ");
+	// alert("[scaleX , scaleY]: [" + this.scaleX + ", " + this.scaleY + "] ");
 	
 	this.positionX = this.blockWidth / 2;
 	// for NO_BORDER mode
