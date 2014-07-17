@@ -76,6 +76,8 @@ function closeDialogBox(divNum)
 	var dialogBoxId = "#div"+divNum;
 	$(dialogBoxId).css("display", "none");
 	$("#dialogBox").css("display", "none"); 
+	var url = window.location.href.substring(0, window.location.href.lastIndexOf('/')) + "/index.html";
+	window.location.href = url;
 }
    </script>	
 <script type="text/javascript">		
