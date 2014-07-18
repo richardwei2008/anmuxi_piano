@@ -13,7 +13,8 @@ if (sys.platform == 'browser') {
 var ccb_resources = [
     {src: "res/fonts/score_font.fnt"},
     {src: "res/fonts/score_font.png"},
-    {src: "res/whiteBlock.png"}
+    {src: "res/whiteBlock.png"},
+	{src: "res/tile.png"}
 ];
 
 MODE_CLASSIC = 0; //经典

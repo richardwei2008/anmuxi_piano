@@ -40,22 +40,27 @@ MainLayer.prototype.onDidLoadFromCCB = function () {
     this.rootNode.setTouchEnabled(true);
 };
 
-
 MainLayer.prototype.onEnter = function () {
     cc.log("game mode==" + GAME_MODE);
-    // return;
-    var winSize = cc.Director.getInstance().getWinSize();
-	this.blockWidth = winSize.width / 4;
-    this.blockHeight = winSize.height / 4;
-    this.blockScaleX = (this.blockWidth - 2) / 320;
-    this.blockScaleY = (this.blockHeight - 2) / 500;
-	this.scaleX = winSize.width / 320;
-	this.scaleY = winSize.height / 568;
+    
+    this.winSize = cc.Director.getInstance().getWinSize();	
+	this.blockWidth = this.winSize.width / 4;
+    this.blockHeight = this.winSize.height / 4;
+	var tileWidth = 160;	// 320
+	var tileHeight = 250;  // 500
+    this.blockScaleX = (this.blockWidth - 2) / 160;
+    this.blockScaleY = (this.blockHeight - 2) / 250;
+	this.scaleX = this.winSize.width / 320;
+	this.scaleY = this.winSize.height / (500 + 4);
+	this.bgScaleX = this.winSize.width / 80;
+	this.bgScaleY = this.winSize.height / 142;
 	this.dpiScale = 1 / window.devicePixelRatio;
 	this.moveNum = 0;
-	
+	// alert("device pixel ratio: " + window.devicePixelRatio);
+	// alert("[winSize.width , winSize.height]: [" + this.winSize.width + ", " + this.winSize.height + "] ");
 	// alert("[blockWidth , blockHeight]: [" + this.blockWidth + ", " + this.blockHeight + "] ");
 	// alert("[scaleX , scaleY]: [" + this.scaleX + ", " + this.scaleY + "] ");
+	// alert("[blockScaleX , blockScaleY]: [" + this.blockScaleX + ", " + this.blockScaleY + "] ");
 	
 	this.positionX = this.blockWidth / 2;
 	// for NO_BORDER mode
@@ -72,33 +77,25 @@ MainLayer.prototype.onEnter = function () {
 
 	  //score font
 	this.scoreBg = cc.Sprite.create("res/scoreBlock.png");
-	this.scoreBg.setScaleY(this.blockScaleX);	
-	this.scoreBg.setScaleY(this.blockScaleY);
-	// console.log("scaleY==" + this.blockScaleY);    
-	var positionY = winSize.height - 40 * this.blockScaleY;
+	this.scoreBg.width = 320;
+	this.scoreBg.height = 32;	
+	
+	this.scoreBg.setScaleX(this.scaleX);
+	this.scoreBg.setScaleY(this.scaleX);
+	var positionY = this.winSize.height - this.scoreBg.height * this.scaleX / 2;
     this.scoreBg.setPosition(cc.p(this.blockWidth * 2, positionY));
-    // console.log("winSizeHeight==" + winSize.height); 
-	// console.log("scoreBgHeight==" + this.scoreBg._contentSize.height); 
-	// console.log("positionY==" + positionY);    
 	this.scoreBg.setAnchorPoint(cc.p(0.5, 0.5));
-	this.rootNode.addChild(this.scoreBg);
-    // this.scoreBg.setColor(cc.c3b(0, 92, 165));
+	this.rootNode.addChild(this.scoreBg);    
     this.scoreBg.setZOrder(199);
-    this.scoreLabel = cc.LabelTTF.create("0.00''", "Arial", 40);
-	// this.scoreLabel.setString("总时间30.00''    块数: " + this.totalTap);
-    this.rootNode.addChild(this.scoreLabel);
-    this.scoreLabel.setScaleX(this.dpiScale);	
-	this.scoreLabel.setScaleY(this.dpiScale);
-	this.scoreLabel.setPosition(cc.p(this.blockWidth * 2, positionY - 10 * this.dpiScale));
-    this.scoreLabel.setAnchorPoint(cc.p(0.5, 0.5));
-    // this.scoreLabel.setColor(cc.c3b(255, 20, 147));
-	// richard modify change score color
+    this.scoreLabel = cc.LabelTTF.create("0.00''", "Arial", this.scoreBg.height * this.scaleY * 0.7);
+	this.rootNode.addChild(this.scoreLabel);
+	this.scoreLabel.setPosition(cc.p(this.blockWidth * 2, positionY));
+    this.scoreLabel.setAnchorPoint(cc.p(0.5, 0.5));    	
     this.scoreLabel.setColor(cc.c3b(178, 206, 228));
     this.scoreLabel.setZOrder(200);
 	
 	// effect
-	this.effectLabel = cc.LabelTTF.create("I Want U!", "Arial", 110);
-	// this.rootNode.addChild(effectLabel);
+	this.effectLabel = cc.LabelTTF.create("I Want U!", "Arial", 110);	
     this.effectLabel.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 2));
     this.effectLabel.setAnchorPoint(cc.p(0.5, 0.5));
 	this.effectLabel.setColor(cc.c3b(178, 206, 228));
@@ -121,9 +118,10 @@ MainLayer.prototype.onEnter = function () {
   
 };
 
+
 MainLayer.prototype.newBlock = function (i, j, colorType) {
     //simple block
-    var block = cc.Sprite.create("res/whiteBlock.png");
+    var block = cc.Sprite.create("res/tile.png");
     block.setPosition(cc.p(this.positionX + this.blockWidth * i, this.blockHeight / 2 + this.blockHeight * j));
 	var scaleX = this.blockScaleX;
 	var scaleY = this.blockScaleY;
@@ -145,29 +143,23 @@ MainLayer.prototype.newBlock = function (i, j, colorType) {
         block.setColor(cc.c3b(178, 206, 228));
     } else {
 		if (i == colorType) {
-			var iconPositionX = this.blockWidth * window.devicePixelRatio / this.scaleX;
-			var iconPositionY = (this.blockHeight - 10) * window.devicePixelRatio / this.scaleY;
+			// var iconPositionX = this.blockWidth / 2;
+			// var iconPositionY = (this.blockHeight - 10) / 2;
+			var iconPositionX = this.blockWidth / this.scaleX;
+			var iconPositionY = (this.blockHeight - 10) / this.scaleY;
 			if (j == 1) {
 				// add start label to the block
-				var startLabel = cc.LabelTTF.create("Start", "Arial", 90);
+				var startLabel = cc.Sprite.create("res/start.png");
 				block.addChild(startLabel);
-				// alert("window.devicePixelRatio: " + window.devicePixelRatio);
-				// alert("this.blockWidth * window.devicePixelRatio: " + this.blockWidth * window.devicePixelRatio);
-				startLabel.setScaleX(1);
-				startLabel.setScaleY(1);
 				startLabel.setPosition(cc.p(iconPositionX, iconPositionY));	
 				startLabel.setAnchorPoint(cc.p(0.5, 0.5));
 				startLabel.setColor(cc.c3b(255, 255, 255));
 				startLabel.setZOrder(1);
 			}
 			if (j % 3 == 0 && this.count_5 < this.max_5) {
-				// seconds = 1;
-				// var pointLabel = cc.LabelTTF.create("减" + seconds + "秒", "Arial", 50);
 				award = 5;		
 				var pointIcon = cc.Sprite.create("res/yogurt.png");
 				block.addChild(pointIcon);
-				pointIcon.setScaleX(1);
-				pointIcon.setScaleY(1);
 				pointIcon.setPosition(cc.p(iconPositionX, iconPositionY)) ;		
 				pointIcon.setAnchorPoint(cc.p(0.5, 0.5));
 				pointIcon.setColor(cc.c3b(255, 255, 255));
@@ -175,14 +167,9 @@ MainLayer.prototype.newBlock = function (i, j, colorType) {
 				this.count_5++;
 			} else 
 			if (j % 11 == 3  && this.count_20 < this.max_20) {
-				// seconds = 1;
-				// var pointLabel = cc.LabelTTF.create("减" + seconds + "秒", "Arial", 50);
-				// awardType = "seconds";
 				award = 20;		
 				var pointIcon = cc.Sprite.create("res/protein.png");
-				block.addChild(pointIcon);	
-				pointIcon.setScaleX(1);
-				pointIcon.setScaleY(1);				
+				block.addChild(pointIcon);					
 				pointIcon.setPosition(cc.p(iconPositionX, iconPositionY)) ;		
 				pointIcon.setAnchorPoint(cc.p(0.5, 0.5));
 				pointIcon.setColor(cc.c3b(255, 255, 255));
@@ -191,7 +178,7 @@ MainLayer.prototype.newBlock = function (i, j, colorType) {
 			}  
 			
 			if (j == 30) {
-				var logoIcon = cc.Sprite.create("image/logo.png");	
+				var logoIcon = cc.Sprite.create("res/iwantu.png");	
 				logoIcon.setPosition(cc.p(iconPositionX, iconPositionY)) ;		
 				logoIcon.setAnchorPoint(cc.p(0.5, 0.5));
 				logoIcon.setColor(cc.c3b(255, 255, 255));
@@ -217,33 +204,30 @@ MainLayer.prototype.createTopOverNode = function () {
 	this.scoreNode.setAnchorPoint(cc.p(0, 0));
     this.scoreNode.setZOrder(130);
     this.blockNode.addChild(this.scoreNode);
+	
+	
+	
 	//color bg
-	var bgColor = cc.Sprite.create("image/last.png");
+	var bgColor = cc.Sprite.create("res/last.png");
 	bgColor.setPosition(cc.p(0, 0)); // 
-	bgColor.setScaleX(window.resolution.width / 160);
-	bgColor.setScaleY(window.resolution.height / 284);
+	bgColor.setScaleX(this.bgScaleX);
+	bgColor.setScaleY(this.bgScaleY);
 	bgColor.setAnchorPoint(cc.p(0, 0));
     
     //color bg
     this.scoreNode.addChild(bgColor);
     this.scoreNode.bgColor = bgColor;
 		
-	var successHeader1 = cc.LabelTTF.create("恭喜您", "Arial", 50 * this.scaleY);    
-	successHeader1.setScaleX(1);
-	successHeader1.setScaleY(1);
-    successHeader1.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 3.3));
+	var successHeader1 = cc.LabelTTF.create("恭喜您", "Arial", 50 * this.scaleY);    	
+    successHeader1.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 2.5 + 110 * this.scaleY));
     successHeader1.setAnchorPoint(cc.p(0.5, 0.5));		
 	
-	var successHeader2 = cc.LabelTTF.create("通关了!", "Arial", 50 * this.scaleY);    
-	successHeader2.setScaleX(1);
-	successHeader2.setScaleY(1);
-    successHeader2.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 3.3 - 60 * this.scaleY));
+	var successHeader2 = cc.LabelTTF.create("通关了!", "Arial", 50 * this.scaleY);    	
+    successHeader2.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 2.5 + 60 * this.scaleY));
     successHeader2.setAnchorPoint(cc.p(0.5, 0.5));	
 	
-	var successHeader3 = cc.LabelTTF.create("100分", "Arial", 70 * this.scaleY);    
-	successHeader3.setScaleX(1);
-	successHeader3.setScaleY(1);
-    successHeader3.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 2.8 - 60 * this.scaleY));
+	var successHeader3 = cc.LabelTTF.create("100分", "Arial", 70 * this.scaleY);  
+    successHeader3.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 2.5));
     successHeader3.setAnchorPoint(cc.p(0.5, 0.5));	
 	
 	this.scoreNode.addChild(successHeader1);
@@ -256,61 +240,56 @@ MainLayer.prototype.createTopOverNode = function () {
 	var failureHeader1 = cc.LabelTTF.create("抱歉", "Arial", 50 * this.scaleY);    
 	failureHeader1.setScaleX(1);
 	failureHeader1.setScaleY(1);
-    failureHeader1.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 3));
+    failureHeader1.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 2.2 + 110 * this.scaleY));
     failureHeader1.setAnchorPoint(cc.p(0.5, 0.5));
 	
-	var failureHeader2 = cc.LabelTTF.create("游戏失败了", "Arial", 50 * this.scaleY);    
-	failureHeader2.setScaleX(1);
-	failureHeader2.setScaleY(1);
-    failureHeader2.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 3 - 60 * this.scaleY));
+	var failureHeader2 = cc.LabelTTF.create("游戏失败了", "Arial", 50 * this.scaleY);  
+    failureHeader2.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 2.2 + 60 * this.scaleY));
     failureHeader2.setAnchorPoint(cc.p(0.5, 0.5));	
 	this.scoreNode.fh1 = failureHeader1;
 	this.scoreNode.fh2 = failureHeader2;
 	
     //result
 	var successLabel1 = cc.LabelTTF.create("伊利安慕希给您", "Arial", 25 * this.scaleY); 
-    successLabel1.setScaleX(1);
-	successLabel1.setScaleY(1);
-    successLabel1.setPosition(cc.p(this.blockWidth * 2, this.blockHeight / this.scaleY + 80 * this.scaleY));
+    successLabel1.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 1.5 + 35 * this.scaleY));
     successLabel1.setAnchorPoint(cc.p(0.5, 0.5));
     this.scoreNode.addChild(successLabel1);
 	this.scoreNode.sc1 = successLabel1;
 	
-	var successLabel2 = cc.LabelTTF.create("发了一个红包", "Arial", 25 * this.scaleY); 
-    successLabel2.setScaleX(1);
-	successLabel2.setScaleY(1);
-    successLabel2.setPosition(cc.p(this.blockWidth * 2, this.blockHeight / this.scaleY + 40 * this.scaleY));
+	var successLabel2 = cc.LabelTTF.create("发了一个红包", "Arial", 30 * this.scaleY); 
+    successLabel2.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 1.5));
     successLabel2.setAnchorPoint(cc.p(0.5, 0.5));
     this.scoreNode.addChild(successLabel2);
 	this.scoreNode.sc2 = successLabel2;
 	
-	var failedLabel = cc.LabelTTF.create("继续努力吧!", "Arial", 30 * this.scaleY);   
-	failedLabel.setScaleX(1);
-	failedLabel.setScaleY(1);	
-	failedLabel.setPosition(cc.p(this.blockWidth * 2, this.blockHeight / this.scaleY + 40 * this.scaleY));
+	var failedLabel = cc.LabelTTF.create("继续努力吧!", "Arial", 30 * this.scaleY); 
+	failedLabel.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 1.5));
     failedLabel.setAnchorPoint(cc.p(0.5, 0.5)); 
 	this.scoreNode.fc1 = failedLabel;
 	
 	// bonus
+	var btnScaleX = this.winSize.width / 360 * this.dpiScale;
+	var btnScaleY = btnScaleX;
+	// alert("[btnScaleX , btnScaleY]: [" + btnScaleX + ", " + btnScaleY + "] ");
     var btnBonus = cc.Sprite.create("image/bonus.png");
-	btnBonus.setScaleX(this.scaleX * this.dpiScale);
-	btnBonus.setScaleY(this.scaleY * this.dpiScale);
-    btnBonus.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 1 / this.scaleY));
+	btnBonus.setScaleX(btnScaleX);
+	btnBonus.setScaleY(btnScaleY);
+    btnBonus.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 1.5 - 40 * this.scaleY));
     btnBonus.setAnchorPoint(cc.p(0.5, 0.5)); 
     this.scoreNode.addChild(btnBonus);
     this.scoreNode.bonus = btnBonus;
 
 	var btnAgain = cc.Sprite.create("image/again.png");
-	btnAgain.setScaleX(this.scaleX * this.dpiScale);
-	btnAgain.setScaleY(this.scaleY * this.dpiScale);
-    btnAgain.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 1 / this.scaleY));
+	btnAgain.setScaleX(btnScaleX);
+	btnAgain.setScaleY(btnScaleY);
+    btnAgain.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 1.5 - 40 * this.scaleY));
     btnAgain.setAnchorPoint(cc.p(0.5, 0.5));      
     this.scoreNode.again = btnAgain;	
 	
 	var footerLabel = cc.LabelTTF.create("如果您喜欢这个游戏，那么请分享您的好友吧!", "Arial", 18);   // fixed font size and scale
 	footerLabel.setScaleX(this.scaleX * this.dpiScale);
 	footerLabel.setScaleY(this.scaleY * this.dpiScale);	
-	footerLabel.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 1 / this.scaleY - 30 * this.scaleY));
+	footerLabel.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 1.5 - 80 * this.scaleY));
     footerLabel.setAnchorPoint(cc.p(0.5, 0.5)); 
 	this.scoreNode.addChild(footerLabel);
 	   	
@@ -468,7 +447,7 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
     }
 	else if (this.gameStatus == OVER) {  //game over
         //back
-        var backRect = cc.rectCreate(this.scoreNode.again.getPosition(), [50, 30]);
+        var backRect = cc.rectCreate(this.scoreNode.again.getPosition(), [200, 120]);
         if (cc.rectContainsPoint(backRect, this.pBegan)) {
             this.scoreNode.again.runAction(cc.Sequence.create(
                 cc.CallFunc.create(function () {
@@ -479,7 +458,7 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
         }
 		
 		var viewBonusEvent = {type:'viewBonus', success : true, score : this.totalTap};
-		var bonusRect = cc.rectCreate(this.scoreNode.bonus.getPosition(), [50, 30]);
+		var bonusRect = cc.rectCreate(this.scoreNode.bonus.getPosition(), [200, 120]);
         if (cc.rectContainsPoint(bonusRect, this.pBegan)) {
             this.scoreNode.bonus.runAction(cc.Sequence.create(
                 cc.CallFunc.create(function () {
