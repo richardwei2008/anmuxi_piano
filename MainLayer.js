@@ -13,6 +13,17 @@ var MainLayer = function () {
 	this.getRandomInt = function (min, max) {
 		return Math.floor(Math.random() * (max - min + 1)) + min;
 	};
+    this.RANDOM_2_START_SEED = [2, 3, 4, 5];
+    this.RANDOM_8_SEED = [2, 3, 5, 7];
+
+    this.random2 = 3;
+    this.start_2_point = this.getRandomInt(2, 3, 4);
+    this.random2Mod = this.random2 - this.getRandomInt(1, 2);
+
+    this.random8 = this.RANDOM_8_SEED[this.getRandomInt(0, 3)];
+    this.start_8_point = this.getRandomInt(4, 9);
+    this.random8Mod = this.random8 - 1;
+
 	this.max_8_point = 5;
 	this.max_2_point = 15;
 	this.count_8_point = 0;
@@ -156,7 +167,7 @@ MainLayer.prototype.newBlock = function (i, j, colorType) {
 				startLabel.setColor(cc.c3b(255, 255, 255));
 				startLabel.setZOrder(1);
 			}
-			if (j % 3 == 2 && this.count_2_point < this.max_2_point) {
+			if (j % this.random2 == this.random2Mod && this.count_2_point < this.max_2_point && j >= this.start_2_point) {
 				award = 2;
 				var pointIcon = cc.Sprite.create("res/yogurt.png");
 				block.addChild(pointIcon);
@@ -166,7 +177,7 @@ MainLayer.prototype.newBlock = function (i, j, colorType) {
 				pointIcon.setZOrder(1);	
 				this.count_2_point++;
 			} else 
-			if (j % 7 == 3 && this.count_8_point < this.max_8_point) {
+			if (j % this.random8 == this.random8Mod && this.count_8_point < this.max_8_point && j >= this.start_8_point) {
 				award = 8;
 				var pointIcon = cc.Sprite.create("res/protein.png");
 				block.addChild(pointIcon);					
