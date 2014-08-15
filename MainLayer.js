@@ -13,10 +13,10 @@ var MainLayer = function () {
 	this.getRandomInt = function (min, max) {
 		return Math.floor(Math.random() * (max - min + 1)) + min;
 	};
-	this.max_20 = 2;
-	this.max_5 = 8;
-	this.count_20 = 0;
-	this.count_5 = 0;
+	this.max_8_point = 5;
+	this.max_2_point = 15;
+	this.count_8_point = 0;
+	this.count_2_point = 0;
 };
 
 MainLayer.prototype.onDidLoadFromCCB = function () {
@@ -212,11 +212,11 @@ MainLayer.prototype.newBlock = function (i, j, colorType) {
 				startLabel.setColor(cc.c3b(255, 255, 255));
 				startLabel.setZOrder(1);
 			}
-			if (j % 11 == 7 && this.count_20 < this.max_20) {
+			if (j % 7 == 3 && this.count_8_point < this.max_8_point) {
 				// seconds = 1;
 				// var pointLabel = cc.LabelTTF.create("减" + seconds + "秒", "Arial", 50);
 				// awardType = "seconds";
-				award = 20;		
+				award = 8;
 				// var pointLabel = cc.LabelTTF.create("+ 35%", "Arial", 50);				
 				// block.addChild(pointLabel);
 				// pointLabel.setPosition(cc.p((this.blockWidth + 70 * 0.5) * window.devicePixelRatio, (this.blockHeight * 2) * window.devicePixelRatio - this.blockHeight * 0.5));	
@@ -229,15 +229,15 @@ MainLayer.prototype.newBlock = function (i, j, colorType) {
 				pointIcon.setAnchorPoint(cc.p(0.5, 0.5));
 				pointIcon.setColor(cc.c3b(255, 255, 255));
 				pointIcon.setZOrder(1);	
-				this.count_20++;
+				this.count_8_point++;
 			} else 
-			if (j % 5 == 3 && this.count_5 < this.max_5) {
+			if (j % 3 == 2 && this.count_2_point < this.max_2_point) {
 				// seconds = 1;
 				// var pointLabel = cc.LabelTTF.create("减" + seconds + "秒", "Arial", 50);
-				award = 5;		
-				// var pointLabel = cc.LabelTTF.create("奖" + award + "块", "Arial", 50);				
+				award = 2;
+				// var pointLabel = cc.LabelTTF.create("奖" + award + "块", "Arial", 50);
 				// block.addChild(pointLabel);
-				// pointLabel.setPosition(cc.p((this.blockWidth + 70 * 0.5) * window.devicePixelRatio, (this.blockHeight * 2) * window.devicePixelRatio - this.blockHeight * 0.5));	
+				// pointLabel.setPosition(cc.p((this.blockWidth + 70 * 0.5) * window.devicePixelRatio, (this.blockHeight * 2) * window.devicePixelRatio - this.blockHeight * 0.5));
 				// pointLabel.setAnchorPoint(cc.p(0.5, 0.5));
 				// pointLabel.setColor(cc.c3b(255, 255, 255));
 				// pointLabel.setZOrder(2);
@@ -247,9 +247,9 @@ MainLayer.prototype.newBlock = function (i, j, colorType) {
 				pointIcon.setAnchorPoint(cc.p(0.5, 0.5));
 				pointIcon.setColor(cc.c3b(255, 255, 255));
 				pointIcon.setZOrder(1);	
-				this.count_5++;
+				this.count_2_point++;
 			}
-			if (j == 30) {
+			if (j == 50) {
 				// var logoIcon = cc.Sprite.create("image/logo.png");
 				// block.addChild(logoIcon);
 				// logoIcon.setPosition(cc.p(this.blockWidth * window.devicePixelRatio, (this.blockHeight - 20) * window.devicePixelRatio)) ;		
