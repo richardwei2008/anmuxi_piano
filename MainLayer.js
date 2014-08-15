@@ -13,10 +13,10 @@ var MainLayer = function () {
 	this.getRandomInt = function (min, max) {
 		return Math.floor(Math.random() * (max - min + 1)) + min;
 	};
-	this.max_20 = 2;
-	this.max_5 = 8;
-	this.count_20 = 0;
-	this.count_5 = 0;
+	this.max_8_point = 5;
+	this.max_2_point = 15;
+	this.count_8_point = 0;
+	this.count_2_point = 0;
 };
 
 MainLayer.prototype.onDidLoadFromCCB = function () {
@@ -156,28 +156,28 @@ MainLayer.prototype.newBlock = function (i, j, colorType) {
 				startLabel.setColor(cc.c3b(255, 255, 255));
 				startLabel.setZOrder(1);
 			}
-			if (j % 3 == 0 && this.count_5 < this.max_5) {
-				award = 5;		
+			if (j % 3 == 2 && this.count_2_point < this.max_2_point) {
+				award = 2;
 				var pointIcon = cc.Sprite.create("res/yogurt.png");
 				block.addChild(pointIcon);
 				pointIcon.setPosition(cc.p(iconPositionX, iconPositionY)) ;		
 				pointIcon.setAnchorPoint(cc.p(0.5, 0.5));
 				pointIcon.setColor(cc.c3b(255, 255, 255));
 				pointIcon.setZOrder(1);	
-				this.count_5++;
+				this.count_2_point++;
 			} else 
-			if (j % 11 == 3  && this.count_20 < this.max_20) {
-				award = 20;		
+			if (j % 7 == 3 && this.count_8_point < this.max_8_point) {
+				award = 8;
 				var pointIcon = cc.Sprite.create("res/protein.png");
 				block.addChild(pointIcon);					
 				pointIcon.setPosition(cc.p(iconPositionX, iconPositionY)) ;		
 				pointIcon.setAnchorPoint(cc.p(0.5, 0.5));
 				pointIcon.setColor(cc.c3b(255, 255, 255));
 				pointIcon.setZOrder(1);	
-				this.count_20++;
+				this.count_8_point++;
 			}  
 			
-			if (j == 30) {
+			if (j == 50) {
 				var logoIcon = cc.Sprite.create("res/iwantu.png");	
 				logoIcon.setPosition(cc.p(iconPositionX, iconPositionY)) ;		
 				logoIcon.setAnchorPoint(cc.p(0.5, 0.5));
