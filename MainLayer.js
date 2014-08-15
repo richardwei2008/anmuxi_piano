@@ -250,17 +250,17 @@ MainLayer.prototype.createTopOverNode = function () {
 	this.scoreNode.fh2 = failureHeader2;
 	
     //result
-	var successLabel1 = cc.LabelTTF.create("伊利安慕希给您", "Arial", 25 * this.scaleY); 
-    successLabel1.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 1.5 + 35 * this.scaleY));
-    successLabel1.setAnchorPoint(cc.p(0.5, 0.5));
-    this.scoreNode.addChild(successLabel1);
-	this.scoreNode.sc1 = successLabel1;
-	
-	var successLabel2 = cc.LabelTTF.create("发了一个红包", "Arial", 30 * this.scaleY); 
-    successLabel2.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 1.5));
-    successLabel2.setAnchorPoint(cc.p(0.5, 0.5));
-    this.scoreNode.addChild(successLabel2);
-	this.scoreNode.sc2 = successLabel2;
+//	var successLabel1 = cc.LabelTTF.create("伊利安慕希给您", "Arial", 25 * this.scaleY);
+//    successLabel1.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 1.5 + 35 * this.scaleY));
+//    successLabel1.setAnchorPoint(cc.p(0.5, 0.5));
+//    this.scoreNode.addChild(successLabel1);
+//	this.scoreNode.sc1 = successLabel1;
+//
+//	var successLabel2 = cc.LabelTTF.create("发了一个红包", "Arial", 30 * this.scaleY);
+//    successLabel2.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 1.5));
+//    successLabel2.setAnchorPoint(cc.p(0.5, 0.5));
+//    this.scoreNode.addChild(successLabel2);
+//	this.scoreNode.sc2 = successLabel2;
 	
 	var failedLabel = cc.LabelTTF.create("继续努力吧!", "Arial", 30 * this.scaleY); 
 	failedLabel.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 1.5));
@@ -271,20 +271,21 @@ MainLayer.prototype.createTopOverNode = function () {
 	var btnScaleX = this.winSize.width / 360 * this.dpiScale;
 	var btnScaleY = btnScaleX;
 	// alert("[btnScaleX , btnScaleY]: [" + btnScaleX + ", " + btnScaleY + "] ");
-    var btnBonus = cc.Sprite.create("image/bonus.png");
-	btnBonus.setScaleX(btnScaleX);
-	btnBonus.setScaleY(btnScaleY);
-    btnBonus.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 1.5 - 40 * this.scaleY));
-    btnBonus.setAnchorPoint(cc.p(0.5, 0.5)); 
-    this.scoreNode.addChild(btnBonus);
-    this.scoreNode.bonus = btnBonus;
+//    var btnBonus = cc.Sprite.create("image/bonus.png");
+//	btnBonus.setScaleX(btnScaleX);
+//	btnBonus.setScaleY(btnScaleY);
+//    btnBonus.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 1.5 - 40 * this.scaleY));
+//    btnBonus.setAnchorPoint(cc.p(0.5, 0.5));
+//    this.scoreNode.addChild(btnBonus);
+//    this.scoreNode.bonus = btnBonus;
 
 	var btnAgain = cc.Sprite.create("image/again.png");
 	btnAgain.setScaleX(btnScaleX);
 	btnAgain.setScaleY(btnScaleY);
     btnAgain.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 1.5 - 40 * this.scaleY));
-    btnAgain.setAnchorPoint(cc.p(0.5, 0.5));      
-    this.scoreNode.again = btnAgain;	
+    btnAgain.setAnchorPoint(cc.p(0.5, 0.5));
+    this.scoreNode.addChild(btnAgain);
+    this.scoreNode.again = btnAgain;
 	
 	var footerLabel = cc.LabelTTF.create("如果您喜欢这个游戏，那么请分享您的好友吧!", "Arial", 18);   // fixed font size and scale
 	footerLabel.setScaleX(this.scaleX * this.dpiScale);
@@ -419,11 +420,11 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
 									this.scoreNode.removeChild(this.scoreNode.sh2);
 									this.scoreNode.addChild(this.scoreNode.fh2);
 									this.scoreNode.removeChild(this.scoreNode.sh3);
-									this.scoreNode.removeChild(this.scoreNode.sc1);
-									this.scoreNode.removeChild(this.scoreNode.sc2);
+//									this.scoreNode.removeChild(this.scoreNode.sc1);
+//									this.scoreNode.removeChild(this.scoreNode.sc2);
 									this.scoreNode.addChild(this.scoreNode.fc1);									
 									
-									this.scoreNode.removeChild(this.scoreNode.bonus);
+//									this.scoreNode.removeChild(this.scoreNode.bonus);
 									this.scoreNode.addChild(this.scoreNode.again);
 									
 									this.rootNode.removeChild(this.scoreBg);
@@ -457,16 +458,16 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
             ));
         }
 		
-		var viewBonusEvent = {type:'viewBonus', success : true, score : this.totalTap};
-		var bonusRect = cc.rectCreate(this.scoreNode.bonus.getPosition(), [200, 120]);
-        if (cc.rectContainsPoint(bonusRect, this.pBegan)) {
-            this.scoreNode.bonus.runAction(cc.Sequence.create(
-                cc.CallFunc.create(function () {
-                    cc.AudioEngine.getInstance().stopAllEffects();
-                    window.onViewBonusEvent.fire(viewBonusEvent);
-                })
-            ));
-        }
+//		var viewBonusEvent = {type:'viewBonus', success : true, score : this.totalTap};
+//		var bonusRect = cc.rectCreate(this.scoreNode.bonus.getPosition(), [200, 120]);
+//        if (cc.rectContainsPoint(bonusRect, this.pBegan)) {
+//            this.scoreNode.bonus.runAction(cc.Sequence.create(
+//                cc.CallFunc.create(function () {
+//                    cc.AudioEngine.getInstance().stopAllEffects();
+//                    window.onViewBonusEvent.fire(viewBonusEvent);
+//                })
+//            ));
+//        }
     }
 };
 
