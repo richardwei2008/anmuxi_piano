@@ -136,11 +136,11 @@ MainLayer.prototype.onEnter = function () {
     this.failureHeader1.setAnchorPoint(cc.p(0.5, 0.5));
 	
     //result
-	this.successLabel = cc.Sprite.create("image/success_h2.png");
-    this.successLabel.setScaleX(spriteScale);
-	this.successLabel.setScaleY(spriteScale);
-    this.successLabel.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 2 - 100 / window.devicePixelRatio ));
-    this.successLabel.setAnchorPoint(cc.p(0.5, 0.5));
+	//this.successLabel = cc.Sprite.create("image/success_h2.png");
+    //this.successLabel.setScaleX(spriteScale);
+	//this.successLabel.setScaleY(spriteScale);
+    //this.successLabel.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 2 - 100 / window.devicePixelRatio ));
+    //this.successLabel.setAnchorPoint(cc.p(0.5, 0.5));
 	
 	this.failedLabel = cc.Sprite.create("image/failure_h2.png"); // cc.LabelTTF.create("失  败  了", "Arial", 60 / window.devicePixelRatio);   
 	this.failedLabel.setScaleX(spriteScale);
@@ -149,11 +149,11 @@ MainLayer.prototype.onEnter = function () {
     this.failedLabel.setAnchorPoint(cc.p(0.5, 0.5));    
 		
 	// bonus
-    this.btnBonus = cc.Sprite.create("image/bonus.png");
-	this.btnBonus.setScaleX(0.8);
-	this.btnBonus.setScaleY(0.8);
-    this.btnBonus.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 1.1));
-    this.btnBonus.setAnchorPoint(cc.p(0.5, 0.5));   
+//    this.btnBonus = cc.Sprite.create("image/bonus.png");
+//	this.btnBonus.setScaleX(0.8);
+//	this.btnBonus.setScaleY(0.8);
+//    this.btnBonus.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 1.1));
+//    this.btnBonus.setAnchorPoint(cc.p(0.5, 0.5));
     	
 	this.btnAgain = cc.Sprite.create("image/again.png");
 	this.btnAgain.setScaleX(0.8);
@@ -290,14 +290,16 @@ MainLayer.prototype.createTopOverNode = function () {
 	this.scoreNode.fh1 = this.failureHeader1;
 	
     //result
-    this.scoreNode.addChild(this.successLabel);
-	this.scoreNode.sh2 = this.successLabel;
+    //this.scoreNode.addChild(this.successLabel);
+	//this.scoreNode.sh2 = this.successLabel;
 	
 	this.scoreNode.fh2 = this.failedLabel;
 	
 	// bonus
-    this.scoreNode.addChild(this.btnBonus);
-    this.scoreNode.bonus = this.btnBonus;
+//    this.scoreNode.addChild(this.btnBonus);
+//    this.scoreNode.bonus = this.btnBonus;
+    this.scoreNode.addChild(this.btnAgain);
+    this.scoreNode.bonus = this.btnAgain;
 	   
     this.scoreNode.again = this.btnAgain;	
 };
