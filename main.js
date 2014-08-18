@@ -63,12 +63,12 @@ if (sys.platform == 'browser') {
 			// cc.EGLView.getInstance().resizeWithBrowserSize(true);
             glView.setDesignResolutionSize(resolutionSizeWidth, resolutionSizeHeight, cc.RESOLUTION_POLICY.SHOW_ALL);
             cc.Loader.preload(ccb_resources, function () {
-                cc.BuilderReader.runScene("", "StartLayer");
+                cc.BuilderReader.runScene("", "MainLayer");
             }, this);
             return true;
         }
     });
     var myApp = new Cocos2dXApplication();
 } else {
-    cc.BuilderReader.runScene("", "StartLayer");
+    cc.BuilderReader.runScene("", "MainLayer");
 }
