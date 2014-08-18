@@ -2,6 +2,7 @@
 START = 0;
 OVER = 1;
 STOP = 2;
+STARTED = 3;
 var MainLayer = function () {
     this.blockNode = this.blockNode || {};
     this.gameStatus = START;
@@ -261,17 +262,17 @@ MainLayer.prototype.createTopOverNode = function () {
 	this.scoreNode.fh2 = failureHeader2;
 	
     //result
-//	var successLabel1 = cc.LabelTTF.create("伊利安慕希给您", "Arial", 25 * this.scaleY);
-//    successLabel1.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 1.5 + 35 * this.scaleY));
-//    successLabel1.setAnchorPoint(cc.p(0.5, 0.5));
-//    this.scoreNode.addChild(successLabel1);
-//	this.scoreNode.sc1 = successLabel1;
-//
-//	var successLabel2 = cc.LabelTTF.create("发了一个红包", "Arial", 30 * this.scaleY);
-//    successLabel2.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 1.5));
-//    successLabel2.setAnchorPoint(cc.p(0.5, 0.5));
-//    this.scoreNode.addChild(successLabel2);
-//	this.scoreNode.sc2 = successLabel2;
+	var successLabel1 = cc.LabelTTF.create("总共用时", "Arial", 25 * this.scaleY);
+    successLabel1.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 1.5 + 35 * this.scaleY));
+    successLabel1.setAnchorPoint(cc.p(0.5, 0.5));
+    this.scoreNode.addChild(successLabel1);
+	this.scoreNode.sc1 = successLabel1;
+
+	var successLabel2 = cc.LabelTTF.create("时间", "Arial", 30 * this.scaleY);
+    successLabel2.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 1.5));
+    successLabel2.setAnchorPoint(cc.p(0.5, 0.5));
+    this.scoreNode.addChild(successLabel2);
+	this.scoreNode.sc2 = successLabel2;
 	
 	var failedLabel = cc.LabelTTF.create("继续努力吧!", "Arial", 30 * this.scaleY); 
 	failedLabel.setPosition(cc.p(this.blockWidth * 2, this.blockHeight * 1.5));
@@ -312,11 +313,15 @@ MainLayer.prototype.onUpdate = function (dt) {
     if (this.gameStatus == OVER) {
         return;
     }
-	this.currentTime += dt;
-	if (this.currentTime - this.lastScoreTime > 0.09) {
-		this.scoreLabel.setString(getD(this.currentTime, 2) + "''");
-		this.lastScoreTime = this.currentTime;
-	}
+    if (this.gameStatus == STARTED) {
+        this.currentTime += dt;
+        if (this.currentTime - this.lastScoreTime > 0.09) {
+            this.scoreLabel.setString(getD(this.currentTime, 2) + "''");
+
+            this.lastScoreTime = this.currentTime;
+        }
+    }
+
 };
 
 MainLayer.prototype.moveAddNewSprites = function () {
@@ -335,7 +340,7 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
     this.pBegan = touches[0].getLocation();
     // cc.log("this.pianoLength==" + this.pianoLength);
 	// console.log("this.pianoLength==" + this.pianoLength);
-    if (this.gameStatus == START) {  //game start
+    if (this.gameStatus == STARTED || this.gameStatus == START) {  //game start
         var newTouchPos = cc.p(this.pBegan.x, (this.pBegan.y + this.moveNum * this.blockHeight));
         for (var j = 0; j < this.pianoLength; j++) {
             for (var i = 0; i < 4; i++) {
@@ -343,6 +348,7 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
                 if (block) {
                     var blockRect = cc.rectCreate(block.getPosition(), [this.positionX, this.blockHeight / 2]);
                     if (cc.rectContainsPoint(blockRect, newTouchPos)) {
+                        this.gameStatus = STARTED;
                         if (j == 0) {							
                             return;
                         }
@@ -402,6 +408,7 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
                                 this.blockNode.runAction(cc.MoveTo.create(0.2, cc.p(0, (this.blockNode.getPositionY() - this.blockHeight * heightNum))));
                                 this.moveNum += 1;
 								this.totalTap += 1;
+                                this.scoreNode.sc2.setString(getD(this.currentTime, 2) + "''");
                                 block.runAction(cc.Sequence.create(
                                     cc.ScaleTo.create(0, this.blockScaleX * 4 / 5, this.blockScaleY),
                                     cc.ScaleTo.create(0.2, this.blockScaleX, this.blockScaleY)
@@ -431,8 +438,8 @@ MainLayer.prototype.onTouchesBegan = function (touches, event) {
 									this.scoreNode.removeChild(this.scoreNode.sh2);
 									this.scoreNode.addChild(this.scoreNode.fh2);
 									this.scoreNode.removeChild(this.scoreNode.sh3);
-//									this.scoreNode.removeChild(this.scoreNode.sc1);
-//									this.scoreNode.removeChild(this.scoreNode.sc2);
+									this.scoreNode.removeChild(this.scoreNode.sc1);
+									this.scoreNode.removeChild(this.scoreNode.sc2);
 									this.scoreNode.addChild(this.scoreNode.fc1);									
 									
 //									this.scoreNode.removeChild(this.scoreNode.bonus);
